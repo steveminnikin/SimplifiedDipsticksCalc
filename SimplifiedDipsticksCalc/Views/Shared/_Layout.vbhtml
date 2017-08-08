@@ -9,33 +9,29 @@
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+        <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", New With { .area = "" }, New With {Key .[class] = "navbar-brand"})
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", New With { .area = "" }, Nothing)</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", New With { .area = "" }, Nothing)</li>
-                </ul>
+                @Html.ActionLink("Dipsticks Calculator", "Index", "Home", New With {.area = ""}, New With {Key .[class] = "navbar-brand"})
+                @Html.ActionLink("Tools and References", "Index", "Tools", New With {.area = ""}, New With {Key .[class] = "navbar-brand"})
             </div>
         </div>
     </div>
-    <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <div class="container">
+                <p>&copy; @DateTime.Now.Year - Dipsticks Engineering Services Ltd</p>
+            </div>
         </footer>
-    </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required:=False)
+    <script type="text/javascript" src="~/Scripts/custom.js"></script>
 </body>
 </html>
