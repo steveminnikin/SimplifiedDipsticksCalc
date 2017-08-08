@@ -65,7 +65,7 @@
 <br />
 <div class="row">
     <div class="col-xs-11 col-xs-offset-1">
-        <p>@Html.DisplayNameFor(Function(model) model.FullVol) = @ViewBag.fullVolume @Model.GetVolume at @Html.DisplayFor(Function(model) model.FlatDiameter) @Model.GetLength &nbsp; - &nbsp; SWC (97%) = @ViewBag.swc @Model.GetVolume</p>
+        <p>@Html.DisplayNameFor(Function(model) model.FullVol) = @ViewBag.fullVolume @Model.GetVolume at @ViewBag.topHeight @Model.GetLength &nbsp; - &nbsp; SWC (97%) = @ViewBag.swc @Model.GetVolume</p>
         <br />
         <p><span id="chartNote"></span></p>
     </div>

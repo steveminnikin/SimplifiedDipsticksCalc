@@ -40,6 +40,7 @@ Namespace Controllers
             vertCyl.IncrementList = _vertCylService.CalculateIncrements(vertCyl)
 
             ViewBag.fullVolume = Math.Round(vertCyl.FullVol, 1)
+            ViewBag.topHeight = IIf(vertCyl.GetLength.Equals("Millimetres"), vertCyl.VertHeight, Math.Round(vertCyl.convertedVertDimensions.ht, 1))
             ViewBag.swc = Math.Round(vertCyl.FullVol * 0.97, 0)
 
             If vertCyl.EngraveCode Then

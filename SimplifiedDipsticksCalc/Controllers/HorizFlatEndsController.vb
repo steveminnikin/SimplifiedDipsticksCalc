@@ -33,6 +33,7 @@ Namespace Controllers
             HorizFlatEnds.IncrementList = _horizFlatEndsService.CalculateIncrements(HorizFlatEnds)
 
             ViewBag.fullVolume = Math.Round(HorizFlatEnds.FullVol, 1)
+            ViewBag.topHeight = IIf(HorizFlatEnds.GetLength.Equals("Millimetres"), HorizFlatEnds.FlatDiameter, Math.Round(HorizFlatEnds.convertedFlatEndsDimensions.dia, 1))
             ViewBag.swc = Math.Round(HorizFlatEnds.FullVol * 0.97, 0)
             If HorizFlatEnds.EngraveCode Then
                 _tankService.DownloadEngraveCode(HorizFlatEnds)

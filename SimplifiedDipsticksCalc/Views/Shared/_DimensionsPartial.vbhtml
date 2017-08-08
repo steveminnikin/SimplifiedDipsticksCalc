@@ -26,14 +26,14 @@
         <div class="form-group">
             <label class="col-lg-3 control-label">Adjustments</label>
             <div class="col-lg-6">
-                @Html.TextBoxFor(Function(model) model.Adjustments, New With {.class = "form-control"})
+                @Html.TextBoxFor(Function(model) model.Adjustments, New With {.class = "form-control", .placeholder = "Optional. Subtracts value from volumes"})
             </div>
         </div>
     <div class="form-group">
         @Html.LabelFor(Function(model) model.Increments, New With {.class = "col-lg-3 control-label"})
         <div class="col-lg-6">
             @Html.TextBoxFor(Function(model) model.Increments, New With {.class = "form-control"})
-            @Html.ValidationMessageFor(Function(model) model.Increments, "", New With {.class = "text-danger"})
+            @Html.ValidationMessageFor(Function(model) model.Increments, "", New With {.class = "text-danger", .placeholder = "Volume for Worshop. Length for Chart"})
         </div>
     </div>
     </div>

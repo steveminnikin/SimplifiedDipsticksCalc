@@ -4,13 +4,13 @@
         <div class="form-group">
             @Html.LabelFor(Function(model) model.FlatDiameter, New With {.class = "col-lg-3 control-label"})
             <div class="col-lg-6">
-                @Html.TextBoxFor(Function(model) model.FlatDiameter, New With {.class = "form-control"})
+                @Html.TextBoxFor(Function(model) model.FlatDiameter, New With {.class = "form-control", .placeholder = "MMs"})
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(Function(model) model.FlatLength, New With {.class = "col-lg-3 control-label"})
             <div class="col-lg-6">
-                @Html.TextBoxFor(Function(model) model.FlatLength, New With {.class = "form-control"})
+                @Html.TextBoxFor(Function(model) model.FlatLength, New With {.class = "form-control", .placeholder = "MMs"})
             </div>
         </div>  
     <div class="col-lg-offset-3 col-lg-9">
@@ -18,7 +18,7 @@
     </div>
     </div>
     <div class="col-lg-6">
-        For tilted flat end tanks just use the dished end calculator and set the straight length and overall length the same.
+        For tilted flat end tanks just use the dished end calculator and set the <em>Straight Length</em> and <em>Overall Length</em> the same.
     </div>
 </div>
 </form>

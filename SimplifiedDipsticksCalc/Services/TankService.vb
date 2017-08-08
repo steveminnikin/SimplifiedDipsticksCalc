@@ -15,7 +15,7 @@ Public Class TankService
                 Case Tank.Dimension.GallonsInches
                     .m = 1 / 25.4
                     .cor = 277.42
-                    .incAdj = IIf(tank.regDip, 0.1, 1.0)
+                    .incAdj = 1.0
                 Case Tank.Dimension.GallonsMMs
                     .m = 1 / 25.4
                     .cor = 277.42
@@ -31,7 +31,7 @@ Public Class TankService
                 Case Tank.Dimension.USGallonsInches
                     .m = 1 / 25.4
                     .cor = 277.42 * 0.8327
-                    .incAdj = IIf(tank.regDip, 0.1, 1.0)
+                    .incAdj = 1.0
                 Case Else
 
             End Select

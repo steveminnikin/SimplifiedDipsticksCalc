@@ -16,6 +16,7 @@ Public Class RectangularService
         Dim iv, h, vol, area As Double
 
         area = CalculateAreaOfTank(rectangular)
+        CalculateFullVolume(rectangular)
 
         If rectangular.regDip Then
             For h = 0 To convertedRectDimensions.height Step rectangular.convertedRectDimensions.inc

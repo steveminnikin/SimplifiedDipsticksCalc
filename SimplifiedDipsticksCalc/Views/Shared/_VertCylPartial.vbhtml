@@ -4,13 +4,13 @@
         <div class="form-group">
             @Html.LabelFor(Function(model) model.Diameter, New With {.class = "col-lg-3 control-label"})
             <div class="col-lg-6">
-                @Html.TextBoxFor(Function(model) model.Diameter, New With {.class = "form-control"})
+                @Html.TextBoxFor(Function(model) model.Diameter, New With {.class = "form-control", .placeholder = "MMs"})
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(Function(model) model.VertHeight, New With {.class = "col-lg-3 control-label"})
             <div class="col-lg-6">
-                @Html.TextBoxFor(Function(model) model.VertHeight, New With {.class = "form-control"})
+                @Html.TextBoxFor(Function(model) model.VertHeight, New With {.class = "form-control", .placeholder = "MMs"})
             </div>
         </div>
     <div class="col-lg-offset-3 col-lg-9">
@@ -21,7 +21,7 @@
             <div class="form-group">
                 @Html.LabelFor(Function(model) model.DishEndDepth, New With {.class = "col-lg-3 control-label"})
                 <div class="col-lg-6">
-                    @Html.TextBoxFor(Function(model) model.DishEndDepth, New With {.class = "form-control"})
+                    @Html.TextBoxFor(Function(model) model.DishEndDepth, New With {.class = "form-control", .placeholder = "Optional"})
                 </div>
             </div>
             For dished bases use overall length of tank (including base).<br />

@@ -30,6 +30,7 @@ Namespace Controllers
             rectangular.IncrementList = _rectangularService.CalculateIncrements(rectangular)
 
             ViewBag.fullVolume = Math.Round(rectangular.FullVol, 1)
+            ViewBag.topHeight = IIf(rectangular.GetLength.Equals("Millimetres"), rectangular.Height, Math.Round(rectangular.convertedRectDimensions.height, 1))
             ViewBag.swc = Math.Round(rectangular.FullVol * 0.97, 0)
 
             If rectangular.EngraveCode Then
