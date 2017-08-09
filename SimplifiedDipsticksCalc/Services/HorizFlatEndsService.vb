@@ -4,6 +4,7 @@ Public Class HorizFlatEndsService
     Inherits TankService
 
     Private convertedHorizFlatEndsDimensions As IConvertedFlatEndsDimensions
+    Private X, T9, R, TN, TIV As Double
 
     Function GetFullVol(horizFlatEnds As HorizFlatEnds) As Double
         horizFlatEnds.FullVol = PI * Pow((convertedHorizFlatEndsDimensions.dia / 2), 2) * convertedHorizFlatEndsDimensions.l / horizFlatEnds.InitialConversionValues.cor
@@ -13,13 +14,13 @@ Public Class HorizFlatEndsService
     Public Function CalculateIncrements(horizFlatEnds As HorizFlatEnds) As Dictionary(Of Double, Double)
 
         Dim incrementList As New Dictionary(Of Double, Double)
-        Dim T9, TN, X, area, AN, AT, IV, R, H As Single
+        Dim area, AN, AT, IV, H As Single
 
         T9 = 0.1
         R = convertedHorizFlatEndsDimensions.dia / 2
 
         If horizFlatEnds.regDip Then
-            For H = 0 + 0.00001 To R Step convertedHorizFlatEndsDimensions.inc
+            For H = 0.00001 To R Step convertedHorizFlatEndsDimensions.inc
                 AN = 2 * (FnA(1 - H / R))
                 AT = 0.5 * R ^ 2 * Sin(AN)
                 area = AN * R ^ 2 / 2 - AT
@@ -27,7 +28,6 @@ Public Class HorizFlatEndsService
                 incrementList.Add(horizFlatEnds.FinalConversionRounding(H), Round(IV))
                 If H > R Then Exit For
             Next H
-            'Height = Diameter is this required in this version?
             For H = H To convertedHorizFlatEndsDimensions.dia Step convertedHorizFlatEndsDimensions.inc
                 AN = 2 * (FnA(2 * H / convertedHorizFlatEndsDimensions.dia - 1))
                 AT = 0.5 * R ^ 2 * Sin(AN)
@@ -38,17 +38,20 @@ Public Class HorizFlatEndsService
         Else
             'Workshop Format
             For TIV = convertedHorizFlatEndsDimensions.inc To horizFlatEnds.FullVol Step convertedHorizFlatEndsDimensions.inc
-X:              X = T9 - Sin(T9) - (2 * horizFlatEnds.InitialConversionValues.cor * TIV / (R ^ 2 * convertedHorizFlatEndsDimensions.l))
-                X = X / (1 - Cos(T9))
-                TN = T9 - X
+                xFactors(horizFlatEnds)
                 If Abs(TN) > 150000.0! Then
-                    TIV = TIV + 0.001
-                    T9 = 0.1
-                    GoTo X
+                    Do
+                        TIV += 0.001
+                        T9 = 0.1
+                        xFactors(horizFlatEnds)
+                    Loop While Abs(TN) > 150000.0!
                 End If
+
                 If Abs(TN - T9) >= 0.00001 Then
-                    T9 = TN
-                    GoTo X
+                    Do
+                        T9 = TN
+                        xFactors(horizFlatEnds)
+                    Loop While Abs(TN - T9) >= 0.00001
                 End If
                 H = R - R * Cos(TN / 2)
 
@@ -58,6 +61,12 @@ X:              X = T9 - Sin(T9) - (2 * horizFlatEnds.InitialConversionValues.co
         End If
         Return incrementList
     End Function
+
+    Sub xFactors(horizFlatEnds As HorizFlatEnds)
+        X = T9 - Sin(T9) - (2 * horizFlatEnds.InitialConversionValues.cor * TIV / (R ^ 2 * convertedHorizFlatEndsDimensions.l))
+        X = X / (1 - Cos(T9))
+        TN = T9 - X
+    End Sub
 
     Function GetConvertedHorizFlatEndsDimensions(horizFlatEnds As HorizFlatEnds) As IConvertedFLatEndsDimensions
 

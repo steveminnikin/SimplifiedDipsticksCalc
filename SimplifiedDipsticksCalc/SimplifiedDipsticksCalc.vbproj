@@ -206,9 +206,12 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.vb" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.vb" />
     <Compile Include="Controllers\HorizDishEndsController.vb" />
+    <Compile Include="Controllers\EllipticalController.vb" />
     <Compile Include="Controllers\HorizFlatEndsController.vb" />
     <Compile Include="Controllers\RectangularController.vb" />
+    <Compile Include="Models\Elliptical.vb" />
     <Compile Include="Services\HorizDishEndsService.vb" />
+    <Compile Include="Services\EllipticalService.vb" />
     <Compile Include="Services\HorizFlatEndsService.vb" />
     <Compile Include="Services\RectangularService.vb" />
     <Compile Include="Services\TankService.vb" />
@@ -323,6 +326,8 @@
     <Content Include="Views\Shared\_CalculateTop.vbhtml" />
     <Content Include="Views\HorizFlatEnds\Calculate.vbhtml" />
     <Content Include="Views\VertCyl\Calculate.vbhtml" />
+    <Content Include="Views\Shared\_EllipticalPartial.vbhtml" />
+    <Content Include="Views\Elliptical\Calculate.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />

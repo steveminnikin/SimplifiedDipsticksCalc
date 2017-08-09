@@ -13,12 +13,12 @@
     </div>
     <div class="col-xs-2">
         <dl>
-            <dt>
+            <dd>
                 @Html.DisplayFor(Function(model) model.FlatDiameter)
-            </dt>
-            <dt>
+            </dd>
+            <dd>
                 @Html.DisplayFor(Function(model) model.FlatLength)
-            </dt>
+            </dd>
         </dl>
 
     </div>

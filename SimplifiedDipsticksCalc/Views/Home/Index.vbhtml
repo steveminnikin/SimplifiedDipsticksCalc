@@ -18,6 +18,7 @@
             <li role="presentation"><a href="#horizFlatEnds" aria-controls="horizFlatEnds" role="tab" data-toggle="tab">Horizontal Cylindrical Flat Ends</a></li>
             <li role="presentation"><a href="#rectangular" aria-controls="rectangular" role="tab" data-toggle="tab">Rectangular</a></li>
             <li role="presentation"><a href="#vertCyl" aria-controls="vertCyl" role="tab" data-toggle="tab">Vertical Cylindrical</a></li>
+            <li role="presentation"><a href="#ellipt" aria-controls="ellipt" role="tab" data-toggle="tab">Elliptical</a></li>
         </ul>
         <br />
         <!-- Tab panes -->
@@ -33,6 +34,9 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="vertCyl">
                 @Html.Partial("_VertCylPartial")
+            </div>
+            <div role="tabpanel" class="tab-pane" id="ellipt">
+                @Html.Partial("_EllipticalPartial")
             </div>
         </div>
     </div>

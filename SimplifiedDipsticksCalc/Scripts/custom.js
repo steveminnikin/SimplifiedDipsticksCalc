@@ -27,6 +27,9 @@
         if ($('#vertCyl').hasClass('active')) {
             $('#submitForm').attr('action', '/VertCyl/Calculate');
         }
+        if ($('#ellipt').hasClass('active')) {
+            $('#submitForm').attr('action', '/Elliptical/Calculate');
+        }
     }); //btnSubmit.click  
 
     $('#btnEdit').click(function () {
