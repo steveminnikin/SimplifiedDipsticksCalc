@@ -7,7 +7,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
+<body class="container">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -17,15 +17,14 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("Dipsticks Calculator", "Index", "Home", New With {.area = ""}, New With {Key .[class] = "navbar-brand"})
-                @Html.ActionLink("Tools and References", "Index", "Tools", New With {.area = ""}, New With {Key .[class] = "navbar-brand"})
             </div>
         </div>
     </div>
         @RenderBody()
         <hr />
-        <footer>
-            <div class="container">
-                <p>&copy; @DateTime.Now.Year - Dipsticks Engineering Services Ltd</p>
+        <footer class="hidden-print">
+            <div>
+                <p >&copy; @DateTime.Now.Year - Dipsticks Engineering Services Ltd - For Best Results Use Microsoft Edge Browser</p>
             </div>
         </footer>
 

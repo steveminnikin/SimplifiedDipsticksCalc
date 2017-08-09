@@ -9,10 +9,12 @@ Public Class HorizDishEndsService
 
     Function GetFullVol(horizDishEnds As HorizDishEnds) As Double
         Dim vt, f1, f2, f3, f4, f5, fv As Double
+
         vt = vd + vb
         If convertedHorizDishEndsDimensions.til = 0 Then
             iv = vt / horizDishEnds.InitialConversionValues.cor
-            Return iv
+            horizDishEnds.FullVol = iv
+            Return horizDishEnds.FullVol
         Else
             t2 = (convertedHorizDishEndsDimensions.til - (convertedHorizDishEndsDimensions.dip * convertedHorizDishEndsDimensions.til / convertedHorizDishEndsDimensions.l)) * Cos(FnB(convertedHorizDishEndsDimensions.til / convertedHorizDishEndsDimensions.l))
             convertedHorizDishEndsDimensions.dip = convertedHorizDishEndsDimensions.l - convertedHorizDishEndsDimensions.dip
@@ -24,7 +26,8 @@ Public Class HorizDishEndsService
             fv = (f2 * f3 + f4 * f1) * convertedHorizDishEndsDimensions.dip / (3 * t2) + f5
             iv = (vt - fv) / horizDishEnds.InitialConversionValues.cor
         End If
-        Return iv
+        horizDishEnds.FullVol = iv
+        Return horizDishEnds.FullVol
     End Function
 
     Function CalculateIncrements(horizDishEnds As HorizDishEnds) As Dictionary(Of Double, Double)
@@ -42,7 +45,7 @@ Public Class HorizDishEndsService
         lm = convertedHorizDishEndsDimensions.l + dr
         lr = convertedHorizDishEndsDimensions.dip + dr / 2
         If horizDishEnds.Tilt <> 0 Then Call TiltConsts(horizDishEnds)
-        Call BasicConstants()
+        BasicConstants()
         If horizDishEnds.regDip And horizDishEnds.Tilt = 0 Then
             Call RegdipCalcCylDish(horizDishEnds)
         Else
@@ -95,7 +98,7 @@ Volcalcs:   Call VolCalcs(horizDishEnds)
                 End If
             End If
         End If
-        If Not horizDishEnds.regDip Then horizDishEnds.IncrementList.Add(Round(horizDishEnds.FullVol), horizDishEnds.FinalConversionRounding(convertedHorizDishEndsDimensions.dia))
+        If Not horizDishEnds.regDip Then incrementList.Add(Round(horizDishEnds.FullVol), horizDishEnds.FinalConversionRounding(convertedHorizDishEndsDimensions.dia))
         Return incrementList
     End Function
     Private Sub RegdipCalcCylDish(horizDishEnds As HorizDishEnds)

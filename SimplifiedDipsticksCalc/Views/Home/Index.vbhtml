@@ -1,4 +1,5 @@
 ﻿    
+<br />
 <form id="submitForm" method="post">
     <div class="row">
         <div class="col-md-6">
@@ -9,6 +10,7 @@
             @Html.Partial("_DimensionsPartial")
         </div>
     </div>
+    <hr />
     <div class="row">
         <!-- Nav tabs -->
         <ul class="nav nav-pills nav-justified" role="tablist">
@@ -17,7 +19,7 @@
             <li role="presentation"><a href="#rectangular" aria-controls="rectangular" role="tab" data-toggle="tab">Rectangular</a></li>
             <li role="presentation"><a href="#vertCyl" aria-controls="vertCyl" role="tab" data-toggle="tab">Vertical Cylindrical</a></li>
         </ul>
-
+        <br />
         <!-- Tab panes -->
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="horizDishEnds">

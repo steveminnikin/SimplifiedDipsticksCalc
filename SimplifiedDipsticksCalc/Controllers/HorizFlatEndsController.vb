@@ -31,6 +31,7 @@ Namespace Controllers
             HorizFlatEnds.InitialConversionValues = _tankService.GetinitialConversionValues(HorizFlatEnds)
             HorizFlatEnds.convertedFlatEndsDimensions = _horizFlatEndsService.GetConvertedHorizFlatEndsDimensions(HorizFlatEnds)
             HorizFlatEnds.IncrementList = _horizFlatEndsService.CalculateIncrements(HorizFlatEnds)
+            HorizFlatEnds.FullVol = _horizFlatEndsService.GetFullVol(HorizFlatEnds)
 
             ViewBag.fullVolume = Math.Round(HorizFlatEnds.FullVol, 1)
             ViewBag.topHeight = IIf(HorizFlatEnds.GetLength.Equals("Millimetres"), HorizFlatEnds.FlatDiameter, Math.Round(HorizFlatEnds.convertedFlatEndsDimensions.dia, 1))

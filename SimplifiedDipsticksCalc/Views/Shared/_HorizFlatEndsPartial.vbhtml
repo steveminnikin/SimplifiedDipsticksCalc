@@ -18,7 +18,11 @@
     </div>
     </div>
     <div class="col-lg-6">
-        For tilted flat end tanks just use the dished end calculator and set the <em>Straight Length</em> and <em>Overall Length</em> the same.
+        <div >
+            <h4>For tilted flat end tanks</h4> 
+            <p>Use the dished end calculator and set the <em>Straight Length</em> and <em>Overall Length</em> the same.</pclass="bg-success">
+
+        </div>
     </div>
 </div>
 </form>

@@ -1,4 +1,5 @@
 ﻿@ModelType SimplifiedDipsticksCalc.VertCyl
+<title>@ViewBag.Title</title>
 @Html.Partial("_CalculateTop")
 <div class="row">
     <div class="col-xs-2 text-right">

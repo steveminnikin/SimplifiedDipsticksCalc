@@ -28,26 +28,26 @@
     </div>
     <div class="col-xs-2">
         <dl>
-            <dt>
+            <dd>
                 @Html.DisplayFor(Function(model) model.DishDiameter)
-            </dt>
-            <dt>
+            </dd>
+            <dd>
                 @Html.DisplayFor(Function(model) model.stLength)
-            </dt>
+            </dd>
             @If Not Model.OvLength.Equals(Nothing) Then
-                @<dt>
+                @<dd>
                     @Html.DisplayFor(Function(model) model.OvLength)
-                </dt>
+                </dd>
             End If
             @If Not Model.DishEndRad.Equals(Nothing) Then
-                @<dt>
+                @<dd>
                     @Html.DisplayFor(Function(model) model.DishEndRad)
-                </dt>
+                </dd>
             End If
             @If Not Model.KnuckleRad.Equals(Nothing) Then
-                @<dt>
+                @<dd>
                     @Html.DisplayFor(Function(model) model.KnuckleRad)
-                </dt>
+                </dd>
             End If
         </dl>
 
@@ -59,15 +59,15 @@
                 @Html.DisplayNameFor(Function(model) model.Increments)
             </dt>
             @If Not Model.Tilt.Equals(Nothing) Then
-                @<dt>
+                @<dd>
                     @Html.DisplayNameFor(Function(model) model.Tilt)
-                </dt>
+                </dd>
             End If
 
             @If Not Model.dipPoint.Equals(Nothing) Then
-                @<dt>
+                @<dd>
                     @Html.DisplayNameFor(Function(model) model.dipPoint)
-                </dt>
+                </dd>
             End If
         </dl>
     </div>

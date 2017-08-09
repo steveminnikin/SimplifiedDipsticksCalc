@@ -17,7 +17,6 @@ Public Class HorizFlatEndsService
 
         T9 = 0.1
         R = convertedHorizFlatEndsDimensions.dia / 2
-        GetFullVol(horizFlatEnds)
 
         If horizFlatEnds.regDip Then
             For H = 0 + 0.00001 To R Step convertedHorizFlatEndsDimensions.inc

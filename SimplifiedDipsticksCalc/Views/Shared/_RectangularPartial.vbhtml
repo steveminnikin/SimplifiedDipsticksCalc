@@ -5,22 +5,22 @@
             <div class="form-group ">
                 @Html.LabelFor(Function(model) model.Length, New With {.class = "col-lg-3 control-label"})
                 <div class="col-lg-6">
-                    @Html.TextBoxFor(Function(model) model.Length, New With {.class = "form-control"})
-                    @Html.ValidationMessageFor(Function(model) model.Length, "", New With {.class = "text-danger", .placeholder = "MMs"})
+                    @Html.TextBoxFor(Function(model) model.Length, New With {.class = "form-control", .placeholder = "MMs"})
+                    @Html.ValidationMessageFor(Function(model) model.Length, "", New With {.class = "text-danger"})
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(Function(model) model.Width, New With {.class = "col-lg-3 control-label"})
                 <div class="col-lg-6">
-                    @Html.TextBoxFor(Function(model) model.Width, New With {.class = "form-control"})
-                    @Html.ValidationMessageFor(Function(model) model.Width, "", New With {.class = "text-danger", .placeholder = "MMs"})
+                    @Html.TextBoxFor(Function(model) model.Width, New With {.class = "form-control", .placeholder = "MMs"})
+                    @Html.ValidationMessageFor(Function(model) model.Width, "", New With {.class = "text-danger"})
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(Function(model) model.Height, New With {.class = "col-lg-3 control-label"})
                 <div class="col-lg-6">
-                    @Html.TextBoxFor(Function(model) model.Height, New With {.class = "form-control"})
-                    @Html.ValidationMessageFor(Function(model) model.Height, "", New With {.class = "text-danger", .placeholder = "MMs"})
+                    @Html.TextBoxFor(Function(model) model.Height, New With {.class = "form-control", .placeholder = "MMs"})
+                    @Html.ValidationMessageFor(Function(model) model.Height, "", New With {.class = "text-danger"})
                 </div>
             </div>
             <div class="col-lg-offset-3 col-lg-9">
