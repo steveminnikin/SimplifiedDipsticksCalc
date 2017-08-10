@@ -7,11 +7,11 @@ Public Class Tank
     Property FullVol As Double
     <Required>
     Property Dimensions As Dimension
-    Property Tilt As Nullable(Of Double)
+    Property Tilt As Double?
     <Display(Name:="Dip Point")>
-    Property dipPoint As Nullable(Of Double)
+    Property DipPoint As Double?
     <Required>
-    Property regDip As Boolean
+    Property RegDip As Boolean
     Property EngraveCode As Boolean
     Property Increments As Double
     Property IncrementList As New Dictionary(Of Double, Double)

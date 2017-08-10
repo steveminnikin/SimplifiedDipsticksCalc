@@ -23,8 +23,7 @@ Namespace Controllers
 
         <AcceptVerbs(HttpVerbs.Post)>
         Function Calculate(<Bind(Include:="Diameter,DishEndDepth,VertHeight,Increments,regDip, Dimensions,EngraveCode,Adjustments,IncrementList")> vertCyl As VertCyl) As ActionResult
-            ViewBag.Title = "Vertical Cylinrical Calculation
-"
+
             _vertCyl = vertCyl
 
             _vertCyl.InitialConversionValues = _tankService.GetinitialConversionValues(vertCyl)
@@ -38,6 +37,7 @@ Namespace Controllers
             ViewBag.fullVolume = Math.Round(_vertCyl.FullVol, 1)
             ViewBag.topHeight = IIf(_vertCyl.GetLength.Equals("Millimetres"), _vertCyl.VertHeight, Math.Round(_vertCyl.convertedVertDimensions.ht, 1))
             ViewBag.swc = Math.Round(_vertCyl.FullVol * 0.97, 0)
+            ViewBag.Title = "Vertical Cylindrical Calculation"
 
             If vertCyl.EngraveCode Then
                 _tankService.DownloadEngraveCode(vertCyl)

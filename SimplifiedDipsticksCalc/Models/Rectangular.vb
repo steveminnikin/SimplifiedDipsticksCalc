@@ -10,10 +10,10 @@ Public Class Rectangular
     <Required>
     Property Height As Double
     <Display(Name:="Hopper Volume")>
-    Property hopperVolume As Nullable(Of Double)
+    Property HopperVolume As Double?
     <Display(Name:="Dip Height Below Base")>
-    Property dipHeightBelowBase As Nullable(Of Double)
-    Property convertedRectDimensions As IConvertedRectangularDimensions
+    Property DipHeightBelowBase As Double?
+    Property ConvertedRectDimensions As IConvertedRectangularDimensions
 
     Public Sub New()
         Shape = "Rectangular"

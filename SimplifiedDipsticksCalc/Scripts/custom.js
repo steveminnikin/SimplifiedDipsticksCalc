@@ -91,7 +91,7 @@
     });
 
     var isEven = function (someNumber) {
-        return (someNumber % 2 === 0) ? true : false;
+        return someNumber % 2 === 0 ? true : false;
     };
 
     $('#btnNote').click(function () {

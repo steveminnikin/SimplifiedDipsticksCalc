@@ -4,7 +4,7 @@ Public Class EllipticalService
     Inherits TankService
 
     Private convertedEllipticalDimensions As IConvertedEllipticalDimensions
-    Private r1 As Double
+    Private r1, X, T9, R, TN, TIV As Double
 
     Function GetFullVol(elliptical As Elliptical) As Double
 
@@ -16,7 +16,7 @@ Public Class EllipticalService
     Public Function CalculateIncrements(elliptical As Elliptical) As Dictionary(Of Double, Double)
 
         Dim incrementList As New Dictionary(Of Double, Double)
-        Dim T9, TN, X, area, AN, AT, IV, R, H, FV As Single
+        Dim T9, area, AN, AT, IV, H, FV As Single
 
         T9 = 0.1
         R = convertedEllipticalDimensions.minDia / 2
@@ -42,18 +42,13 @@ Public Class EllipticalService
             'Workshop Format
             convertedEllipticalDimensions.inc /= r1
             For TIV = convertedEllipticalDimensions.inc To FV Step convertedEllipticalDimensions.inc
-X:              X = T9 - Sin(T9) - (2 * elliptical.InitialConversionValues.cor * TIV / (R ^ 2 * convertedEllipticalDimensions.len))
-                X = X / (1 - Cos(T9))
-                TN = T9 - X
-                If Abs(TN) > 150000.0! Then
-                    TIV += 0.001
-                    T9 = 0.1
-                    GoTo X
-                End If
-                If Abs(TN - T9) >= 0.00001 Then
+                xFactors(elliptical)
+
+                Do
                     T9 = TN
-                    GoTo X
-                End If
+                    xFactors(elliptical)
+                Loop Until Abs(TN - T9) >= 0.00001
+
                 H = R - R * Cos(TN / 2)
                 IV = TIV * r1
                 incrementList.Add(Round(IV), elliptical.FinalConversionRounding(H))
@@ -62,6 +57,11 @@ X:              X = T9 - Sin(T9) - (2 * elliptical.InitialConversionValues.cor *
         End If
         Return incrementList
     End Function
+    Sub XFactors(elliptical As Elliptical)
+        X = T9 - Sin(T9) - (2 * elliptical.InitialConversionValues.cor * TIV / (R ^ 2 * convertedEllipticalDimensions.len))
+        X = X / (1 - Cos(T9))
+        TN = T9 - X
+    End Sub
 
     Function GetConvertedEllipticalDimensions(Elliptical As Elliptical) As IConvertedEllipticalDimensions
 

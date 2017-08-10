@@ -22,8 +22,7 @@ Namespace Controllers
         End Function
 
         <AcceptVerbs(HttpVerbs.Post)>
-        Function Calculate(<Bind(Include:="Length,Width,Height,Tilt,dipPoint,Increments,regDip, Dimensions,EngraveCode, Adjustments")> rectangular As Rectangular) As ActionResult
-            rectangular.IncrementList.Clear()
+        Function Calculate(<Bind(Include:="Length,Width,Height,Tilt,dipPoint,Increments,regDip, Dimensions,EngraveCode, Adjustments, hopperVolume,dipHeightBelowBase ")> rectangular As Rectangular) As ActionResult
 
             rectangular.InitialConversionValues = _tankService.GetinitialConversionValues(rectangular)
             rectangular.convertedRectDimensions = _rectangularService.GetConvertedRectDimensions(rectangular)

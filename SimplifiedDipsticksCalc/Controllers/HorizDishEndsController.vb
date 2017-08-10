@@ -30,7 +30,6 @@ Namespace Controllers
 
         <AcceptVerbs(HttpVerbs.Post)>
         Function Calculate(<Bind(Include:="DishDiameter,OvLength,StLength,DishEndRad,KnuckleRad,Tilt,dipPoint,Increments,regDip, Dimensions,EngraveCode")> horizDishEnds As HorizDishEnds) As ActionResult
-            horizDishEnds.IncrementList.Clear()
 
             horizDishEnds.InitialConversionValues = _tankService.GetinitialConversionValues(horizDishEnds)
             horizDishEnds.convertedHorizDishEndsDimensions = _horizDishEndsService.GetConvertedHorizFlatEndsDimensions(horizDishEnds)

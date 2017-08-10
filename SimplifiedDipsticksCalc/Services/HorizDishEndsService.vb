@@ -47,9 +47,9 @@ Public Class HorizDishEndsService
         If horizDishEnds.Tilt <> 0 Then Call TiltConsts(horizDishEnds)
         BasicConstants()
         If horizDishEnds.regDip And horizDishEnds.Tilt = 0 Then
-            Call RegdipCalcCylDish(horizDishEnds)
+            RegdipCalcCylDish(horizDishEnds)
         Else
-Volcalcs:   Call VolCalcs(horizDishEnds)
+Volcalcs:   VolCalcs(horizDishEnds)
             If init = False Then GoTo 6740
             If swit = True Then GoTo 6760
             If v0 < vol Then GoTo 6640

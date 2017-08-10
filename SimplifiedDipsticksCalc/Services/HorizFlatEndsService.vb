@@ -39,22 +39,13 @@ Public Class HorizFlatEndsService
             'Workshop Format
             For TIV = convertedHorizFlatEndsDimensions.inc To horizFlatEnds.FullVol Step convertedHorizFlatEndsDimensions.inc
                 xFactors(horizFlatEnds)
-                If Abs(TN) > 150000.0! Then
-                    Do
-                        TIV += 0.001
-                        T9 = 0.1
-                        xFactors(horizFlatEnds)
-                    Loop While Abs(TN) > 150000.0!
-                End If
 
-                If Abs(TN - T9) >= 0.00001 Then
-                    Do
-                        T9 = TN
-                        xFactors(horizFlatEnds)
-                    Loop While Abs(TN - T9) >= 0.00001
-                End If
+                Do
+                    T9 = TN
+                    xFactors(horizFlatEnds)
+                Loop While Abs(TN - T9) >= 0.00001
+
                 H = R - R * Cos(TN / 2)
-
                 incrementList.Add(Round(TIV), horizFlatEnds.FinalConversionRounding(H))
             Next TIV
             incrementList.Add(Round(horizFlatEnds.FullVol), horizFlatEnds.FinalConversionRounding(convertedHorizFlatEndsDimensions.dia))
@@ -62,7 +53,7 @@ Public Class HorizFlatEndsService
         Return incrementList
     End Function
 
-    Sub xFactors(horizFlatEnds As HorizFlatEnds)
+    Sub XFactors(horizFlatEnds As HorizFlatEnds)
         X = T9 - Sin(T9) - (2 * horizFlatEnds.InitialConversionValues.cor * TIV / (R ^ 2 * convertedHorizFlatEndsDimensions.l))
         X = X / (1 - Cos(T9))
         TN = T9 - X
