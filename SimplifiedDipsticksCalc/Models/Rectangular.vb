@@ -9,6 +9,10 @@ Public Class Rectangular
     Property Width As Double
     <Required>
     Property Height As Double
+    <Display(Name:="Tilt")>
+    Property Slope As Double?
+    <Display(Name:="Dip Point")>
+    Property PointofDip As Double?
     <Display(Name:="Hopper Volume")>
     Property HopperVolume As Double?
     <Display(Name:="Dip Height Below Base")>

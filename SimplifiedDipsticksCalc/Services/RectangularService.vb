@@ -18,14 +18,14 @@ Public Class RectangularService
         area = CalculateAreaOfTank(rectangular)
         CalculateFullVolume(rectangular)
 
-        If rectangular.Tilt.Equals(Nothing) Then
-            If rectangular.regDip Then
-                For h = 0 To convertedRectDimensions.height Step rectangular.convertedRectDimensions.inc
+        If rectangular.Slope.Equals(Nothing) Then
+            If rectangular.RegDip Then
+                For h = 0 To convertedRectDimensions.height Step rectangular.ConvertedRectDimensions.inc
                     iv = area * h / rectangular.InitialConversionValues.cor
                     incrementList.Add(rectangular.FinalConversionRounding(h), Round(iv))
                 Next
             Else
-                For iv = rectangular.convertedRectDimensions.inc To CalculateFullVolume(rectangular) Step rectangular.convertedRectDimensions.inc
+                For iv = rectangular.ConvertedRectDimensions.inc To CalculateFullVolume(rectangular) Step rectangular.ConvertedRectDimensions.inc
                     h = iv * rectangular.InitialConversionValues.cor / area
                     vol = IIf((iv < 1), iv, Round(iv, 1)) + rectangular.Adjustments
                     incrementList.Add(vol, rectangular.FinalConversionRounding(h))
@@ -52,14 +52,15 @@ Public Class RectangularService
 
     Function TiltCalc(rectangular As Rectangular) As Dictionary(Of Double, Double)
         Dim incrementList As New Dictionary(Of Double, Double)
-        Dim dbdb, varl, vol1, mark, vtilt, volt, iv, h1, v2, vol, volr, sinc, tv, v3, d, d3, d2, ds, d4, d1, l, w, h, til, dip, i As Single
+        Dim dbdb, varl, vol1, mark, vtilt, volt, iv, h1, v2, vol, volr, sinc, tv, v3, d, d3, d2, ds, d4, d1, l, w, h, til, i As Single
+        Dim dip As Single = 0
 
         If rectangular.regDip = True Then
             l = rectangular.Length / 100
             w = rectangular.Width / 100
             h = rectangular.Height / 100
-            til = rectangular.Tilt / 100
-            dip = rectangular.dipPoint / 100
+            til = rectangular.Slope / 100
+            dip = rectangular.PointofDip / 100
             i = rectangular.Increments / 100
 
             mark = 0
@@ -69,7 +70,7 @@ Public Class RectangularService
             For count = dbdb To til Step i
                 varl = l / til * count         'varl = variable length as height increases
                 vol = varl * w * count / 2
-                incrementList.Add(Round(vol), mark)
+                incrementList.Add(mark, Round(vol))
                 mark = mark + (i * 100)
             Next
             'calc for part that passes through junction of til and regular section
@@ -78,13 +79,13 @@ Public Class RectangularService
             v2 = l * w * h1
             vol = vol1 + v2 + vol
             'iv = vol
-            incrementList.Add(Round(vol), mark)
+            incrementList.Add(mark, Round(vol))
             'calc for regular section
             For x = i To h - (dbdb + (mark / 100)) Step i
                 volr = l * w * x
                 volt = vol + volr
                 mark = mark + (i * 100)
-                incrementList.Add(Round(volt), mark)
+                incrementList.Add(mark, Round(volt))
             Next
             'h = (h - dbdb) * 100
             'vol = (l * w * h) - vtilt

@@ -22,14 +22,14 @@ Namespace Controllers
         End Function
 
         <AcceptVerbs(HttpVerbs.Post)>
-        Function Calculate(<Bind(Include:="Length,Width,Height,Tilt,dipPoint,Increments,regDip, Dimensions,EngraveCode, Adjustments, hopperVolume,dipHeightBelowBase ")> rectangular As Rectangular) As ActionResult
+        Function Calculate(<Bind(Include:="Length,Width,Height,Slope,PointofDip,Increments,regDip, Dimensions,EngraveCode, Adjustments, hopperVolume,dipHeightBelowBase ")> rectangular As Rectangular) As ActionResult
 
             rectangular.InitialConversionValues = _tankService.GetinitialConversionValues(rectangular)
-            rectangular.convertedRectDimensions = _rectangularService.GetConvertedRectDimensions(rectangular)
+            rectangular.ConvertedRectDimensions = _rectangularService.GetConvertedRectDimensions(rectangular)
             rectangular.IncrementList = _rectangularService.CalculateIncrements(rectangular)
 
             ViewBag.fullVolume = Math.Round(rectangular.FullVol, 1)
-            ViewBag.topHeight = IIf(rectangular.GetLength.Equals("Millimetres"), rectangular.Height, Math.Round(rectangular.convertedRectDimensions.height, 1))
+            ViewBag.topHeight = IIf(rectangular.GetLength.Equals("Millimetres"), rectangular.Height, Math.Round(rectangular.ConvertedRectDimensions.height, 1))
             ViewBag.swc = Math.Round(rectangular.FullVol * 0.97, 0)
 
             If rectangular.EngraveCode Then

@@ -35,13 +35,13 @@
             </dt>
             @If Not Model.Tilt.Equals(Nothing) Then
                 @<dt>
-                    @Html.DisplayNameFor(Function(model) model.Tilt)
+                    @Html.DisplayNameFor(Function(model) model.Slope)
                 </dt>
             End If
 
             @If Not Model.dipPoint.Equals(Nothing) Then
                 @<dt>
-                    @Html.DisplayNameFor(Function(model) model.dipPoint)
+                    @Html.DisplayNameFor(Function(model) model.PointofDip)
                 </dt>
             End If
         </dl>
@@ -53,13 +53,13 @@
             </dd>
             @If Not Model.Tilt.Equals(Nothing) Then
                 @<dd>
-                    @Html.DisplayFor(Function(model) model.Tilt)
+                    @Html.DisplayFor(Function(model) model.Slope)
                 </dd>
             End If
             @If Not Model.Tilt.Equals(Nothing) Then
 
                 @<dd>
-                    @Html.DisplayFor(Function(model) model.dipPoint)
+                    @Html.DisplayFor(Function(model) model.PointofDip)
                 </dd>
             End If
         </dl>
