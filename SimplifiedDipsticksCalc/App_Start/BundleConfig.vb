@@ -6,7 +6,8 @@ Public Module BundleConfig
     Public Sub RegisterBundles(ByVal bundles As BundleCollection)
         bundles.Add(New ScriptBundle("~/bundles/jquery").Include(
                    "~/Scripts/jquery-{version}.js"))
-
+        bundles.Add(New ScriptBundle("~/bundles/jqueryval").Include(
+                   "~/Scripts/jquery.validate.js"))
         ' Use the development version of Modernizr to develop with and learn from. Then, when you're
         ' ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
         bundles.Add(New ScriptBundle("~/bundles/modernizr").Include(

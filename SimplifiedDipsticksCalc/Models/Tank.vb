@@ -13,6 +13,7 @@ Public Class Tank
     <Required>
     Property RegDip As Boolean
     Property EngraveCode As Boolean
+    <Required(ErrorMessage:="Increments are required")>
     Property Increments As Double
     Property IncrementList As New Dictionary(Of Double, Double)
     Property Adjustments As Double

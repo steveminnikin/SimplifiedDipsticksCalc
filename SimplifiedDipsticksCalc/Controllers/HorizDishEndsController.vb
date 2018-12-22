@@ -30,18 +30,20 @@ Namespace Controllers
 
         <AcceptVerbs(HttpVerbs.Post)>
         Function Calculate(<Bind(Include:="DishDiameter,OvLength,StLength,DishEndRad,KnuckleRad,Tilt,dipPoint,Increments,regDip, Dimensions,EngraveCode")> horizDishEnds As HorizDishEnds) As ActionResult
+            If ModelState.IsValid Then
+                horizDishEnds.InitialConversionValues = _tankService.GetinitialConversionValues(horizDishEnds)
+                horizDishEnds.convertedHorizDishEndsDimensions = _horizDishEndsService.GetConvertedHorizFlatEndsDimensions(horizDishEnds)
+                horizDishEnds.IncrementList = _horizDishEndsService.CalculateIncrements(horizDishEnds)
 
-            horizDishEnds.InitialConversionValues = _tankService.GetinitialConversionValues(horizDishEnds)
-            horizDishEnds.convertedHorizDishEndsDimensions = _horizDishEndsService.GetConvertedHorizFlatEndsDimensions(horizDishEnds)
-            horizDishEnds.IncrementList = _horizDishEndsService.CalculateIncrements(horizDishEnds)
-
-            ViewBag.fullVolume = Math.Round(horizDishEnds.FullVol, 1)
-            ViewBag.topHeight = IIf(horizDishEnds.GetLength.Equals("Millimetres"), horizDishEnds.DishDiameter, Math.Round(horizDishEnds.convertedHorizDishEndsDimensions.dia, 1))
-            ViewBag.swc = Math.Round(horizDishEnds.FullVol * 0.97, 0)
-            If horizDishEnds.EngraveCode Then
-                _tankService.DownloadEngraveCode(horizDishEnds)
+                ViewBag.fullVolume = Math.Round(horizDishEnds.FullVol, 1)
+                ViewBag.topHeight = IIf(horizDishEnds.GetLength.Equals("Millimetres"), horizDishEnds.DishDiameter, Math.Round(horizDishEnds.convertedHorizDishEndsDimensions.dia, 1))
+                ViewBag.swc = Math.Round(horizDishEnds.FullVol * 0.97, 0)
+                If horizDishEnds.EngraveCode Then
+                    _tankService.DownloadEngraveCode(horizDishEnds)
+                End If
             End If
             Return View(horizDishEnds)
+
         End Function
 
     End Class

@@ -20,15 +20,16 @@
             </div>
         </div>
     </div>
-        @RenderBody()
-        <hr />
-        <footer class="hidden-print">
-            <div>
-                <p >&copy; @DateTime.Now.Year - Dipsticks Engineering Services Ltd - For Best Results Use Microsoft Edge Browser</p>
-            </div>
-        </footer>
+    @RenderBody()
+    <hr />
+    <footer class="hidden-print">
+        <div>
+            <p>&copy; @DateTime.Now.Year - Dipsticks Engineering Services Ltd - For Best Results Use Microsoft Edge Browser</p>
+        </div>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required:=False)
     <script type="text/javascript" src="~/Scripts/custom.js"></script>

@@ -1,23 +1,39 @@
 ﻿$(document).ready(function () {
     var count = 0;
+    var Data = [];
+    var retrievedData = [];
 
+    if (!sessionStorage.getItem("hasCodeRunBefore")) {
+        sessionStorage.setItem("hasCodeRunBefore", true);
+    }
+    else {
+        $('form input').each(function (i, e) {
+
+            retrievedData = JSON.parse(sessionStorage.getItem('Data'));
+            e.value = retrievedData[i].value;
+        });
+    }
 
     $('.btnSubmit').click(function () {
         var Client = {
-            Name: $('#clientName').val(),
-            Ref: $('#clientRef').val(),
-            Notes: $('#clientNotes').val(),
-            Date: $('#clientDate').val(),
+            Name: $('#Name').val(),
+            Ref: $('#Ref').val(),
+            Notes: $('#Notes').val(),
+            Date: $('#Date').val(),
             TankRef: $('#tankRef').val(),
             OurRef: $('#ourRef').val()
         };
+        $('form input').each(function (i, e) {
+            Data[i] = { id: e.id, value: e.value };
+        });
 
-        localStorage.setItem('Client', JSON.stringify(Client));
+        sessionStorage.setItem('Data', JSON.stringify(Data));
+        sessionStorage.setItem('Client', JSON.stringify(Client));
 
         //set the post action on the tab form
         if ($('#horizDishEnds').hasClass('active')) {
-          $('#submitForm').attr('action', '/HorizDishEnds/Calculate');
-         }
+            $('#submitForm').attr('action', '/HorizDishEnds/Calculate');
+        }
         if ($('#horizFlatEnds').hasClass('active')) {
             $('#submitForm').attr('action', '/HorizFlatEnds/Calculate');
         }
@@ -40,13 +56,11 @@
         if (!isEven(count)) {
             document.body.contentEditable = false;
         }
-
-        count = count + 1;
-
+        count += 1;
     });
 
     $('#btnClient').click(function () {
-        var retrievedClient = JSON.parse(localStorage.getItem('Client'));
+        var retrievedClient = JSON.parse(sessionStorage.getItem('Client'));
 
         var $clientTitle = $('#clientTitle');
         var $clientData = $('#clientData');
@@ -62,10 +76,10 @@
             $clientTitle.append($('<dt>Notes<dt>'));
             $clientData.append($('<span>' + retrievedClient.Notes + '<span><br />'));
         }
-   
-            $clientTitle.append($('<dt>Date<dt>'));
-            $clientData.append($('<span>' + retrievedClient.Date + '<span><br />'));
-       
+
+        $clientTitle.append($('<dt>Date<dt>'));
+        $clientData.append($('<span>' + retrievedClient.Date + '<span><br />'));
+
         if (retrievedClient.TankRef) {
             $clientTitle.append($('<dt>Tank Ref<dt>'));
             $clientData.append($('<span>' + retrievedClient.TankRef + '<span><br />'));
@@ -74,19 +88,9 @@
             $clientTitle.append($('<dt>Chart No<dt>'));
             $clientData.append($('<span>' + retrievedClient.OurRef + '<span><br />'));
         }
-
-        //$('#Client').text(retrievedClient.Name);
-        //$('#Ref').text(retrievedClient.Ref);
-        //$('#Notes').text(retrievedClient.Notes);
-        //$('#Date').text(retrievedClient.Date);
-        //$('#TankRef').text(retrievedClient.TankRef);
-        //$('#OurRef').text(retrievedClient.OurRef);
-
-        
         //Toggle display of the client info on the scree
         var $clientInfo = $('#clientInfo');
         $clientInfo.toggleClass('visible-print');
-
 
     });
 
