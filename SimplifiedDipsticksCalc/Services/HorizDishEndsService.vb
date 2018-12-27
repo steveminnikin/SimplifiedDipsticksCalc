@@ -209,6 +209,13 @@ Volcalcs:   VolCalcs(horizDishEnds)
 
     End Function
 
+    Function getTankDetails(horizDish As HorizDishEnds) As String
+        Dim tankDetails As String
+
+        tankDetails = "_(" + horizDish.DishDiameter.ToString() + "_" + horizDish.StLength.ToString() + "_" + horizDish.DishEndRad.ToString() + "_" + horizDish.KnuckleRad.ToString() + ")"
+        Return tankDetails
+    End Function
+
     Structure IConvertedHorizDishEndsDimensions
         Public ovl As Double
         Public ra As Nullable(Of Double)

@@ -25,20 +25,21 @@ Namespace Controllers
         ' POST: /HorizCylDishEnds/Calculate
 
         <AcceptVerbs(HttpVerbs.Post)>
-        Function Calculate(<Bind(Include:="FlatDiameter,FlatLength,Tilt,dipPoint,Increments,regDip, Dimensions, EngraveCode")> HorizFlatEnds As HorizFlatEnds) As ActionResult
+        Function Calculate(<Bind(Include:="FlatDiameter,FlatLength,Tilt,dipPoint,Increments,regDip, Dimensions, EngraveCode")> horizFlatEnds As HorizFlatEnds) As ActionResult
 
-            HorizFlatEnds.InitialConversionValues = _tankService.GetinitialConversionValues(HorizFlatEnds)
-            HorizFlatEnds.convertedFlatEndsDimensions = _horizFlatEndsService.GetConvertedHorizFlatEndsDimensions(HorizFlatEnds)
-            HorizFlatEnds.FullVol = _horizFlatEndsService.GetFullVol(HorizFlatEnds)
-            HorizFlatEnds.IncrementList = _horizFlatEndsService.CalculateIncrements(HorizFlatEnds)
+            horizFlatEnds.InitialConversionValues = _tankService.GetinitialConversionValues(horizFlatEnds)
+            horizFlatEnds.convertedFlatEndsDimensions = _horizFlatEndsService.GetConvertedHorizFlatEndsDimensions(horizFlatEnds)
+            horizFlatEnds.FullVol = _horizFlatEndsService.GetFullVol(horizFlatEnds)
+            horizFlatEnds.IncrementList = _horizFlatEndsService.CalculateIncrements(horizFlatEnds)
+            horizFlatEnds.Details = _horizFlatEndsService.getTankDetails(horizFlatEnds)
 
-            ViewBag.fullVolume = Math.Round(HorizFlatEnds.FullVol, 1)
-            ViewBag.topHeight = IIf(HorizFlatEnds.GetLength.Equals("Millimetres"), HorizFlatEnds.FlatDiameter, Math.Round(HorizFlatEnds.convertedFlatEndsDimensions.dia, 1))
-            ViewBag.swc = Math.Round(HorizFlatEnds.FullVol * 0.97, 0)
-            If HorizFlatEnds.EngraveCode Then
-                _tankService.DownloadEngraveCode(HorizFlatEnds)
+            ViewBag.fullVolume = Math.Round(horizFlatEnds.FullVol, 1)
+            ViewBag.topHeight = IIf(horizFlatEnds.GetLength.Equals("Millimetres"), horizFlatEnds.FlatDiameter, Math.Round(horizFlatEnds.convertedFlatEndsDimensions.dia, 1))
+            ViewBag.swc = Math.Round(horizFlatEnds.FullVol * 0.97, 0)
+            If horizFlatEnds.EngraveCode Then
+                _tankService.DownloadEngraveCode(horizFlatEnds)
             End If
-            Return View(HorizFlatEnds)
+            Return View(horizFlatEnds)
         End Function
 
     End Class

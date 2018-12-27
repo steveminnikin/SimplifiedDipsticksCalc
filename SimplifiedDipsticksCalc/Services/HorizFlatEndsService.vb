@@ -70,6 +70,14 @@ Public Class HorizFlatEndsService
         Return convertedHorizFlatEndsDimensions
     End Function
 
+    Function getTankDetails(horizFlat As HorizFlatEnds) As String
+        Dim tankDetails As String
+
+        tankDetails = "_(" + horizFlat.FlatDiameter.ToString() + "_" + horizFlat.FlatLength.ToString() + ")"
+        Return tankDetails
+    End Function
+
+
     Structure IConvertedFlatEndsDimensions
         Public l As Double
         Public dia As Double

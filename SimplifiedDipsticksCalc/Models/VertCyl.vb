@@ -13,7 +13,7 @@ Public Class VertCyl
 
     Public Sub New()
         Shape = "Vertical Cylindrical"
-    End Sub
 
+    End Sub
 
 End Class

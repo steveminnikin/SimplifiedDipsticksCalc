@@ -54,6 +54,13 @@ Public Class VertCylService
 
     End Function
 
+    Function getTankDetails(vert As VertCyl) As String
+        Dim tankDetails As String
+
+        tankDetails = "_(" + vert.Diameter.ToString() + "_" + vert.VertHeight.ToString() + ")"
+        Return tankDetails
+    End Function
+
     Structure IConvertedVertDimensions
         Public dia As Double
         Public ht As Double

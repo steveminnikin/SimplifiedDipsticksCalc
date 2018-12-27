@@ -55,7 +55,7 @@ Public Class RectangularService
         Dim dbdb, varl, vol1, mark, vtilt, volt, iv, h1, v2, vol, volr, sinc, tv, v3, d, d3, d2, ds, d4, d1, l, w, h, til, i As Single
         Dim dip As Single = 0
 
-        If rectangular.regDip = True Then
+        If rectangular.RegDip = True Then
             l = rectangular.Length / 100
             w = rectangular.Width / 100
             h = rectangular.Height / 100
@@ -136,10 +136,17 @@ Public Class RectangularService
         convertedRectDimensions.height = rectangular.Height * rectangular.InitialConversionValues.m
         convertedRectDimensions.inc = rectangular.Increments * rectangular.InitialConversionValues.incAdj
         convertedRectDimensions.tilt = IIf(rectangular.Tilt.Equals(Nothing), 0.0, rectangular.Tilt * rectangular.InitialConversionValues.m)
-        convertedRectDimensions.dip = IIf(rectangular.dipPoint.Equals(Nothing), 0.0, rectangular.dipPoint * rectangular.InitialConversionValues.m)
+        convertedRectDimensions.dip = IIf(rectangular.DipPoint.Equals(Nothing), 0.0, rectangular.DipPoint * rectangular.InitialConversionValues.m)
 
         Return convertedRectDimensions
 
+    End Function
+
+    Function getTankDetails(rect As Rectangular) As String
+        Dim tankDetails As String
+
+        tankDetails = "_(" + rect.Length.ToString() + "_" + rect.Width.ToString() + "_" + rect.Height.ToString() + ")"
+        Return tankDetails
     End Function
 
     Structure IConvertedRectangularDimensions
@@ -150,5 +157,7 @@ Public Class RectangularService
         Public tilt As Nullable(Of Double)
         Public dip As Nullable(Of Double)
     End Structure
+
+
 
 End Class

@@ -33,6 +33,7 @@ Namespace Controllers
                 _vertCylService.CalculateDishedEndVolume(vertCyl)
             End If
             _vertCyl.IncrementList = _vertCylService.CalculateIncrements(vertCyl)
+            _vertCyl.Details = _vertCylService.getTankDetails(vertCyl)
 
             ViewBag.fullVolume = Math.Round(_vertCyl.FullVol, 1)
             ViewBag.topHeight = IIf(_vertCyl.GetLength.Equals("Millimetres"), _vertCyl.VertHeight, Math.Round(_vertCyl.convertedVertDimensions.ht, 1))

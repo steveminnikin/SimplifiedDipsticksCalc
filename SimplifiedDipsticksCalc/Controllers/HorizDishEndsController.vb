@@ -34,6 +34,7 @@ Namespace Controllers
                 horizDishEnds.InitialConversionValues = _tankService.GetinitialConversionValues(horizDishEnds)
                 horizDishEnds.convertedHorizDishEndsDimensions = _horizDishEndsService.GetConvertedHorizFlatEndsDimensions(horizDishEnds)
                 horizDishEnds.IncrementList = _horizDishEndsService.CalculateIncrements(horizDishEnds)
+                horizDishEnds.Details = _horizDishEndsService.getTankDetails(horizDishEnds)
 
                 ViewBag.fullVolume = Math.Round(horizDishEnds.FullVol, 1)
                 ViewBag.topHeight = IIf(horizDishEnds.GetLength.Equals("Millimetres"), horizDishEnds.DishDiameter, Math.Round(horizDishEnds.convertedHorizDishEndsDimensions.dia, 1))

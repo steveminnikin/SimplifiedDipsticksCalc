@@ -27,6 +27,7 @@ Namespace Controllers
             rectangular.InitialConversionValues = _tankService.GetinitialConversionValues(rectangular)
             rectangular.ConvertedRectDimensions = _rectangularService.GetConvertedRectDimensions(rectangular)
             rectangular.IncrementList = _rectangularService.CalculateIncrements(rectangular)
+            rectangular.Details = _rectangularService.getTankDetails(rectangular)
 
             ViewBag.fullVolume = Math.Round(rectangular.FullVol, 1)
             ViewBag.topHeight = IIf(rectangular.GetLength.Equals("Millimetres"), rectangular.Height, Math.Round(rectangular.ConvertedRectDimensions.height, 1))

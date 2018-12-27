@@ -7,6 +7,7 @@ Public Class Tank
     Property FullVol As Double
     <Required>
     Property Dimensions As Dimension
+    Property Details As String
     Property Tilt As Double?
     <Display(Name:="Dip Point")>
     Property DipPoint As Double?
@@ -90,6 +91,8 @@ Public Class Tank
         <Display(Name:="Cubic Metres & MMs")>
         CubicMetresMMs
     End Enum
+
+
 End Class
 
 

@@ -11,7 +11,7 @@ Public Class TankService
                 Case Tank.Dimension.LitresMMs
                     .m = 0.1
                     .cor = 1000
-                    .incAdj = IIf(tank.regDip, 0.1, 1.0)
+                    .incAdj = IIf(tank.RegDip, 0.1, 1.0)
                 Case Tank.Dimension.GallonsInches
                     .m = 1 / 25.4
                     .cor = 277.42
@@ -19,15 +19,15 @@ Public Class TankService
                 Case Tank.Dimension.GallonsMMs
                     .m = 1 / 25.4
                     .cor = 277.42
-                    .incAdj = IIf(tank.regDip, 0.1, 1.0)
+                    .incAdj = IIf(tank.RegDip, 0.1, 1.0)
                 Case Tank.Dimension.CubicMetresMMs
                     .m = 0.01
                     .cor = 1000
-                    .incAdj = IIf(tank.regDip, 0.01, 1.0)
+                    .incAdj = IIf(tank.RegDip, 0.01, 1.0)
                 Case Tank.Dimension.USGallonsMMs
                     .m = 1 / 25.4
                     .cor = 277.42 * 0.8327
-                    .incAdj = IIf(tank.regDip, 0.1, 1.0)
+                    .incAdj = IIf(tank.RegDip, 0.1, 1.0)
                 Case Tank.Dimension.USGallonsInches
                     .m = 1 / 25.4
                     .cor = 277.42 * 0.8327
@@ -43,7 +43,7 @@ Public Class TankService
 
     Sub DownloadEngraveCode(tank As Tank)
 
-        Dim fileName As String = Me.ToString.Remove(0, 21) + "_FV " + Round(tank.FullVol).ToString + "_INCS " + tank.Increments.ToString
+        Dim fileName As String = "FV " + Round(tank.FullVol).ToString + "_INCS " + tank.Increments.ToString + tank.Details
         Dim text As String = ""
         For Each row As KeyValuePair(Of Double, Double) In tank.IncrementList
             text = text & CStr(row.Value) & "," & CStr(row.Key) & vbCr
