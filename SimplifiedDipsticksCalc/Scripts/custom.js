@@ -3,7 +3,16 @@
     var Data = [];
     var retrievedData = [];
 
+    $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+        sessionStorage.setItem('activeTab', $(e.target).attr('href'));
+    });
+    var activeTab = sessionStorage.getItem('activeTab');
+    if (activeTab) {
+        $('a[href="' + activeTab + '"]').tab('show');
+    }
+
     if (!sessionStorage.getItem("hasCodeRunBefore")) {
+
         sessionStorage.setItem("hasCodeRunBefore", true);
     }
     else {
@@ -23,6 +32,7 @@
             TankRef: $('#tankRef').val(),
             OurRef: $('#ourRef').val()
         };
+
         $('form input').each(function (i, e) {
             Data[i] = { id: e.id, value: e.value };
         });
@@ -46,6 +56,7 @@
         if ($('#ellipt').hasClass('active')) {
             $('#submitForm').attr('action', '/Elliptical/Calculate');
         }
+
     }); //btnSubmit.click  
 
     $('#btnEdit').click(function () {
