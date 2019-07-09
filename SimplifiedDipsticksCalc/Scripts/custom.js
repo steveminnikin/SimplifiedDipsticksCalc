@@ -99,7 +99,8 @@
             $clientTitle.append($('<dt>Chart No<dt>'));
             $clientData.append($('<span>' + retrievedClient.OurRef + '<span><br />'));
         }
-        //Toggle display of the client info on the scree
+
+        //Toggle display of the client info on the screen
         var $clientInfo = $('#clientInfo');
         $clientInfo.toggleClass('visible-print');
 
@@ -112,6 +113,12 @@
     $('#btnNote').click(function () {
         var myNote = prompt("Add a note to the chart", "Add 6mm to dip reading before using chart to allow for striker plate");
         $('#chartNote').text(myNote);
+    });
+
+    //enabled create button when increments added
+
+    $('#Increments').focusout(function () {
+        $(":button").removeAttr('disabled');
     });
 
 });
