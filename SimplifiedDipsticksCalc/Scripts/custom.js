@@ -117,8 +117,10 @@
 
     //enabled create button when increments added
 
-    $('#Increments').focusout(function () {
+    if (AreIncrementsAdded) {
         $(":button").removeAttr('disabled');
-    });
+
+    }
+    
 
 });

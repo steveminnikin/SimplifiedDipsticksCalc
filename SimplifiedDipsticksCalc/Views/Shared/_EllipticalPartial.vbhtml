@@ -20,7 +20,7 @@
             </div>
         </div>  
     <div class="col-lg-offset-3 col-lg-9">
-        <button id="btnSubmit" type="submit" class="btn btn-primary btnSubmit" disabled>Create</button>
+        <button id="btnSubmit" type="submit" class="btn btn-primary btnSubmit">Create</button>
     </div>
     </div>
 </div>
