@@ -32,7 +32,7 @@
     <div class="form-group">
         @Html.LabelFor(Function(model) model.Increments, New With {.class = "col-lg-3 control-label"})
         <div class="col-lg-6">
-            @Html.TextBoxFor(Function(model) model.Increments, New With {.class = "form-control", .placeholder = "Volume for Workshop. Length for Chart"})
+            @Html.TextBoxFor(Function(model) model.Increments, New With {.class = "form-control", .placeholder = "Volume for Workshop. Length for Chart", .id = "incrementsInput"})
             @Html.ValidationMessageFor(Function(model) model.Increments, "", New With {.class = "text-danger"})
         </div>
     </div>

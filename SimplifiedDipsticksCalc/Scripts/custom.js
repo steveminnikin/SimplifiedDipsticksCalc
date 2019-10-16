@@ -115,12 +115,8 @@
         $('#chartNote').text(myNote);
     });
 
-    //enabled create button when increments added
 
-    //if (AreIncrementsAdded) {
-    //    $(":button").removeAttr('disabled');
-
-    //}
-    
-
+  
 });
+
+  
