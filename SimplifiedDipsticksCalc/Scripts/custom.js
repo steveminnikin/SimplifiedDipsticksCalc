@@ -114,9 +114,6 @@
         var myNote = prompt("Add a note to the chart", "Add 6mm to dip reading before using chart to allow for striker plate");
         $('#chartNote').text(myNote);
     });
-
-
-  
 });
 
   
