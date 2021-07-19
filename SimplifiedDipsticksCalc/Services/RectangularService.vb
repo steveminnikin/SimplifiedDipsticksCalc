@@ -52,19 +52,18 @@ Public Class RectangularService
 
     Function TiltCalc(rectangular As Rectangular) As Dictionary(Of Double, Double)
         Dim incrementList As New Dictionary(Of Double, Double)
-        Dim dbdb, varl, vol1, mark, vtilt, volt, iv, h1, v2, vol, volr, sinc, tv, v3, d, d3, d2, ds, d4, d1, l, w, h, til, i As Single
-        Dim dip As Single = 0
+        Dim dbdb, varl, vol1, mark, vtilt, volt, iv, h1, v2, vol, volr, sinc, tv, v3, d, d3, d2, ds, dp, d4, d1, l, w, h, til, i As Single
 
         If rectangular.RegDip = True Then
             l = rectangular.Length / 100
             w = rectangular.Width / 100
             h = rectangular.Height / 100
             til = rectangular.Slope / 100
-            dip = rectangular.PointofDip / 100
+            dp = rectangular.PointofDip / 100
             i = rectangular.Increments / 100
 
             mark = 0
-            dbdb = til * dip / l           'distance below dipstick base to ground level
+            dbdb = til * dp / l           'distance below dipstick base to ground level
             vtilt = l * w * til / 2        'volume of tilted section
             'calc for tilted section
             For count = dbdb To til Step i
@@ -91,34 +90,42 @@ Public Class RectangularService
             'vol = (l * w * h) - vtilt
             'dipTable.Rows.Add(Round(vol), mark)
         Else
+            l = rectangular.Length / 100
+            w = rectangular.Width / 100
+            h = rectangular.Height / 100
+            til = rectangular.Slope
+            dp = rectangular.PointofDip / 100
+            i = rectangular.Increments
+            Dim hv, vt, s, vds As Single
             'used to add min vol to form
+
             sinc = i
-            l /= 100
-            w /= 100
-            h /= 100
-            dip /= 100
+            hv = l * w * h
             'volume of tilted section
             tv = l * w * til / 200
+            vt = hv - tv
+            s = tv / i
+            vds = dp * w * dp * til / (200 * l)
             'volume of lower top edge
-            For iv = i To tv Step i
-                d = ((Sqrt(i * til * 2 / (l * w))) * 10) - (til * dip / l)
-                incrementList.Add(Round(iv), Round(d, 1))
+            For i = i To tv Step i
+                d = (((Sqrt(i * til * 2 / (l * w))) * 10) - (til * dp / l))
+                incrementList.Add(Round(i), Round(d, 1))
             Next
             'calc of inc that passes through til
-            d1 = h * 100 * sinc / rectangular.FullVol 'distance per vol inc up tank
+            d1 = h * 100 * sinc / hv 'distance per vol inc up tank
+            v2 = tv - (i - sinc)
             v3 = i - tv
+            ds = til * dp / l 'distance from horiz to dipsticks base
             d3 = v3 / sinc * d1
-            ds = til * dip / l 'distance from horiz to dipsticks base
             d2 = til - (d + ds)
             d4 = d3 + d2 + d
-            'dipTable.Rows.Add(Round(iv), Round(d4, 1))
-            i = i + sinc
+            incrementList.Add(Round(i), Round(d4, 1))
             'increments up straight tank
-            For iv = i To rectangular.FullVol - ds Step sinc
-                d4 = d4 + d1
-                If d4 > (h * 100) - ds Then Exit For
-                incrementList.Add(Round(iv), Round(d4, 1))
-            Next
+            Do Until d4 > (h * 100) - ds
+                i += sinc
+                d4 += d1
+                incrementList.Add(Round(i), Round(d4, 1))
+            Loop
         End If
         'adjustment to convert output volume to US Gallons
         'If ObjUnits.OutputVolume = Units.Volume.USGallons Then
