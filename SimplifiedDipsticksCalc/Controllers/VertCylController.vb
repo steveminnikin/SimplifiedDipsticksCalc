@@ -24,10 +24,6 @@ Namespace Controllers
         <AcceptVerbs(HttpVerbs.Post)>
         Function Calculate(<Bind(Include:="Diameter,DishEndDepth,VertHeight,Increments,regDip, Dimensions,EngraveCode,Adjustments,IncrementList")> vertCyl As VertCyl) As ActionResult
 
-            If Not ModelState.IsValid Then
-                Return View("Index", vertCyl)
-            End If
-
             _vertCyl = vertCyl
 
             _vertCyl.InitialConversionValues = _tankService.GetinitialConversionValues(vertCyl)

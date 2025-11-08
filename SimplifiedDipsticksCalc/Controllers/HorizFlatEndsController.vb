@@ -27,10 +27,6 @@ Namespace Controllers
         <AcceptVerbs(HttpVerbs.Post)>
         Function Calculate(<Bind(Include:="FlatDiameter,FlatLength,Tilt,dipPoint,Increments,regDip, Dimensions, EngraveCode")> horizFlatEnds As HorizFlatEnds) As ActionResult
 
-            If Not ModelState.IsValid Then
-                Return View("Index", horizFlatEnds)
-            End If
-
             horizFlatEnds.InitialConversionValues = _tankService.GetinitialConversionValues(horizFlatEnds)
             horizFlatEnds.convertedFlatEndsDimensions = _horizFlatEndsService.GetConvertedHorizFlatEndsDimensions(horizFlatEnds)
             horizFlatEnds.FullVol = _horizFlatEndsService.GetFullVol(horizFlatEnds)

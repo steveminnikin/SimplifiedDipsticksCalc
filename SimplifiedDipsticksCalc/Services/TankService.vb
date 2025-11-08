@@ -54,7 +54,7 @@ Public Class TankService
         Dim fileName As String = "FV " + Round(tank.FullVol).ToString + "_INCS " + tank.Increments.ToString + tank.Details + ".csv"
         Dim text As String = ""
         ' Add CSV header row
-        text = "Height,Volume" & vbCrLf
+        'Text = "Height,Volume" & vbCrLf '
         ' Add data rows
         For Each row As KeyValuePair(Of Double, Double) In tank.IncrementList
             text = text & CStr(row.Value) & "," & CStr(row.Key) & vbCrLf

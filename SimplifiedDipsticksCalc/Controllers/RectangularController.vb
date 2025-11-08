@@ -24,10 +24,6 @@ Namespace Controllers
         <AcceptVerbs(HttpVerbs.Post)>
         Function Calculate(<Bind(Include:="Length,Width,Height,Slope,PointofDip,Increments,regDip, Dimensions,EngraveCode, Adjustments, hopperVolume,dipHeightBelowBase ")> rectangular As Rectangular) As ActionResult
 
-            If Not ModelState.IsValid Then
-                Return View("Index", rectangular)
-            End If
-
             rectangular.InitialConversionValues = _tankService.GetinitialConversionValues(rectangular)
             rectangular.ConvertedRectDimensions = _rectangularService.GetConvertedRectDimensions(rectangular)
             rectangular.IncrementList = _rectangularService.CalculateIncrements(rectangular)

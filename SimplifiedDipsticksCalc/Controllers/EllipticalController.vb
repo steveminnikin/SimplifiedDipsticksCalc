@@ -27,10 +27,6 @@ Namespace Controllers
         <AcceptVerbs(HttpVerbs.Post)>
         Function Calculate(<Bind(Include:="MajorDiameter,MinorDiameter,ElliptLength,Increments,regDip, Dimensions,EngraveCode")> elliptical As Elliptical) As ActionResult
 
-            If Not ModelState.IsValid Then
-                Return View("Index", elliptical)
-            End If
-
             elliptical.InitialConversionValues = _tankService.GetinitialConversionValues(elliptical)
             elliptical.convertedEllipticalDimensions = _ellipticalService.GetConvertedEllipticalDimensions(elliptical)
             elliptical.FullVol = _ellipticalService.GetFullVol(elliptical)
