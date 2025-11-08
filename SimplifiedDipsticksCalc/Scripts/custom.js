@@ -12,15 +12,23 @@
     }
 
     if (!sessionStorage.getItem("hasCodeRunBefore")) {
-
-        sessionStorage.setItem("hasCodeRunBefore", true);
+        try {
+            sessionStorage.setItem("hasCodeRunBefore", true);
+        } catch (e) {
+            console.error('SessionStorage not available:', e);
+        }
     }
     else {
-        $('form input').each(function (i, e) {
-
-            retrievedData = JSON.parse(sessionStorage.getItem('Data'));
-            e.value = retrievedData[i].value;
-        });
+        try {
+            $('form input').each(function (i, e) {
+                retrievedData = JSON.parse(sessionStorage.getItem('Data'));
+                if (retrievedData && retrievedData[i]) {
+                    e.value = retrievedData[i].value;
+                }
+            });
+        } catch (e) {
+            console.error('Failed to restore form data:', e);
+        }
     }
 
     $('.btnSubmit').click(function () {
@@ -37,8 +45,13 @@
             Data[i] = { id: e.id, value: e.value };
         });
 
-        sessionStorage.setItem('Data', JSON.stringify(Data));
-        sessionStorage.setItem('Client', JSON.stringify(Client));
+        try {
+            sessionStorage.setItem('Data', JSON.stringify(Data));
+            sessionStorage.setItem('Client', JSON.stringify(Client));
+        } catch (e) {
+            console.error('Failed to save form data:', e);
+            alert('Could not save form data. Your browser may have cookies/storage disabled.');
+        }
 
         //set the post action on the tab form
         if ($('#horizDishEnds').hasClass('active')) {
@@ -71,39 +84,45 @@
     });
 
     $('#btnClient').click(function () {
-        var retrievedClient = JSON.parse(sessionStorage.getItem('Client'));
+        try {
+            var retrievedClient = JSON.parse(sessionStorage.getItem('Client'));
+            if (!retrievedClient) {
+                return;
+            }
 
-        var $clientTitle = $('#clientTitle');
-        var $clientData = $('#clientData');
-        if (retrievedClient.Name) {
-            $clientTitle.append($('<dt>Client<dt>'));
-            $clientData.append($('<span>' + retrievedClient.Name + '<span><br />'));
-        }
-        if (retrievedClient.Ref) {
-            $clientTitle.append($('<dt>Ref<dt>'));
-            $clientData.append($('<span>' + retrievedClient.Ref + '<span><br />'));
-        }
-        if (retrievedClient.Notes) {
-            $clientTitle.append($('<dt>Notes<dt>'));
-            $clientData.append($('<span>' + retrievedClient.Notes + '<span><br />'));
-        }
+            var $clientTitle = $('#clientTitle');
+            var $clientData = $('#clientData');
+            if (retrievedClient.Name) {
+                $clientTitle.append($('<dt>').text('Client'));
+                $clientData.append($('<span>').text(retrievedClient.Name)).append('<br />');
+            }
+            if (retrievedClient.Ref) {
+                $clientTitle.append($('<dt>').text('Ref'));
+                $clientData.append($('<span>').text(retrievedClient.Ref)).append('<br />');
+            }
+            if (retrievedClient.Notes) {
+                $clientTitle.append($('<dt>').text('Notes'));
+                $clientData.append($('<span>').text(retrievedClient.Notes)).append('<br />');
+            }
 
-        $clientTitle.append($('<dt>Date<dt>'));
-        $clientData.append($('<span>' + retrievedClient.Date + '<span><br />'));
+            $clientTitle.append($('<dt>').text('Date'));
+            $clientData.append($('<span>').text(retrievedClient.Date)).append('<br />');
 
-        if (retrievedClient.TankRef) {
-            $clientTitle.append($('<dt>Tank Ref<dt>'));
-            $clientData.append($('<span>' + retrievedClient.TankRef + '<span><br />'));
+            if (retrievedClient.TankRef) {
+                $clientTitle.append($('<dt>').text('Tank Ref'));
+                $clientData.append($('<span>').text(retrievedClient.TankRef)).append('<br />');
+            }
+            if (retrievedClient.OurRef) {
+                $clientTitle.append($('<dt>').text('Chart No'));
+                $clientData.append($('<span>').text(retrievedClient.OurRef)).append('<br />');
+            }
+
+            //Toggle display of the client info on the screen
+            var $clientInfo = $('#clientInfo');
+            $clientInfo.toggleClass('visible-print');
+        } catch (e) {
+            console.error('Failed to display client information:', e);
         }
-        if (retrievedClient.OurRef) {
-            $clientTitle.append($('<dt>Chart No<dt>'));
-            $clientData.append($('<span>' + retrievedClient.OurRef + '<span><br />'));
-        }
-
-        //Toggle display of the client info on the screen
-        var $clientInfo = $('#clientInfo');
-        $clientInfo.toggleClass('visible-print');
-
     });
 
     var isEven = function (someNumber) {

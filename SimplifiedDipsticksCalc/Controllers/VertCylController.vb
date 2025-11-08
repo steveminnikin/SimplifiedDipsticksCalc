@@ -24,19 +24,23 @@ Namespace Controllers
         <AcceptVerbs(HttpVerbs.Post)>
         Function Calculate(<Bind(Include:="Diameter,DishEndDepth,VertHeight,Increments,regDip, Dimensions,EngraveCode,Adjustments,IncrementList")> vertCyl As VertCyl) As ActionResult
 
+            If Not ModelState.IsValid Then
+                Return View("Index", vertCyl)
+            End If
+
             _vertCyl = vertCyl
 
             _vertCyl.InitialConversionValues = _tankService.GetinitialConversionValues(vertCyl)
             _vertCyl.convertedVertDimensions = _vertCylService.GetConvertedVertDimensions(vertCyl)
 
-            If Not _vertCyl.DishEndDepth.Equals(Nothing) Then
+            If _vertCyl.DishEndDepth.HasValue Then
                 _vertCylService.CalculateDishedEndVolume(vertCyl)
             End If
             _vertCyl.IncrementList = _vertCylService.CalculateIncrements(vertCyl)
             _vertCyl.Details = _vertCylService.getTankDetails(vertCyl)
 
             ViewBag.fullVolume = Math.Round(_vertCyl.FullVol, 1)
-            ViewBag.topHeight = IIf(_vertCyl.GetLength.Equals("Millimetres"), _vertCyl.VertHeight, Math.Round(_vertCyl.convertedVertDimensions.ht, 1))
+            ViewBag.topHeight = If(_vertCyl.GetLength.Equals("Millimetres"), _vertCyl.VertHeight, Math.Round(_vertCyl.convertedVertDimensions.ht, 1))
             ViewBag.swc = Math.Round(_vertCyl.FullVol * 0.97, 0)
             ViewBag.Title = "Vertical Cylindrical Calculation"
 

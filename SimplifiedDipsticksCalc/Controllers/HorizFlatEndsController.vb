@@ -27,6 +27,10 @@ Namespace Controllers
         <AcceptVerbs(HttpVerbs.Post)>
         Function Calculate(<Bind(Include:="FlatDiameter,FlatLength,Tilt,dipPoint,Increments,regDip, Dimensions, EngraveCode")> horizFlatEnds As HorizFlatEnds) As ActionResult
 
+            If Not ModelState.IsValid Then
+                Return View("Index", horizFlatEnds)
+            End If
+
             horizFlatEnds.InitialConversionValues = _tankService.GetinitialConversionValues(horizFlatEnds)
             horizFlatEnds.convertedFlatEndsDimensions = _horizFlatEndsService.GetConvertedHorizFlatEndsDimensions(horizFlatEnds)
             horizFlatEnds.FullVol = _horizFlatEndsService.GetFullVol(horizFlatEnds)
@@ -34,7 +38,7 @@ Namespace Controllers
             horizFlatEnds.Details = _horizFlatEndsService.getTankDetails(horizFlatEnds)
 
             ViewBag.fullVolume = Math.Round(horizFlatEnds.FullVol, 1)
-            ViewBag.topHeight = IIf(horizFlatEnds.GetLength.Equals("Millimetres"), horizFlatEnds.FlatDiameter, Math.Round(horizFlatEnds.convertedFlatEndsDimensions.dia, 1))
+            ViewBag.topHeight = If(horizFlatEnds.GetLength.Equals("Millimetres"), horizFlatEnds.FlatDiameter, Math.Round(horizFlatEnds.convertedFlatEndsDimensions.dia, 1))
             ViewBag.swc = Math.Round(horizFlatEnds.FullVol * 0.97, 0)
             If horizFlatEnds.EngraveCode Then
                 _tankService.DownloadEngraveCode(horizFlatEnds)

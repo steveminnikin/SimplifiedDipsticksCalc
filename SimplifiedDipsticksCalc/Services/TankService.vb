@@ -1,6 +1,14 @@
 ﻿Imports System.Math
 Public Class TankService
 
+    ' Unit conversion constants
+    Private Const MM_TO_CM As Double = 0.1
+    Private Const CM_TO_M As Double = 0.01
+    Private Const CM_TO_INCH As Double = 1 / 25.4
+    Private Const CUBIC_INCHES_PER_IMPERIAL_GALLON As Double = 277.42
+    Private Const US_TO_IMPERIAL_GALLON_RATIO As Double = 0.8327
+    Private Const LITRES_PER_CUBIC_METER As Double = 1000
+
     Function GetinitialConversionValues(tank As Tank) As IInitialConversionValues
 
         Dim initialConversionValues As IInitialConversionValues
@@ -9,28 +17,28 @@ Public Class TankService
             Select Case tank.Dimensions
 
                 Case Tank.Dimension.LitresMMs
-                    .m = 0.1
-                    .cor = 1000
-                    .incAdj = IIf(tank.RegDip, 0.1, 1.0)
+                    .m = MM_TO_CM
+                    .cor = LITRES_PER_CUBIC_METER
+                    .incAdj = If(tank.RegDip, MM_TO_CM, 1.0)
                 Case Tank.Dimension.GallonsInches
-                    .m = 1 / 25.4
-                    .cor = 277.42
+                    .m = CM_TO_INCH
+                    .cor = CUBIC_INCHES_PER_IMPERIAL_GALLON
                     .incAdj = 1.0
                 Case Tank.Dimension.GallonsMMs
-                    .m = 1 / 25.4
-                    .cor = 277.42
-                    .incAdj = IIf(tank.RegDip, 0.1, 1.0)
+                    .m = CM_TO_INCH
+                    .cor = CUBIC_INCHES_PER_IMPERIAL_GALLON
+                    .incAdj = If(tank.RegDip, MM_TO_CM, 1.0)
                 Case Tank.Dimension.CubicMetresMMs
-                    .m = 0.01
-                    .cor = 1000
-                    .incAdj = IIf(tank.RegDip, 0.01, 1.0)
+                    .m = CM_TO_M
+                    .cor = LITRES_PER_CUBIC_METER
+                    .incAdj = If(tank.RegDip, CM_TO_M, 1.0)
                 Case Tank.Dimension.USGallonsMMs
-                    .m = 1 / 25.4
-                    .cor = 277.42 * 0.8327
-                    .incAdj = IIf(tank.RegDip, 0.1, 1.0)
+                    .m = CM_TO_INCH
+                    .cor = CUBIC_INCHES_PER_IMPERIAL_GALLON * US_TO_IMPERIAL_GALLON_RATIO
+                    .incAdj = If(tank.RegDip, MM_TO_CM, 1.0)
                 Case Tank.Dimension.USGallonsInches
-                    .m = 1 / 25.4
-                    .cor = 277.42 * 0.8327
+                    .m = CM_TO_INCH
+                    .cor = CUBIC_INCHES_PER_IMPERIAL_GALLON * US_TO_IMPERIAL_GALLON_RATIO
                     .incAdj = 1.0
                 Case Else
 

@@ -199,11 +199,11 @@ Volcalcs:   VolCalcs(horizDishEnds)
         convertedHorizDishEndsDimensions.dia = horizDishEnds.DishDiameter * horizDishEnds.InitialConversionValues.m
         convertedHorizDishEndsDimensions.l = horizDishEnds.stLength * horizDishEnds.InitialConversionValues.m
         convertedHorizDishEndsDimensions.inc = horizDishEnds.Increments * horizDishEnds.InitialConversionValues.incAdj
-        convertedHorizDishEndsDimensions.til = IIf(horizDishEnds.Tilt.Equals(Nothing), 0.0, horizDishEnds.Tilt * horizDishEnds.InitialConversionValues.m)
-        convertedHorizDishEndsDimensions.ovl = IIf(horizDishEnds.OvLength.Equals(Nothing), 0.0, horizDishEnds.OvLength * horizDishEnds.InitialConversionValues.m)
-        convertedHorizDishEndsDimensions.kr = IIf(horizDishEnds.KnuckleRad.Equals(Nothing), 0.0, horizDishEnds.KnuckleRad * horizDishEnds.InitialConversionValues.m)
-        convertedHorizDishEndsDimensions.ra = IIf(horizDishEnds.DishEndRad.Equals(Nothing), 0.0, horizDishEnds.DishEndRad * horizDishEnds.InitialConversionValues.m)
-        convertedHorizDishEndsDimensions.dip = IIf(horizDishEnds.dipPoint.Equals(Nothing), 0.0, horizDishEnds.dipPoint * horizDishEnds.InitialConversionValues.m)
+        convertedHorizDishEndsDimensions.til = If(horizDishEnds.Tilt.HasValue, horizDishEnds.Tilt.Value * horizDishEnds.InitialConversionValues.m, 0.0)
+        convertedHorizDishEndsDimensions.ovl = If(horizDishEnds.OvLength.HasValue, horizDishEnds.OvLength.Value * horizDishEnds.InitialConversionValues.m, 0.0)
+        convertedHorizDishEndsDimensions.kr = If(horizDishEnds.KnuckleRad.HasValue, horizDishEnds.KnuckleRad.Value * horizDishEnds.InitialConversionValues.m, 0.0)
+        convertedHorizDishEndsDimensions.ra = If(horizDishEnds.DishEndRad.HasValue, horizDishEnds.DishEndRad.Value * horizDishEnds.InitialConversionValues.m, 0.0)
+        convertedHorizDishEndsDimensions.dip = If(horizDishEnds.dipPoint.HasValue, horizDishEnds.dipPoint.Value * horizDishEnds.InitialConversionValues.m, 0.0)
 
         Return convertedHorizDishEndsDimensions
 

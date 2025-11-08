@@ -24,13 +24,13 @@ Public Class Tank
     Function FinalConversionRounding(h As Double) As Double
         Select Case Dimensions
             Case Dimension.LitresMMs
-                Return IIf(regDip, Round(h * 10), Round(h * 10, 1))
+                Return If(regDip, Round(h * 10), Round(h * 10, 1))
             Case Dimension.GallonsInches, Dimension.USGallonsInches
                 Return Round(h, 2)
             Case Dimension.GallonsMMs, Dimension.USGallonsMMs
-                Return IIf(regDip, Round(h * 25.4), Round(h * 25.4, 1))
+                Return If(regDip, Round(h * 25.4), Round(h * 25.4, 1))
             Case Dimension.CubicMetresMMs
-                Return IIf(regDip, Round(h * 10), Round(h * 100, 1))
+                Return If(regDip, Round(h * 10), Round(h * 100, 1))
             Case Else
                 Return h
         End Select

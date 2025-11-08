@@ -64,8 +64,8 @@ Public Class HorizFlatEndsService
         convertedHorizFlatEndsDimensions.dia = horizFlatEnds.FlatDiameter * horizFlatEnds.InitialConversionValues.m
         convertedHorizFlatEndsDimensions.l = horizFlatEnds.FlatLength * horizFlatEnds.InitialConversionValues.m
         convertedHorizFlatEndsDimensions.inc = horizFlatEnds.Increments * horizFlatEnds.InitialConversionValues.incAdj
-        convertedHorizFlatEndsDimensions.til = IIf(horizFlatEnds.Tilt.Equals(Nothing), 0.0, horizFlatEnds.Tilt * horizFlatEnds.InitialConversionValues.m)
-        convertedHorizFlatEndsDimensions.dip = IIf(horizFlatEnds.dipPoint.Equals(Nothing), 0.0, horizFlatEnds.dipPoint * horizFlatEnds.InitialConversionValues.m)
+        convertedHorizFlatEndsDimensions.til = If(horizFlatEnds.Tilt.HasValue, horizFlatEnds.Tilt.Value * horizFlatEnds.InitialConversionValues.m, 0.0)
+        convertedHorizFlatEndsDimensions.dip = If(horizFlatEnds.dipPoint.HasValue, horizFlatEnds.dipPoint.Value * horizFlatEnds.InitialConversionValues.m, 0.0)
 
         Return convertedHorizFlatEndsDimensions
     End Function

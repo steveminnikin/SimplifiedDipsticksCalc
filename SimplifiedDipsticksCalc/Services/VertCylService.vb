@@ -48,7 +48,7 @@ Public Class VertCylService
         convertedVertDimensions.dia = vertCyl.Diameter * vertCyl.InitialConversionValues.m
         convertedVertDimensions.ht = vertCyl.VertHeight * vertCyl.InitialConversionValues.m
         convertedVertDimensions.inc = vertCyl.Increments * vertCyl.InitialConversionValues.incAdj
-        convertedVertDimensions.dish = IIf(vertCyl.DishEndDepth.Equals(Nothing), 0.0, vertCyl.DishEndDepth * vertCyl.InitialConversionValues.m)
+        convertedVertDimensions.dish = If(vertCyl.DishEndDepth.HasValue, vertCyl.DishEndDepth.Value * vertCyl.InitialConversionValues.m, 0.0)
 
         Return convertedVertDimensions
 

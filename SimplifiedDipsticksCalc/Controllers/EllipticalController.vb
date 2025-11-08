@@ -27,13 +27,17 @@ Namespace Controllers
         <AcceptVerbs(HttpVerbs.Post)>
         Function Calculate(<Bind(Include:="MajorDiameter,MinorDiameter,ElliptLength,Increments,regDip, Dimensions,EngraveCode")> elliptical As Elliptical) As ActionResult
 
+            If Not ModelState.IsValid Then
+                Return View("Index", elliptical)
+            End If
+
             elliptical.InitialConversionValues = _tankService.GetinitialConversionValues(elliptical)
             elliptical.convertedEllipticalDimensions = _ellipticalService.GetConvertedEllipticalDimensions(elliptical)
             elliptical.FullVol = _ellipticalService.GetFullVol(elliptical)
             elliptical.IncrementList = _ellipticalService.CalculateIncrements(elliptical)
 
             ViewBag.fullVolume = Math.Round(elliptical.FullVol, 1)
-            ViewBag.topHeight = IIf(elliptical.GetLength.Equals("Millimetres"), elliptical.MinorDiameter, Math.Round(elliptical.convertedEllipticalDimensions.minDia, 1))
+            ViewBag.topHeight = If(elliptical.GetLength.Equals("Millimetres"), elliptical.MinorDiameter, Math.Round(elliptical.convertedEllipticalDimensions.minDia, 1))
             ViewBag.swc = Math.Round(elliptical.FullVol * 0.97, 0)
             If elliptical.EngraveCode Then
                 _tankService.DownloadEngraveCode(elliptical)

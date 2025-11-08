@@ -18,7 +18,7 @@ Public Class RectangularService
         area = CalculateAreaOfTank(rectangular)
         CalculateFullVolume(rectangular)
 
-        If rectangular.Slope.Equals(Nothing) Then
+        If Not rectangular.Slope.HasValue Then
             If rectangular.RegDip Then
                 For h = 0 To convertedRectDimensions.height Step rectangular.ConvertedRectDimensions.inc
                     iv = area * h / rectangular.InitialConversionValues.cor
@@ -27,7 +27,7 @@ Public Class RectangularService
             Else
                 For iv = rectangular.ConvertedRectDimensions.inc To CalculateFullVolume(rectangular) Step rectangular.ConvertedRectDimensions.inc
                     h = iv * rectangular.InitialConversionValues.cor / area
-                    vol = IIf((iv < 1), iv, Round(iv, 1)) + rectangular.Adjustments
+                    vol = If((iv < 1), iv, Round(iv, 1)) + rectangular.Adjustments
                     incrementList.Add(vol, rectangular.FinalConversionRounding(h))
                 Next
                 ''Add final fullvolume figures to increment list
@@ -142,8 +142,8 @@ Public Class RectangularService
         convertedRectDimensions.width = rectangular.Width * rectangular.InitialConversionValues.m
         convertedRectDimensions.height = rectangular.Height * rectangular.InitialConversionValues.m
         convertedRectDimensions.inc = rectangular.Increments * rectangular.InitialConversionValues.incAdj
-        convertedRectDimensions.tilt = IIf(rectangular.Tilt.Equals(Nothing), 0.0, rectangular.Tilt * rectangular.InitialConversionValues.m)
-        convertedRectDimensions.dip = IIf(rectangular.DipPoint.Equals(Nothing), 0.0, rectangular.DipPoint * rectangular.InitialConversionValues.m)
+        convertedRectDimensions.tilt = If(rectangular.Tilt.HasValue, rectangular.Tilt.Value * rectangular.InitialConversionValues.m, 0.0)
+        convertedRectDimensions.dip = If(rectangular.DipPoint.HasValue, rectangular.DipPoint.Value * rectangular.InitialConversionValues.m, 0.0)
 
         Return convertedRectDimensions
 
