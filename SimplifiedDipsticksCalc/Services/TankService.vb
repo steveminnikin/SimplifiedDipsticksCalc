@@ -51,17 +51,20 @@ Public Class TankService
 
     Sub DownloadEngraveCode(tank As Tank)
 
-        Dim fileName As String = "FV " + Round(tank.FullVol).ToString + "_INCS " + tank.Increments.ToString + tank.Details
+        Dim fileName As String = "FV " + Round(tank.FullVol).ToString + "_INCS " + tank.Increments.ToString + tank.Details + ".csv"
         Dim text As String = ""
+        ' Add CSV header row
+        text = "Height,Volume" & vbCrLf
+        ' Add data rows
         For Each row As KeyValuePair(Of Double, Double) In tank.IncrementList
-            text = text & CStr(row.Value) & "," & CStr(row.Key) & vbCr
+            text = text & CStr(row.Value) & "," & CStr(row.Key) & vbCrLf
         Next
-        Dim attachment As String = String.Format("attachment; filename=" + fileName)
+        Dim attachment As String = String.Format("attachment; filename=""{0}""", fileName)
         With HttpContext.Current.Response
             .ClearHeaders()
             .ClearContent()
             .AddHeader("content-disposition", attachment)
-            .ContentType = "text/plain"
+            .ContentType = "text/csv"
             .Write(text)
             .End()
         End With
