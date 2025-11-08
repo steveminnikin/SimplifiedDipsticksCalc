@@ -39,10 +39,10 @@ Namespace Controllers
             _vertCyl.IncrementList = _vertCylService.CalculateIncrements(vertCyl)
             _vertCyl.Details = _vertCylService.getTankDetails(vertCyl)
 
-            ViewBag.fullVolume = Math.Round(_vertCyl.FullVol, 1)
-            ViewBag.topHeight = If(_vertCyl.GetLength.Equals("Millimetres"), _vertCyl.VertHeight, Math.Round(_vertCyl.convertedVertDimensions.ht, 1))
-            ViewBag.swc = Math.Round(_vertCyl.FullVol * 0.97, 0)
-            ViewBag.Title = "Vertical Cylindrical Calculation"
+            ViewData("fullVolume") = Math.Round(_vertCyl.FullVol, 1)
+            ViewData("topHeight") = If(_vertCyl.GetLength.Equals("Millimetres"), _vertCyl.VertHeight, Math.Round(_vertCyl.convertedVertDimensions.ht, 1))
+            ViewData("swc") = Math.Round(_vertCyl.FullVol * 0.97, 0)
+            ViewData("Title") = "Vertical Cylindrical Calculation"
 
             If vertCyl.EngraveCode Then
                 _tankService.DownloadEngraveCode(vertCyl)

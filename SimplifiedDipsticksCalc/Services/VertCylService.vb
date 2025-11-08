@@ -65,7 +65,7 @@ Public Class VertCylService
         Public dia As Double
         Public ht As Double
         Public inc As Double
-        Public dish As Nullable(Of Double)
+        Public dish As Double
     End Structure
 End Class
 

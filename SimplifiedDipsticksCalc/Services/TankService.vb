@@ -67,13 +67,13 @@ Public Class TankService
         End With
     End Sub
 
-    Protected Friend Function FnA(x As Single) As Single
+    Protected Friend Function FnA(x As Double) As Double
         'defines function for use in vol calcs
-        Return CSng(PI / 2 - Atan(x / Sqrt(-x * x + 1)))
+        Return PI / 2 - Atan(x / Sqrt(-x * x + 1))
     End Function
-    Protected Friend Function FnB(x As Single) As Single
+    Protected Friend Function FnB(x As Double) As Double
         'defines function for use in vol calcs
-        Return CSng(Atan(x / Sqrt(-x * x + 1)))
+        Return Atan(x / Sqrt(-x * x + 1))
     End Function
 
     Structure IInitialConversionValues

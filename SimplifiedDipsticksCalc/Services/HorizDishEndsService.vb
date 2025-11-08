@@ -102,11 +102,11 @@ Volcalcs:   VolCalcs(horizDishEnds)
         Return incrementList
     End Function
     Private Sub RegdipCalcCylDish(horizDishEnds As HorizDishEnds)
-        Dim hi, iv, blankh, h1, h As Double
-        Dim jump, n As Integer
+        Dim hi, iv, h1, h As Double
+        Dim jump, n, blankh As Integer
         If horizDishEnds.Tilt <> 0 Then
             hi = convertedHorizDishEndsDimensions.dia * (1 - Cos(a)) / 2
-            blankh = Int(hi / convertedHorizDishEndsDimensions.inc)
+            blankh = CInt(Int(hi / convertedHorizDishEndsDimensions.inc))
             h = -convertedHorizDishEndsDimensions.inc
             For n = 0 To blankh - 1
                 iv = 0
@@ -218,13 +218,13 @@ Volcalcs:   VolCalcs(horizDishEnds)
 
     Structure IConvertedHorizDishEndsDimensions
         Public ovl As Double
-        Public ra As Nullable(Of Double)
-        Public kr As Nullable(Of Double)
+        Public ra As Double
+        Public kr As Double
         Public dia As Double
         Public inc As Double
-        Public til As Nullable(Of Double)
-        Public dip As Nullable(Of Double)
-        Public l As Nullable(Of Double)
+        Public til As Double
+        Public dip As Double
+        Public l As Double
     End Structure
 
 End Class

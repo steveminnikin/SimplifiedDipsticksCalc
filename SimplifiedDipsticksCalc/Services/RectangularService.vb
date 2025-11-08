@@ -52,14 +52,14 @@ Public Class RectangularService
 
     Function TiltCalc(rectangular As Rectangular) As Dictionary(Of Double, Double)
         Dim incrementList As New Dictionary(Of Double, Double)
-        Dim dbdb, varl, vol1, mark, vtilt, volt, iv, h1, v2, vol, volr, sinc, tv, v3, d, d3, d2, ds, dp, d4, d1, l, w, h, til, i As Single
+        Dim dbdb, varl, vol1, mark, vtilt, volt, iv, h1, v2, vol, volr, sinc, tv, v3, d, d3, d2, ds, dp, d4, d1, l, w, h, til, i As Double
 
         If rectangular.RegDip = True Then
             l = rectangular.Length / 100
             w = rectangular.Width / 100
             h = rectangular.Height / 100
-            til = rectangular.Slope / 100
-            dp = rectangular.PointofDip / 100
+            til = rectangular.Slope.Value / 100
+            dp = rectangular.PointofDip.Value / 100
             i = rectangular.Increments / 100
 
             mark = 0
@@ -93,10 +93,10 @@ Public Class RectangularService
             l = rectangular.Length / 100
             w = rectangular.Width / 100
             h = rectangular.Height / 100
-            til = rectangular.Slope
-            dp = rectangular.PointofDip / 100
+            til = rectangular.Slope.Value
+            dp = rectangular.PointofDip.Value / 100
             i = rectangular.Increments
-            Dim hv, vt, s, vds As Single
+            Dim hv, vt, s, vds As Double
             'used to add min vol to form
 
             sinc = i

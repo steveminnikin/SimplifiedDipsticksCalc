@@ -14,7 +14,7 @@ Public Class HorizFlatEndsService
     Public Function CalculateIncrements(horizFlatEnds As HorizFlatEnds) As Dictionary(Of Double, Double)
 
         Dim incrementList As New Dictionary(Of Double, Double)
-        Dim area, AN, AT, IV, H As Single
+        Dim area, AN, AT, IV, H As Double
 
         T9 = 0.1
         R = convertedHorizFlatEndsDimensions.dia / 2
@@ -82,8 +82,8 @@ Public Class HorizFlatEndsService
         Public l As Double
         Public dia As Double
         Public inc As Double
-        Public til As Nullable(Of Double)
-        Public dip As Nullable(Of Double)
+        Public til As Double
+        Public dip As Double
     End Structure
 
 End Class

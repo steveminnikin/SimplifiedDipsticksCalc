@@ -33,9 +33,9 @@ Namespace Controllers
             rectangular.IncrementList = _rectangularService.CalculateIncrements(rectangular)
             rectangular.Details = _rectangularService.getTankDetails(rectangular)
 
-            ViewBag.fullVolume = Math.Round(rectangular.FullVol, 1)
-            ViewBag.topHeight = If(rectangular.GetLength.Equals("Millimetres"), rectangular.Height, Math.Round(rectangular.ConvertedRectDimensions.height, 1))
-            ViewBag.swc = Math.Round(rectangular.FullVol * 0.97, 0)
+            ViewData("fullVolume") = Math.Round(rectangular.FullVol, 1)
+            ViewData("topHeight") = If(rectangular.GetLength.Equals("Millimetres"), rectangular.Height, Math.Round(rectangular.ConvertedRectDimensions.height, 1))
+            ViewData("swc") = Math.Round(rectangular.FullVol * 0.97, 0)
 
             If rectangular.EngraveCode Then
                 _tankService.DownloadEngraveCode(rectangular)

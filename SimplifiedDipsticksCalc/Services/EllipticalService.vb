@@ -16,7 +16,7 @@ Public Class EllipticalService
     Public Function CalculateIncrements(elliptical As Elliptical) As Dictionary(Of Double, Double)
 
         Dim incrementList As New Dictionary(Of Double, Double)
-        Dim T9, area, AN, AT, IV, H, FV As Single
+        Dim area, AN, AT, IV, H, FV As Double
 
         T9 = 0.1
         R = convertedEllipticalDimensions.minDia / 2

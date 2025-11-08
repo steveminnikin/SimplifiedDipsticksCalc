@@ -37,9 +37,9 @@ Namespace Controllers
             horizFlatEnds.IncrementList = _horizFlatEndsService.CalculateIncrements(horizFlatEnds)
             horizFlatEnds.Details = _horizFlatEndsService.getTankDetails(horizFlatEnds)
 
-            ViewBag.fullVolume = Math.Round(horizFlatEnds.FullVol, 1)
-            ViewBag.topHeight = If(horizFlatEnds.GetLength.Equals("Millimetres"), horizFlatEnds.FlatDiameter, Math.Round(horizFlatEnds.convertedFlatEndsDimensions.dia, 1))
-            ViewBag.swc = Math.Round(horizFlatEnds.FullVol * 0.97, 0)
+            ViewData("fullVolume") = Math.Round(horizFlatEnds.FullVol, 1)
+            ViewData("topHeight") = If(horizFlatEnds.GetLength.Equals("Millimetres"), horizFlatEnds.FlatDiameter, Math.Round(horizFlatEnds.convertedFlatEndsDimensions.dia, 1))
+            ViewData("swc") = Math.Round(horizFlatEnds.FullVol * 0.97, 0)
             If horizFlatEnds.EngraveCode Then
                 _tankService.DownloadEngraveCode(horizFlatEnds)
             End If

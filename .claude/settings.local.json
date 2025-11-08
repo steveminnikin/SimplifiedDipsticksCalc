@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(nul)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git checkout:*)",
+      "Bash(git push:*)",
+      "Bash(nuget restore:*)",
+      "Bash(.gitignore)",
+      "Bash(msbuild:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

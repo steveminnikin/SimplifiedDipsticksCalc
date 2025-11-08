@@ -36,9 +36,9 @@ Namespace Controllers
             elliptical.FullVol = _ellipticalService.GetFullVol(elliptical)
             elliptical.IncrementList = _ellipticalService.CalculateIncrements(elliptical)
 
-            ViewBag.fullVolume = Math.Round(elliptical.FullVol, 1)
-            ViewBag.topHeight = If(elliptical.GetLength.Equals("Millimetres"), elliptical.MinorDiameter, Math.Round(elliptical.convertedEllipticalDimensions.minDia, 1))
-            ViewBag.swc = Math.Round(elliptical.FullVol * 0.97, 0)
+            ViewData("fullVolume") = Math.Round(elliptical.FullVol, 1)
+            ViewData("topHeight") = If(elliptical.GetLength.Equals("Millimetres"), elliptical.MinorDiameter, Math.Round(elliptical.convertedEllipticalDimensions.minDia, 1))
+            ViewData("swc") = Math.Round(elliptical.FullVol * 0.97, 0)
             If elliptical.EngraveCode Then
                 _tankService.DownloadEngraveCode(elliptical)
             End If
