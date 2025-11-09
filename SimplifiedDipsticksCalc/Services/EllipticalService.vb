@@ -47,7 +47,7 @@ Public Class EllipticalService
                 Do
                     T9 = TN
                     xFactors(elliptical)
-                Loop Until Abs(TN - T9) >= 0.00001
+                Loop Until Abs(TN - T9) <= 0.00001
 
                 H = R - R * Cos(TN / 2)
                 IV = TIV * r1
@@ -59,7 +59,13 @@ Public Class EllipticalService
     End Function
     Sub XFactors(elliptical As Elliptical)
         X = T9 - Sin(T9) - (2 * elliptical.InitialConversionValues.cor * TIV / (R ^ 2 * convertedEllipticalDimensions.len))
-        X = X / (1 - Cos(T9))
+        Dim denominator As Double = 1 - Cos(T9)
+        If Abs(denominator) < 0.00001 Then
+            ' When denominator is close to zero, use a small non-zero value to prevent division by zero
+            ' This occurs when T9 is close to 0 or multiples of 2*PI
+            denominator = 0.00001
+        End If
+        X = X / denominator
         TN = T9 - X
     End Sub
 

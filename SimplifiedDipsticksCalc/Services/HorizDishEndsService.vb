@@ -169,13 +169,26 @@ Volcalcs:   VolCalcs(horizDishEnds)
         c3 = d2 * (a - Sin(a) * Cos(a)) / 4
         c4 = p1 * (Sin(a)) ^ 3 * Cos(a) / 6
         c5 = yd * Sin(a) / 2
-        c6 = y2 * Cos(a) / (3 * Sin(a))
+        ' Guard against division by zero when Sin(a) = 0
+        If Abs(Sin(a)) < 0.00001 Then
+            c6 = 0
+        Else
+            c6 = y2 * Cos(a) / (3 * Sin(a))
+        End If
+        ' Guard against division by zero when cor = 0
+        If horizDishEnds.InitialConversionValues.cor = 0 Then
+            Throw New InvalidOperationException("Conversion factor (cor) cannot be zero")
+        End If
         vol = volcor * (c3 - c4 + c5 + c6) / horizDishEnds.InitialConversionValues.cor
         Return vol
     End Function
     Protected Friend Sub BasicConstants()
         'additional constants for vol cals
         Dim ll, y, g6, xinc As Double
+        ' Guard against division by zero when Cos(t2) = 0
+        If Abs(Cos(t2)) < 0.00001 Then
+            Throw New InvalidOperationException("Invalid angle t2: Cos(t2) is too close to zero")
+        End If
         ht = convertedHorizDishEndsDimensions.dia / Cos(t2)
         ll = convertedHorizDishEndsDimensions.l - convertedHorizDishEndsDimensions.dip + dr / 2
         t2 = FnB(convertedHorizDishEndsDimensions.til / convertedHorizDishEndsDimensions.l)

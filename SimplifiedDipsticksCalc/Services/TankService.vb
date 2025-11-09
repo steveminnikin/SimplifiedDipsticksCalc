@@ -11,7 +11,7 @@ Public Class TankService
 
     Function GetinitialConversionValues(tank As Tank) As IInitialConversionValues
 
-        Dim initialConversionValues As IInitialConversionValues
+        Dim initialConversionValues As New IInitialConversionValues()
 
         With initialConversionValues
             Select Case tank.Dimensions
@@ -51,10 +51,18 @@ Public Class TankService
 
     Sub DownloadEngraveCode(tank As Tank)
 
-        Dim fileName As String = "FV " + Round(tank.FullVol).ToString + "_INCS " + tank.Increments.ToString + tank.Details + ".csv"
+        ' Validate that we're in an HTTP context
+        If HttpContext.Current Is Nothing Then
+            Throw New InvalidOperationException("This method must be called within an HTTP context")
+        End If
+
+        ' Handle null Details property
+        Dim details As String = If(tank.Details, "")
+
+        Dim fileName As String = "FV " + Round(tank.FullVol).ToString + "_INCS " + tank.Increments.ToString + details + ".csv"
         Dim text As String = ""
         ' Add CSV header row
-        'Text = "Height,Volume" & vbCrLf '
+        text = "Height,Volume" & vbCrLf '
         ' Add data rows
         For Each row As KeyValuePair(Of Double, Double) In tank.IncrementList
             text = text & CStr(row.Value) & "," & CStr(row.Key) & vbCrLf

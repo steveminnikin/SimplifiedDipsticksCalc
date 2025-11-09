@@ -54,6 +54,11 @@ Public Class RectangularService
         Dim incrementList As New Dictionary(Of Double, Double)
         Dim dbdb, varl, vol1, mark, vtilt, volt, iv, h1, v2, vol, volr, sinc, tv, v3, d, d3, d2, ds, dp, d4, d1, l, w, h, til, i As Double
 
+        ' Validate dimensions to prevent division by zero
+        If rectangular.Length <= 0 OrElse rectangular.Width <= 0 OrElse rectangular.Height <= 0 Then
+            Throw New ArgumentException("All tank dimensions (Length, Width, Height) must be positive numbers")
+        End If
+
         If rectangular.RegDip = True Then
             l = rectangular.Length / 100
             w = rectangular.Width / 100
