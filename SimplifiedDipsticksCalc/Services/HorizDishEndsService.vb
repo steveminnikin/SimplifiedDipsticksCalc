@@ -46,7 +46,7 @@ Public Class HorizDishEndsService
         lr = convertedHorizDishEndsDimensions.dip + dr / 2
         If horizDishEnds.Tilt <> 0 Then Call TiltConsts(horizDishEnds)
         BasicConstants()
-        If horizDishEnds.regDip And horizDishEnds.Tilt = 0 Then
+        If horizDishEnds.RegDip And horizDishEnds.Tilt = 0 Then
             RegdipCalcCylDish(horizDishEnds)
         Else
 Volcalcs:   VolCalcs(horizDishEnds)
@@ -54,7 +54,7 @@ Volcalcs:   VolCalcs(horizDishEnds)
             If swit = True Then GoTo 6760
             If v0 < vol Then GoTo 6640
             GoTo 6780
-6640:       If horizDishEnds.regDip = True Then
+6640:       If horizDishEnds.RegDip = True Then
                 Call RegdipCalcCylDish(horizDishEnds)
             Else
                 swit = True
@@ -91,14 +91,14 @@ Volcalcs:   VolCalcs(horizDishEnds)
                     VolCalcs(horizDishEnds)
                     iv = vol
                     h = convertedHorizDishEndsDimensions.dia * (1 - Cos(ap)) / 2
-                    incrementList.Add(Round(iv), horizDishEnds.FinalConversionRounding(h))
+                    SafeAddToIncrementList(incrementList, Round(iv), horizDishEnds.FinalConversionRounding(h))
                     xinc = xinc + convertedHorizDishEndsDimensions.inc
                     ai = 0.05
                     GoTo 6780
                 End If
             End If
         End If
-        If Not horizDishEnds.regDip Then incrementList.Add(Round(horizDishEnds.FullVol), horizDishEnds.FinalConversionRounding(convertedHorizDishEndsDimensions.dia))
+        If Not horizDishEnds.RegDip Then SafeAddToIncrementList(incrementList, Round(horizDishEnds.FullVol), horizDishEnds.FinalConversionRounding(convertedHorizDishEndsDimensions.dia))
         Return incrementList
     End Function
     Private Sub RegdipCalcCylDish(horizDishEnds As HorizDishEnds)
@@ -115,7 +115,7 @@ Volcalcs:   VolCalcs(horizDishEnds)
             Next n
             iv = firstvol
             h += convertedHorizDishEndsDimensions.inc
-            incrementList.Add(horizDishEnds.FinalConversionRounding(h), Round(iv))
+            SafeAddToIncrementList(incrementList, horizDishEnds.FinalConversionRounding(h), Round(iv))
             h1 = Int(hi / convertedHorizDishEndsDimensions.inc) * convertedHorizDishEndsDimensions.inc + convertedHorizDishEndsDimensions.inc
         End If
         For h = h1 + 0.001 To ht Step convertedHorizDishEndsDimensions.inc
@@ -128,7 +128,7 @@ Volcalcs:   VolCalcs(horizDishEnds)
                 iv = horizDishEnds.FullVol
             Else : iv = vol
             End If
-            incrementList.Add(horizDishEnds.FinalConversionRounding(h), Round(iv))
+            SafeAddToIncrementList(incrementList, horizDishEnds.FinalConversionRounding(h), Round(iv))
         Next h
         GetFullVol(horizDishEnds)
     End Sub

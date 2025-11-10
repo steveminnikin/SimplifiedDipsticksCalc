@@ -22,13 +22,13 @@ Public Class EllipticalService
         R = convertedEllipticalDimensions.minDia / 2
         FV = elliptical.FullVol / r1
 
-        If elliptical.regDip Then
+        If elliptical.RegDip Then
             For H = 0.00001 To R Step convertedEllipticalDimensions.inc
                 AN = 2 * (FnA(1 - H / R))
                 AT = 0.5 * R ^ 2 * Sin(AN)
                 area = AN * R ^ 2 / 2 - AT
                 IV = r1 * area * convertedEllipticalDimensions.len / elliptical.InitialConversionValues.cor
-                incrementList.Add(elliptical.FinalConversionRounding(H), Round(IV))
+                SafeAddToIncrementList(incrementList, elliptical.FinalConversionRounding(H), Round(IV))
                 If H > R Then Exit For
             Next H
             For H = H To convertedEllipticalDimensions.minDia Step convertedEllipticalDimensions.inc
@@ -36,7 +36,7 @@ Public Class EllipticalService
                 AT = 0.5 * R ^ 2 * Sin(AN)
                 area = AN * R ^ 2 / 2 - AT
                 IV = r1 * (PI * R ^ 2 - area) * convertedEllipticalDimensions.len / elliptical.InitialConversionValues.cor
-                incrementList.Add(elliptical.FinalConversionRounding(H), Round(IV))
+                SafeAddToIncrementList(incrementList, elliptical.FinalConversionRounding(H), Round(IV))
             Next H
         Else
             'Workshop Format
@@ -51,9 +51,9 @@ Public Class EllipticalService
 
                 H = R - R * Cos(TN / 2)
                 IV = TIV * r1
-                incrementList.Add(Round(IV), elliptical.FinalConversionRounding(H))
+                SafeAddToIncrementList(incrementList, Round(IV), elliptical.FinalConversionRounding(H))
             Next TIV
-            incrementList.Add(Round(elliptical.FullVol), elliptical.FinalConversionRounding(convertedEllipticalDimensions.minDia))
+            SafeAddToIncrementList(incrementList, Round(elliptical.FullVol), elliptical.FinalConversionRounding(convertedEllipticalDimensions.minDia))
         End If
         Return incrementList
     End Function

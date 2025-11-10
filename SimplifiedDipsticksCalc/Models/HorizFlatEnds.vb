@@ -11,7 +11,7 @@ Public Class HorizFlatEnds
     <Display(Name:="Length")>
     Property FlatLength As Double
 
-    Public convertedFlatEndsDimensions As IConvertedFLatEndsDimensions
+    Public convertedFlatEndsDimensions As IConvertedFlatEndsDimensions
 
     Public Sub New()
         Shape = "Horizontal Cylindrical with Flat Ends"

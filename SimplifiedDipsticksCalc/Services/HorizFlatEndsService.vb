@@ -19,13 +19,13 @@ Public Class HorizFlatEndsService
         T9 = 0.1
         R = convertedHorizFlatEndsDimensions.dia / 2
 
-        If horizFlatEnds.regDip Then
+        If horizFlatEnds.RegDip Then
             For H = 0.00001 To R Step convertedHorizFlatEndsDimensions.inc
                 AN = 2 * (FnA(1 - H / R))
                 AT = 0.5 * R ^ 2 * Sin(AN)
                 area = AN * R ^ 2 / 2 - AT
                 IV = area * convertedHorizFlatEndsDimensions.l / horizFlatEnds.InitialConversionValues.cor
-                incrementList.Add(horizFlatEnds.FinalConversionRounding(H), Round(IV))
+                SafeAddToIncrementList(incrementList, horizFlatEnds.FinalConversionRounding(H), Round(IV))
                 If H > R Then Exit For
             Next H
             For H = H To convertedHorizFlatEndsDimensions.dia Step convertedHorizFlatEndsDimensions.inc
@@ -33,7 +33,7 @@ Public Class HorizFlatEndsService
                 AT = 0.5 * R ^ 2 * Sin(AN)
                 area = AN * R ^ 2 / 2 - AT
                 IV = (PI * R ^ 2 - area) * convertedHorizFlatEndsDimensions.l / horizFlatEnds.InitialConversionValues.cor
-                incrementList.Add(horizFlatEnds.FinalConversionRounding(H), Round(IV))
+                SafeAddToIncrementList(incrementList, horizFlatEnds.FinalConversionRounding(H), Round(IV))
             Next H
         Else
             'Workshop Format
@@ -46,9 +46,9 @@ Public Class HorizFlatEndsService
                 Loop Until Abs(TN - T9) <= 0.00001
 
                 H = R - R * Cos(TN / 2)
-                incrementList.Add(Round(TIV), horizFlatEnds.FinalConversionRounding(H))
+                SafeAddToIncrementList(incrementList, Round(TIV), horizFlatEnds.FinalConversionRounding(H))
             Next TIV
-            incrementList.Add(Round(horizFlatEnds.FullVol), horizFlatEnds.FinalConversionRounding(convertedHorizFlatEndsDimensions.dia))
+            SafeAddToIncrementList(incrementList, Round(horizFlatEnds.FullVol), horizFlatEnds.FinalConversionRounding(convertedHorizFlatEndsDimensions.dia))
         End If
         Return incrementList
     End Function
@@ -65,7 +65,7 @@ Public Class HorizFlatEndsService
         TN = T9 - X
     End Sub
 
-    Function GetConvertedHorizFlatEndsDimensions(horizFlatEnds As HorizFlatEnds) As IConvertedFLatEndsDimensions
+    Function GetConvertedHorizFlatEndsDimensions(horizFlatEnds As HorizFlatEnds) As IConvertedFlatEndsDimensions
 
         convertedHorizFlatEndsDimensions.dia = horizFlatEnds.FlatDiameter * horizFlatEnds.InitialConversionValues.m
         convertedHorizFlatEndsDimensions.l = horizFlatEnds.FlatLength * horizFlatEnds.InitialConversionValues.m

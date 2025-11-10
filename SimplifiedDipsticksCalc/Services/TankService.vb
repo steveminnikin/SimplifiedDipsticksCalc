@@ -78,6 +78,21 @@ Public Class TankService
         End With
     End Sub
 
+    ''' <summary>
+    ''' Safely adds a key-value pair to the increment list dictionary.
+    ''' If the key already exists, updates the value instead of throwing an exception.
+    ''' This prevents crashes when FinalConversionRounding produces duplicate rounded values.
+    ''' </summary>
+    Protected Friend Sub SafeAddToIncrementList(incrementList As Dictionary(Of Double, Double), key As Double, value As Double)
+        If incrementList.ContainsKey(key) Then
+            ' Key already exists - update the value instead of adding
+            ' This typically happens when rounding produces the same value for close measurements
+            incrementList(key) = value
+        Else
+            incrementList.Add(key, value)
+        End If
+    End Sub
+
     Protected Friend Function FnA(x As Double) As Double
         'defines function for use in vol calcs
         Return PI / 2 - Atan(x / Sqrt(-x * x + 1))

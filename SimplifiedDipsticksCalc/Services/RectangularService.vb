@@ -22,16 +22,16 @@ Public Class RectangularService
             If rectangular.RegDip Then
                 For h = 0 To convertedRectDimensions.height Step rectangular.ConvertedRectDimensions.inc
                     iv = area * h / rectangular.InitialConversionValues.cor
-                    incrementList.Add(rectangular.FinalConversionRounding(h), Round(iv))
+                    SafeAddToIncrementList(incrementList, rectangular.FinalConversionRounding(h), Round(iv))
                 Next
             Else
                 For iv = rectangular.ConvertedRectDimensions.inc To CalculateFullVolume(rectangular) Step rectangular.ConvertedRectDimensions.inc
                     h = iv * rectangular.InitialConversionValues.cor / area
                     vol = If((iv < 1), iv, Round(iv, 1)) + rectangular.Adjustments
-                    incrementList.Add(vol, rectangular.FinalConversionRounding(h))
+                    SafeAddToIncrementList(incrementList, vol, rectangular.FinalConversionRounding(h))
                 Next
                 ''Add final fullvolume figures to increment list
-                incrementList.Add(CalculateFullVolume(rectangular), rectangular.FinalConversionRounding(convertedRectDimensions.height))
+                SafeAddToIncrementList(incrementList, CalculateFullVolume(rectangular), rectangular.FinalConversionRounding(convertedRectDimensions.height))
             End If
         Else
             incrementList = TiltCalc(rectangular)
@@ -74,7 +74,7 @@ Public Class RectangularService
             For count = dbdb To til Step i
                 varl = l / til * count         'varl = variable length as height increases
                 vol = varl * w * count / 2
-                incrementList.Add(mark, Round(vol))
+                SafeAddToIncrementList(incrementList, mark, Round(vol))
                 mark = mark + (i * 100)
             Next
             'calc for part that passes through junction of til and regular section
@@ -83,13 +83,13 @@ Public Class RectangularService
             v2 = l * w * h1
             vol = vol1 + v2 + vol
             'iv = vol
-            incrementList.Add(mark, Round(vol))
+            SafeAddToIncrementList(incrementList, mark, Round(vol))
             'calc for regular section
             For x = i To h - (dbdb + (mark / 100)) Step i
                 volr = l * w * x
                 volt = vol + volr
                 mark = mark + (i * 100)
-                incrementList.Add(mark, Round(volt))
+                SafeAddToIncrementList(incrementList, mark, Round(volt))
             Next
             'h = (h - dbdb) * 100
             'vol = (l * w * h) - vtilt
@@ -114,7 +114,7 @@ Public Class RectangularService
             'volume of lower top edge
             For i = i To tv Step i
                 d = (((Sqrt(i * til * 2 / (l * w))) * 10) - (til * dp / l))
-                incrementList.Add(Round(i), Round(d, 1))
+                SafeAddToIncrementList(incrementList, Round(i), Round(d, 1))
             Next
             'calc of inc that passes through til
             d1 = h * 100 * sinc / hv 'distance per vol inc up tank
@@ -124,12 +124,12 @@ Public Class RectangularService
             d3 = v3 / sinc * d1
             d2 = til - (d + ds)
             d4 = d3 + d2 + d
-            incrementList.Add(Round(i), Round(d4, 1))
+            SafeAddToIncrementList(incrementList, Round(i), Round(d4, 1))
             'increments up straight tank
             Do Until d4 > (h * 100) - ds
                 i += sinc
                 d4 += d1
-                incrementList.Add(Round(i), Round(d4, 1))
+                SafeAddToIncrementList(incrementList, Round(i), Round(d4, 1))
             Loop
         End If
         'adjustment to convert output volume to US Gallons

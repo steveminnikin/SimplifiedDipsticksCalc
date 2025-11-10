@@ -2,7 +2,7 @@
 
 **Last Updated:** 2025-11-09
 **Total Issues Found:** 22
-**Fixed:** 9
+**Fixed:** 13
 
 ## Summary
 
@@ -10,7 +10,7 @@
 |----------|-------|-------|
 | Critical | 3 | 3 ✅ |
 | High | 6 | 6 ✅ |
-| Moderate | 4 | 0 |
+| Moderate | 4 | 4 ✅ |
 | Low-Moderate | 4 | 0 |
 | Low | 5 | 0 |
 
@@ -266,10 +266,10 @@ If tank.Details Is Nothing Then tank.Details = ""
 
 ## MODERATE SEVERITY ISSUES
 
-### 10. ❌ Potential Dictionary Key Duplicate Issues
+### 10. ✅ Potential Dictionary Key Duplicate Issues
 
 **File:** Multiple service classes (e.g., `SimplifiedDipsticksCalc/Services/RectangularService.vb:14-41`)
-**Status:** 🔴 Open
+**Status:** ✅ Fixed
 **Severity:** Moderate
 
 **Issue:**
@@ -293,10 +293,10 @@ End If
 
 ---
 
-### 11. ❌ Type Conversion Issue - Case Sensitivity in Property Names
+### 11. ✅ Type Conversion Issue - Case Sensitivity in Property Names
 
 **File:** `SimplifiedDipsticksCalc/Services/HorizFlatEndsService.vb:62`
-**Status:** 🔴 Open
+**Status:** ✅ Fixed
 **Severity:** Moderate
 
 **Issue:**
@@ -312,10 +312,10 @@ The return type is `IConvertedFLatEndsDimensions` (with capital "F" and "Lat") b
 
 ---
 
-### 12. ❌ Inconsistent Property Naming - Case Mismatch
+### 12. ✅ Inconsistent Property Naming - Case Mismatch
 
 **File:** Multiple service files
-**Status:** 🔴 Open
+**Status:** ✅ Fixed
 **Severity:** Moderate
 
 **Issue:**
@@ -331,10 +331,10 @@ Property naming inconsistencies throughout the codebase:
 
 ---
 
-### 13. ❌ Potential Negative Volume in VertCylService.vb
+### 13. ✅ Potential Negative Volume in VertCylService.vb
 
 **File:** `SimplifiedDipsticksCalc/Services/VertCylService.vb:13,17`
-**Status:** 🔴 Open
+**Status:** ✅ Fixed
 **Severity:** Moderate
 
 **Issue:**

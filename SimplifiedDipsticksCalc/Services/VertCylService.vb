@@ -12,20 +12,25 @@ Public Class VertCylService
 
         vertCyl.FullVol = (area * convertedVertDimensions.ht / vertCyl.InitialConversionValues.cor) - vertCyl.Adjustments
 
-        If vertCyl.regDip Then
+        ' Validate that adjustments don't exceed the calculated volume
+        If vertCyl.Adjustments > 0 AndAlso vertCyl.FullVol < 0 Then
+            Throw New InvalidOperationException("Adjustments (" & vertCyl.Adjustments.ToString() & ") cannot exceed the calculated tank volume. This would result in negative volume.")
+        End If
+
+        If vertCyl.RegDip Then
             For h = 0 To convertedVertDimensions.ht Step convertedVertDimensions.inc
                 iv = area * (h / vertCyl.InitialConversionValues.cor) - vertCyl.Adjustments
                 If Not vertCyl.Adjustments.Equals(Nothing) And iv < CalculateDishedEndVolume(vertCyl) Then
                     iv = 0
                 End If
-                incrementList.Add(vertCyl.FinalConversionRounding(h), Round(iv))
+                SafeAddToIncrementList(incrementList, vertCyl.FinalConversionRounding(h), Round(iv))
             Next
         Else
             For iv = convertedVertDimensions.inc To vertCyl.FullVol Step convertedVertDimensions.inc
                 h = iv * vertCyl.InitialConversionValues.cor / area
-                incrementList.Add(Round(iv), vertCyl.FinalConversionRounding(h))
+                SafeAddToIncrementList(incrementList, Round(iv), vertCyl.FinalConversionRounding(h))
             Next
-            incrementList.Add(Round(vertCyl.FullVol), vertCyl.FinalConversionRounding(convertedVertDimensions.ht))
+            SafeAddToIncrementList(incrementList, Round(vertCyl.FullVol), vertCyl.FinalConversionRounding(convertedVertDimensions.ht))
         End If
 
         Return incrementList
