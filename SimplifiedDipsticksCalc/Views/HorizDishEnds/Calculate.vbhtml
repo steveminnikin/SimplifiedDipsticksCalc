@@ -1,4 +1,10 @@
 ﻿@ModelType SimplifiedDipsticksCalc.HorizDishEnds
+
+@section Breadcrumb
+    <li><a href="@Url.Action("Index", "HorizDishEnds")">Horizontal Cylindrical Dished Ends Tank</a></li>
+    <li class="active">Results</li>
+End Section
+
 @Html.Partial("_CalculateTop")
 <div class="row">
     <div class="col-xs-4 text-right">

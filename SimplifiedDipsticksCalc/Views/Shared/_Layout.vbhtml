@@ -20,6 +20,14 @@
             </div>
         </div>
     </div>
+    <div class="container" style="margin-top: 70px;">
+        @If IsSectionDefined("Breadcrumb") Then
+            @<ol class="breadcrumb hidden-print">
+                <li><a href="@Url.Action("Index", "Home")"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                @RenderSection("Breadcrumb", required:=False)
+            </ol>
+        End If
+    </div>
     @RenderBody()
     <hr />
     <footer class="hidden-print">

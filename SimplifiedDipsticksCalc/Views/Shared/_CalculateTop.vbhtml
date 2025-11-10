@@ -14,6 +14,12 @@
 </div>
 <div class="row ">
     <div class="col-md-10 ">
+        <a href="@Url.Action("Index", ViewContext.RouteData.Values("controller").ToString())" class="btn btn-primary hidden-print">
+            <span class="glyphicon glyphicon-arrow-left"></span> Back to Input
+        </a>
+        <a href="@Url.Action("Index", "Home")" class="btn btn-default hidden-print">
+            <span class="glyphicon glyphicon-home"></span> Tank Selection
+        </a>
         <button class="btn btn-warning hidden-print" id="btnNote" onclick="">Chart Note</button>
         <button class="btn btn-warning hidden-print" id="btnClient">Show Client Details</button>
         <button class="btn btn-outline hidden-print" data-toggle="button" aria-pressed="false" id="btnEdit">Enable Editing</button>
