@@ -1,4 +1,135 @@
-﻿// Calculation History Management
+﻿// Form Validation Module
+var FormValidator = (function() {
+    function isNumeric(value) {
+        return !isNaN(parseFloat(value)) && isFinite(value);
+    }
+
+    function isPositive(value) {
+        return isNumeric(value) && parseFloat(value) > 0;
+    }
+
+    function showError($field, message) {
+        clearError($field);
+        $field.addClass('has-error');
+        $field.after('<span class="help-block text-danger validation-error">' + message + '</span>');
+    }
+
+    function clearError($field) {
+        $field.removeClass('has-error');
+        $field.next('.validation-error').remove();
+    }
+
+    function clearAllErrors() {
+        $('.has-error').removeClass('has-error');
+        $('.validation-error').remove();
+    }
+
+    function validateNumericField($field, fieldName, required) {
+        var value = $field.val().trim();
+
+        if (required && value === '') {
+            showError($field, fieldName + ' is required.');
+            return false;
+        }
+
+        if (value !== '' && !isNumeric(value)) {
+            showError($field, fieldName + ' must be a valid number.');
+            return false;
+        }
+
+        if (value !== '' && !isPositive(value)) {
+            showError($field, fieldName + ' must be greater than zero.');
+            return false;
+        }
+
+        clearError($field);
+        return true;
+    }
+
+    function validateDimensionalFields() {
+        clearAllErrors();
+        var isValid = true;
+        var activeTab = $('.tab-pane.active').attr('id');
+
+        // Get active tank type
+        var requiredFields = [];
+
+        if (activeTab === 'rectangular') {
+            requiredFields = [
+                { selector: '#Length', name: 'Length' },
+                { selector: '#Width', name: 'Width' },
+                { selector: '#Height', name: 'Height' }
+            ];
+        } else if (activeTab === 'vertCyl') {
+            requiredFields = [
+                { selector: '#Diameter', name: 'Diameter' },
+                { selector: '#Height', name: 'Height' }
+            ];
+        } else if (activeTab === 'horizFlatEnds') {
+            requiredFields = [
+                { selector: '#Diameter', name: 'Diameter' },
+                { selector: '#Length', name: 'Length' }
+            ];
+        } else if (activeTab === 'horizDishEnds') {
+            requiredFields = [
+                { selector: '#Diameter', name: 'Diameter' },
+                { selector: '#Length', name: 'Length' },
+                { selector: '#DishEndRadius', name: 'Dished End Radius' }
+            ];
+        } else if (activeTab === 'ellipt') {
+            requiredFields = [
+                { selector: '#MajorAxis', name: 'Major Axis' },
+                { selector: '#MinorAxis', name: 'Minor Axis' },
+                { selector: '#Length', name: 'Length' }
+            ];
+        }
+
+        // Validate required fields
+        requiredFields.forEach(function(field) {
+            var $field = $(field.selector);
+            if ($field.length) {
+                if (!validateNumericField($field, field.name, true)) {
+                    isValid = false;
+                }
+            }
+        });
+
+        // Validate Increments field (always required)
+        var $increments = $('#incrementsInput');
+        if ($increments.length && !validateNumericField($increments, 'Increments', true)) {
+            isValid = false;
+        }
+
+        // Validate Adjustments if filled (optional but must be numeric if provided)
+        var $adjustments = $('#Adjustments');
+        if ($adjustments.length && $adjustments.val().trim() !== '') {
+            if (!validateNumericField($adjustments, 'Adjustments', false)) {
+                isValid = false;
+            }
+        }
+
+        // Dimensional relationship validations
+        if (activeTab === 'ellipt') {
+            var majorAxis = parseFloat($('#MajorAxis').val());
+            var minorAxis = parseFloat($('#MinorAxis').val());
+            if (!isNaN(majorAxis) && !isNaN(minorAxis) && minorAxis > majorAxis) {
+                showError($('#MinorAxis'), 'Minor Axis must be less than or equal to Major Axis.');
+                isValid = false;
+            }
+        }
+
+        return isValid;
+    }
+
+    return {
+        validate: validateDimensionalFields,
+        clearErrors: clearAllErrors,
+        isNumeric: isNumeric,
+        isPositive: isPositive
+    };
+})();
+
+// Calculation History Management
 var CalculationHistory = (function() {
     var MAX_HISTORY_ITEMS = 10;
     var STORAGE_KEY = 'dipstickCalculationHistory';
@@ -192,7 +323,23 @@ $(document).ready(function () {
         }
     }
 
-    $('.btnSubmit').click(function () {
+    $('.btnSubmit').click(function (e) {
+        // Validate form before submission
+        if (!FormValidator.validate()) {
+            e.preventDefault();
+
+            // Scroll to first error
+            var $firstError = $('.has-error').first();
+            if ($firstError.length) {
+                $('html, body').animate({
+                    scrollTop: $firstError.offset().top - 100
+                }, 500);
+            }
+
+            alert('Please correct the validation errors before submitting.');
+            return false;
+        }
+
         var Client = {
             Name: $('#Name').val(),
             Ref: $('#Ref').val(),

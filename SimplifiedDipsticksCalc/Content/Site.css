@@ -45,3 +45,37 @@ textarea {
     height: 50px;
     width: auto;
 }
+
+/* ===========================
+   FORM VALIDATION STYLING
+   =========================== */
+
+/* Error state for input fields */
+input.has-error,
+select.has-error,
+textarea.has-error {
+    border-color: #d9534f !important;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(217, 83, 79, 0.6) !important;
+}
+
+/* Validation error messages */
+.validation-error {
+    display: block;
+    margin-top: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #d9534f;
+}
+
+/* Form group with error */
+.form-group.has-error label {
+    color: #d9534f;
+}
+
+/* Success state for validated fields */
+input.is-valid,
+select.is-valid,
+textarea.is-valid {
+    border-color: #5cb85c;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(92, 184, 92, 0.6);
+}
