@@ -588,27 +588,27 @@ $(document).ready(function () {
             var $clientData = $('#clientData');
             if (retrievedClient.Name) {
                 $clientTitle.append($('<dt>').text('Client'));
-                $clientData.append($('<span>').text(retrievedClient.Name)).append('<br />');
+                $clientData.append($('<span>').text(retrievedClient.Name)).append($('<br>'));
             }
             if (retrievedClient.Ref) {
                 $clientTitle.append($('<dt>').text('Ref'));
-                $clientData.append($('<span>').text(retrievedClient.Ref)).append('<br />');
+                $clientData.append($('<span>').text(retrievedClient.Ref)).append($('<br>'));
             }
             if (retrievedClient.Notes) {
                 $clientTitle.append($('<dt>').text('Notes'));
-                $clientData.append($('<span>').text(retrievedClient.Notes)).append('<br />');
+                $clientData.append($('<span>').text(retrievedClient.Notes)).append($('<br>'));
             }
 
             $clientTitle.append($('<dt>').text('Date'));
-            $clientData.append($('<span>').text(retrievedClient.Date)).append('<br />');
+            $clientData.append($('<span>').text(retrievedClient.Date)).append($('<br>'));
 
             if (retrievedClient.TankRef) {
                 $clientTitle.append($('<dt>').text('Tank Ref'));
-                $clientData.append($('<span>').text(retrievedClient.TankRef)).append('<br />');
+                $clientData.append($('<span>').text(retrievedClient.TankRef)).append($('<br>'));
             }
             if (retrievedClient.OurRef) {
                 $clientTitle.append($('<dt>').text('Chart No'));
-                $clientData.append($('<span>').text(retrievedClient.OurRef)).append('<br />');
+                $clientData.append($('<span>').text(retrievedClient.OurRef)).append($('<br>'));
             }
 
             //Toggle display of the client info on the screen

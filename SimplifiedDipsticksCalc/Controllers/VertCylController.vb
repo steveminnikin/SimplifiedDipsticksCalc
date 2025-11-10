@@ -28,6 +28,17 @@ Namespace Controllers
         <AcceptVerbs(HttpVerbs.Post)>
         Function Calculate(<Bind(Include:="Diameter,DishEndDepth,VertHeight,Increments,regDip, Dimensions,EngraveCode,Adjustments,IncrementList")> vertCyl As VertCyl) As ActionResult
 
+            ' Server-side validation
+            If vertCyl.Diameter <= 0 OrElse vertCyl.VertHeight <= 0 Then
+                ModelState.AddModelError("", "Diameter and Height must be positive numbers")
+                Return View("Index", vertCyl)
+            End If
+
+            If vertCyl.Increments <= 0 Then
+                ModelState.AddModelError("", "Increments must be a positive number")
+                Return View("Index", vertCyl)
+            End If
+
             _vertCyl = vertCyl
 
             _vertCyl.InitialConversionValues = _tankService.GetinitialConversionValues(vertCyl)

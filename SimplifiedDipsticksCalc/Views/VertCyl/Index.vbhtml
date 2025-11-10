@@ -11,6 +11,8 @@ End Code
     </div>
 </div>
 
+@Html.ValidationSummary(False, "", New With {.class = "alert alert-danger"})
+
 <form action="@Url.Action("Calculate", "VertCyl")" method="post">
     <div class="row">
         <div class="col-md-6">

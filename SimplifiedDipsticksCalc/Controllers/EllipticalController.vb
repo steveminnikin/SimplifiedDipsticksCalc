@@ -31,6 +31,22 @@ Namespace Controllers
         <AcceptVerbs(HttpVerbs.Post)>
         Function Calculate(<Bind(Include:="MajorDiameter,MinorDiameter,ElliptLength,Increments,regDip, Dimensions,EngraveCode")> elliptical As Elliptical) As ActionResult
 
+            ' Server-side validation
+            If elliptical.MajorDiameter <= 0 OrElse elliptical.MinorDiameter <= 0 OrElse elliptical.ElliptLength <= 0 Then
+                ModelState.AddModelError("", "Major Axis, Minor Axis, and Length must be positive numbers")
+                Return View("Index", elliptical)
+            End If
+
+            If elliptical.MinorDiameter > elliptical.MajorDiameter Then
+                ModelState.AddModelError("", "Minor Axis must be less than or equal to Major Axis")
+                Return View("Index", elliptical)
+            End If
+
+            If elliptical.Increments <= 0 Then
+                ModelState.AddModelError("", "Increments must be a positive number")
+                Return View("Index", elliptical)
+            End If
+
             elliptical.InitialConversionValues = _tankService.GetinitialConversionValues(elliptical)
             elliptical.convertedEllipticalDimensions = _ellipticalService.GetConvertedEllipticalDimensions(elliptical)
             elliptical.FullVol = _ellipticalService.GetFullVol(elliptical)

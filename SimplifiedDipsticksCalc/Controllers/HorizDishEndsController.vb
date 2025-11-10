@@ -29,6 +29,18 @@ Namespace Controllers
 
         <AcceptVerbs(HttpVerbs.Post)>
         Function Calculate(<Bind(Include:="DishDiameter,OvLength,StLength,DishEndRad,KnuckleRad,Tilt,dipPoint,Increments,regDip, Dimensions,EngraveCode")> horizDishEnds As HorizDishEnds) As ActionResult
+
+            ' Server-side validation
+            If horizDishEnds.DishDiameter <= 0 OrElse horizDishEnds.OvLength <= 0 OrElse horizDishEnds.StLength <= 0 OrElse horizDishEnds.DishEndRad <= 0 Then
+                ModelState.AddModelError("", "Diameter, Overall Length, Straight Length, and Dished End Radius must be positive numbers")
+                Return View("Index", horizDishEnds)
+            End If
+
+            If horizDishEnds.Increments <= 0 Then
+                ModelState.AddModelError("", "Increments must be a positive number")
+                Return View("Index", horizDishEnds)
+            End If
+
             If ModelState.IsValid Then
                 horizDishEnds.InitialConversionValues = _tankService.GetinitialConversionValues(horizDishEnds)
                 horizDishEnds.convertedHorizDishEndsDimensions = _horizDishEndsService.GetConvertedHorizFlatEndsDimensions(horizDishEnds)

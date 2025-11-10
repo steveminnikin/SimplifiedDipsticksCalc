@@ -31,6 +31,17 @@ Namespace Controllers
         <AcceptVerbs(HttpVerbs.Post)>
         Function Calculate(<Bind(Include:="FlatDiameter,FlatLength,Tilt,dipPoint,Increments,regDip, Dimensions, EngraveCode")> horizFlatEnds As HorizFlatEnds) As ActionResult
 
+            ' Server-side validation
+            If horizFlatEnds.FlatDiameter <= 0 OrElse horizFlatEnds.FlatLength <= 0 Then
+                ModelState.AddModelError("", "Diameter and Length must be positive numbers")
+                Return View("Index", horizFlatEnds)
+            End If
+
+            If horizFlatEnds.Increments <= 0 Then
+                ModelState.AddModelError("", "Increments must be a positive number")
+                Return View("Index", horizFlatEnds)
+            End If
+
             horizFlatEnds.InitialConversionValues = _tankService.GetinitialConversionValues(horizFlatEnds)
             horizFlatEnds.convertedFlatEndsDimensions = _horizFlatEndsService.GetConvertedHorizFlatEndsDimensions(horizFlatEnds)
             horizFlatEnds.FullVol = _horizFlatEndsService.GetFullVol(horizFlatEnds)

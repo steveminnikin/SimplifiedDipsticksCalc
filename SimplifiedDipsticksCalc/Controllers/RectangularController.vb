@@ -28,6 +28,17 @@ Namespace Controllers
         <AcceptVerbs(HttpVerbs.Post)>
         Function Calculate(<Bind(Include:="Length,Width,Height,Slope,PointofDip,Increments,regDip, Dimensions,EngraveCode, Adjustments, hopperVolume,dipHeightBelowBase ")> rectangular As Rectangular) As ActionResult
 
+            ' Server-side validation
+            If rectangular.Length <= 0 OrElse rectangular.Width <= 0 OrElse rectangular.Height <= 0 Then
+                ModelState.AddModelError("", "Length, Width, and Height must be positive numbers")
+                Return View("Index", rectangular)
+            End If
+
+            If rectangular.Increments <= 0 Then
+                ModelState.AddModelError("", "Increments must be a positive number")
+                Return View("Index", rectangular)
+            End If
+
             rectangular.InitialConversionValues = _tankService.GetinitialConversionValues(rectangular)
             rectangular.ConvertedRectDimensions = _rectangularService.GetConvertedRectDimensions(rectangular)
             rectangular.IncrementList = _rectangularService.CalculateIncrements(rectangular)
