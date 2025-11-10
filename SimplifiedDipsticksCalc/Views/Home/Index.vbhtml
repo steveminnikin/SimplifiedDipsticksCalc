@@ -1,85 +1,135 @@
+@Code
+    ViewBag.Title = "Tank Calibration Calculator"
+End Code
 
-<br />
+<div class="jumbotron">
+    <h1>Dipsticks Calculator</h1>
+    <p class="lead">Professional dipstick calibration calculator for various tank geometries. Generate accurate volume-to-height conversion tables for your tanks.</p>
+</div>
+
 <div class="row">
     <div class="col-md-12">
-        <div class="panel panel-info">
+        <h2>Select Tank Type</h2>
+        <p>Choose the tank geometry that matches your application:</p>
+    </div>
+</div>
+
+<div class="row" style="margin-top: 30px;">
+    <div class="col-md-6">
+        <div class="panel panel-primary">
             <div class="panel-heading">
-                <h4 class="panel-title">
-                    <span class="glyphicon glyphicon-time"></span> Calculation History & Configuration Management
-                </h4>
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-minus"></span> Horizontal Cylindrical Dished Ends
+                </h3>
             </div>
             <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-7">
-                        <div class="form-group">
-                            <label for="historyDropdown">Load Previous Calculation:</label>
-                            <select id="historyDropdown" class="form-control">
-                                <option value="">-- Select Previous Calculation --</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <label>&nbsp;</label>
-                        <button type="button" id="btnExportConfig" class="btn btn-success btn-block" title="Export current tank configuration to file">
-                            <span class="glyphicon glyphicon-export"></span> Export Config
-                        </button>
-                    </div>
-                    <div class="col-md-2">
-                        <label>&nbsp;</label>
-                        <button type="button" id="btnImportConfig" class="btn btn-info btn-block" title="Import tank configuration from file">
-                            <span class="glyphicon glyphicon-import"></span> Import Config
-                        </button>
-                        <input type="file" id="fileImportConfig" accept=".json" style="display: none;" />
-                    </div>
-                    <div class="col-md-1">
-                        <label>&nbsp;</label>
-                        <button type="button" id="btnClearHistory" class="btn btn-danger btn-block" title="Clear all calculation history">
-                            <span class="glyphicon glyphicon-trash"></span>
-                        </button>
-                    </div>
-                </div>
+                <p>For horizontal cylindrical tanks with dished (hemispherical) end caps.</p>
+                <p><strong>Parameters:</strong> Diameter, Straight Length, Overall Length, Dished End Radius, Knuckle Radius</p>
+                <a href="@Url.Action("Index", "HorizDishEnds")" class="btn btn-primary btn-block btn-lg">
+                    Calculate <span class="glyphicon glyphicon-arrow-right"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-minus"></span> Horizontal Cylindrical Flat Ends
+                </h3>
+            </div>
+            <div class="panel-body">
+                <p>For horizontal cylindrical tanks with flat end caps.</p>
+                <p><strong>Parameters:</strong> Diameter, Length</p>
+                <a href="@Url.Action("Index", "HorizFlatEnds")" class="btn btn-info btn-block btn-lg">
+                    Calculate <span class="glyphicon glyphicon-arrow-right"></span>
+                </a>
             </div>
         </div>
     </div>
 </div>
-<form id="submitForm" method="post">
-    <div class="row">
-        <div class="col-md-6">
-            @Html.Partial("_ClientPartial")
 
-        </div>
-        <div class="col-md-6">
-            @Html.Partial("_DimensionsPartial")
-        </div>
-    </div>
-    <hr />
-    <div class="row">
-        <!-- Nav tabs -->
-        <ul class="nav nav-pills nav-justified" role="tablist">
-            <li role="presentation" class="active"><a href="#horizDishEnds" aria-controls="horizDishEnds" role="tab" data-toggle="tab">Horizontal Cylindrical Dished Ends</a></li>
-            <li role="presentation"><a href="#horizFlatEnds" aria-controls="horizFlatEnds" role="tab" data-toggle="tab">Horizontal Cylindrical Flat Ends</a></li>
-            <li role="presentation"><a href="#rectangular" aria-controls="rectangular" role="tab" data-toggle="tab">Rectangular</a></li>
-            <li role="presentation"><a href="#vertCyl" aria-controls="vertCyl" role="tab" data-toggle="tab">Vertical Cylindrical</a></li>
-            <li role="presentation"><a href="#ellipt" aria-controls="ellipt" role="tab" data-toggle="tab">Elliptical</a></li>
-        </ul>
-        <br />
-        <!-- Tab panes -->
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="horizDishEnds">
-                @Html.Partial("_HorizDishEndsPartial")
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-stop"></span> Rectangular
+                </h3>
             </div>
-            <div role="tabpanel" class="tab-pane" id="horizFlatEnds">
-                @Html.Partial("_HorizFlatEndsPartial")
-            </div>
-            <div role="tabpanel" class="tab-pane" id="rectangular">
-                @Html.Partial("_RectangularPartial")
-            </div>
-            <div role="tabpanel" class="tab-pane" id="vertCyl">
-                @Html.Partial("_VertCylPartial")
-            </div>
-            <div role="tabpanel" class="tab-pane" id="ellipt">
-                @Html.Partial("_EllipticalPartial")
+            <div class="panel-body">
+                <p>For rectangular tanks and containers.</p>
+                <p><strong>Parameters:</strong> Length, Width, Height, Slope (optional)</p>
+                <a href="@Url.Action("Index", "Rectangular")" class="btn btn-success btn-block btn-lg">
+                    Calculate <span class="glyphicon glyphicon-arrow-right"></span>
+                </a>
             </div>
         </div>
     </div>
-</form>
+
+    <div class="col-md-6">
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-record"></span> Vertical Cylindrical
+                </h3>
+            </div>
+            <div class="panel-body">
+                <p>For vertical cylindrical tanks standing upright.</p>
+                <p><strong>Parameters:</strong> Diameter, Height, Dished End Depth (optional)</p>
+                <a href="@Url.Action("Index", "VertCyl")" class="btn btn-warning btn-block btn-lg">
+                    Calculate <span class="glyphicon glyphicon-arrow-right"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-adjust"></span> Elliptical
+                </h3>
+            </div>
+            <div class="panel-body">
+                <p>For tanks with elliptical cross-sections.</p>
+                <p><strong>Parameters:</strong> Major Axis, Minor Axis, Length</p>
+                <a href="@Url.Action("Index", "Elliptical")" class="btn btn-danger btn-block btn-lg">
+                    Calculate <span class="glyphicon glyphicon-arrow-right"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-top: 40px;">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">About This Calculator</h3>
+            </div>
+            <div class="panel-body">
+                <h4>Features:</h4>
+                <ul>
+                    <li>Multiple tank geometries supported</li>
+                    <li>Workshop format (fixed volume increments) or Chart format (fixed height increments)</li>
+                    <li>Multiple unit systems: Litres/Millimetres, Gallons/Inches, Cubic Metres/Millimetres</li>
+                    <li>CSV export for CNC engraving machines</li>
+                    <li>Calculation history and configuration management</li>
+                    <li>Client-side validation for accurate data entry</li>
+                </ul>
+                <h4>How It Works:</h4>
+                <ol>
+                    <li>Select your tank type from the options above</li>
+                    <li>Enter tank dimensions and select your preferred units</li>
+                    <li>Choose between Workshop or Chart format</li>
+                    <li>Specify increment values</li>
+                    <li>Click Calculate to generate your dipstick calibration table</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>

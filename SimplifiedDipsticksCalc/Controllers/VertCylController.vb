@@ -18,6 +18,10 @@ Namespace Controllers
             _vertCylService = vertCylService
             _tankService = tankService
         End Sub
+
+        Function Index() As ActionResult
+            Return View()
+        End Function
         '
         ' POST: /VertCyl/Calculate
 

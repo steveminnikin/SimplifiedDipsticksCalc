@@ -16,6 +16,10 @@ Namespace Controllers
             _tankService = tankService
         End Sub
 
+        Function Index() As ActionResult
+            Return View()
+        End Function
+
         Function GetGCode() As ActionResult
 
             Return View()

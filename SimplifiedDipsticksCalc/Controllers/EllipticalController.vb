@@ -17,6 +17,10 @@ Namespace Controllers
         End Sub
 
         ' GET: Elliptical
+        Function Index() As ActionResult
+            Return View()
+        End Function
+
         Function Input() As ActionResult
 
             Return View()

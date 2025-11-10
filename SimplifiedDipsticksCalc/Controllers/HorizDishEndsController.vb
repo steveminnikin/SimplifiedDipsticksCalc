@@ -18,10 +18,9 @@ Namespace Controllers
         End Sub
 
         '
-        '   GET /HorizDishEnds/Calculate
+        '   GET /HorizDishEnds/Index
 
-        Function Calculate() As ActionResult
-
+        Function Index() As ActionResult
             Return View()
         End Function
 

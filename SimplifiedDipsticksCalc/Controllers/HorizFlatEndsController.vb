@@ -17,6 +17,10 @@ Namespace Controllers
         End Sub
 
         ' GET: HorizFlatEnds
+        Function Index() As ActionResult
+            Return View()
+        End Function
+
         Function Input() As ActionResult
 
             Return View()
