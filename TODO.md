@@ -20,21 +20,21 @@ This document outlines suggested improvements for the Dipsticks Calculator appli
 ### 1.1 Visual Design & Branding
 - [ ] 📌 **Design a proper logo** for "Dipsticks Calculator" in the navbar
 - [ ] 📌 **Improve color scheme** - Replace default Bootstrap inverse navbar with branded colors
-- [ ] 📌 **Add tank type icons** to the navigation tabs for visual identification
-- [ ] 💡 **Create a landing/welcome screen** with quick start guide
+- [x] ~~**Add tank type icons** to the navigation tabs for visual identification~~ - **N/A** (tabs removed in favor of separate pages) ✅ 2025-11-10
+- [x] 💡 **Create a landing/welcome screen** with quick start guide ✅ 2025-11-10
 - [ ] 💡 **Add visual tank diagrams** showing dimension labels for each tank type
 - [ ] 📌 **Improve footer design** - modernize copyright notice, add version info
 
 ### 1.2 Form Input Experience
-- [ ] ⭐ **Add input validation feedback** - Real-time validation with helpful error messages
-- [ ] ⭐ **Add placeholder text** to all input fields with example values
+- [x] ⭐ **Add input validation feedback** - Real-time validation with helpful error messages ✅ 2025-11-10
+- [x] ⭐ **Add placeholder text** to all input fields with example values ✅ 2025-11-10
 - [ ] 📌 **Add tooltips/help icons** next to technical fields (e.g., "Dished End Radius")
 - [ ] 📌 **Implement input masking** for numeric fields to prevent invalid characters
 - [ ] 📌 **Add unit converter helper** - Quick conversion between mm/inches inline
 - [ ] 💡 **Auto-calculate dependent fields** (e.g., full volume preview before calculation)
 - [ ] 📌 **Group related fields visually** with card/panel containers
 - [ ] ⭐ **Add clear/reset button** for each tank type form
-- [ ] 💡 **Save favorite configurations** - Allow users to save common tank setups
+- [x] 💡 **Save favorite configurations** - Allow users to save common tank setups ✅ 2025-11-10 (via export/import)
 
 ### 1.3 Results Display
 - [ ] ⭐ **Add visual charts/graphs** - Plot height vs volume using Chart.js or similar
@@ -50,9 +50,9 @@ This document outlines suggested improvements for the Dipsticks Calculator appli
 ### 1.4 Navigation & Workflow
 - [ ] ⭐ **Add breadcrumb navigation** showing current step
 - [ ] 📌 **Add "Back to Input" button** on results page
-- [ ] 📌 **Improve tab navigation** - Add keyboard shortcuts (Ctrl+1, Ctrl+2, etc.)
-- [ ] 💡 **Add quick access menu** to recently calculated tanks
-- [ ] 📌 **Remember last used tab** across sessions (already partially implemented)
+- [x] ~~**Improve tab navigation** - Add keyboard shortcuts (Ctrl+1, Ctrl+2, etc.)~~ - **N/A** (tabs removed, now using separate pages) ✅ 2025-11-10
+- [x] 💡 **Add quick access menu** to recently calculated tanks ✅ 2025-11-10 (via calculation history dropdown)
+- [x] ~~**Remember last used tab** across sessions (already partially implemented)~~ - **N/A** (tabs removed) ✅ 2025-11-10
 - [ ] 💡 **Multi-step wizard** for complex tank types (optional guided mode)
 
 ### 1.5 Responsive Design
@@ -287,3 +287,12 @@ Move completed items here with completion date:
   - Improved error messages to be user-friendly and actionable
   - Added export/import tank configuration functionality (JSON files)
   - Validated dimensional relationships (e.g., minor axis <= major axis)
+- ✅ **2025-11-10** - Major architectural refactoring:
+  - Refactored from single-page tab-based interface to separate views per tank type
+  - Created individual Index views for all 5 tank types
+  - Converted Home/Index to professional landing page with tank selection
+  - Eliminated duplicate field ID issues (HTML standards compliant)
+  - Added unique URLs for each tank calculator
+  - Fixed validation bugs caused by duplicate IDs across tabs
+  - Improved SEO with separate pages for each tank type
+  - Better browser history and bookmarking support
