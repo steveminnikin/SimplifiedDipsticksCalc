@@ -1,7 +1,168 @@
-﻿$(document).ready(function () {
+﻿// Calculation History Management
+var CalculationHistory = (function() {
+    var MAX_HISTORY_ITEMS = 10;
+    var STORAGE_KEY = 'dipstickCalculationHistory';
+
+    function saveCalculation(tankType, formData, client) {
+        try {
+            var history = getHistory();
+            var calculation = {
+                id: Date.now(),
+                timestamp: new Date().toISOString(),
+                tankType: tankType,
+                formData: formData,
+                client: client
+            };
+
+            history.unshift(calculation);
+            if (history.length > MAX_HISTORY_ITEMS) {
+                history = history.slice(0, MAX_HISTORY_ITEMS);
+            }
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+            return true;
+        } catch (e) {
+            console.error('Failed to save calculation to history:', e);
+            return false;
+        }
+    }
+
+    function getHistory() {
+        try {
+            var history = localStorage.getItem(STORAGE_KEY);
+            return history ? JSON.parse(history) : [];
+        } catch (e) {
+            console.error('Failed to retrieve calculation history:', e);
+            return [];
+        }
+    }
+
+    function clearHistory() {
+        try {
+            localStorage.removeItem(STORAGE_KEY);
+            return true;
+        } catch (e) {
+            console.error('Failed to clear calculation history:', e);
+            return false;
+        }
+    }
+
+    function deleteCalculation(id) {
+        try {
+            var history = getHistory();
+            history = history.filter(function(calc) { return calc.id !== id; });
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+            return true;
+        } catch (e) {
+            console.error('Failed to delete calculation:', e);
+            return false;
+        }
+    }
+
+    return {
+        save: saveCalculation,
+        getAll: getHistory,
+        clear: clearHistory,
+        delete: deleteCalculation
+    };
+})();
+
+$(document).ready(function () {
     var count = 0;
     var Data = [];
     var retrievedData = [];
+
+    // Initialize calculation history dropdown
+    function initCalculationHistory() {
+        var history = CalculationHistory.getAll();
+        var $dropdown = $('#historyDropdown');
+
+        if (!$dropdown.length || history.length === 0) {
+            return;
+        }
+
+        $dropdown.empty();
+        $dropdown.append('<option value="">-- Select Previous Calculation --</option>');
+
+        history.forEach(function(calc) {
+            var date = new Date(calc.timestamp);
+            var dateStr = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+            var label = calc.tankType + ' - ' + dateStr;
+            if (calc.client && calc.client.Name) {
+                label += ' (' + calc.client.Name + ')';
+            }
+            $dropdown.append('<option value="' + calc.id + '">' + label + '</option>');
+        });
+    }
+
+    // Load a calculation from history
+    function loadCalculationFromHistory(calculationId) {
+        var history = CalculationHistory.getAll();
+        var calculation = history.find(function(calc) { return calc.id === parseInt(calculationId); });
+
+        if (!calculation) {
+            return;
+        }
+
+        // Switch to the correct tab
+        var tabMap = {
+            'Horizontal Cylindrical Dished Ends': '#horizDishEnds',
+            'Horizontal Cylindrical Flat Ends': '#horizFlatEnds',
+            'Rectangular': '#rectangular',
+            'Vertical Cylindrical': '#vertCyl',
+            'Elliptical': '#ellipt'
+        };
+
+        var tabId = tabMap[calculation.tankType];
+        if (tabId) {
+            $('a[href="' + tabId + '"]').tab('show');
+        }
+
+        // Populate client fields
+        if (calculation.client) {
+            $('#Name').val(calculation.client.Name || '');
+            $('#Ref').val(calculation.client.Ref || '');
+            $('#Notes').val(calculation.client.Notes || '');
+            $('#Date').val(calculation.client.Date || '');
+            $('#tankRef').val(calculation.client.TankRef || '');
+            $('#ourRef').val(calculation.client.OurRef || '');
+        }
+
+        // Populate form fields
+        if (calculation.formData) {
+            calculation.formData.forEach(function(field) {
+                var $input = $('#' + field.id);
+                if ($input.length) {
+                    $input.val(field.value);
+                }
+            });
+        }
+    }
+
+    // Clear calculation history
+    function clearCalculationHistory() {
+        if (confirm('Are you sure you want to clear all calculation history? This cannot be undone.')) {
+            CalculationHistory.clear();
+            initCalculationHistory();
+            alert('Calculation history has been cleared.');
+        }
+    }
+
+    // Handle history dropdown change
+    $(document).on('change', '#historyDropdown', function() {
+        var calculationId = $(this).val();
+        if (calculationId) {
+            loadCalculationFromHistory(calculationId);
+        }
+    });
+
+    // Handle clear history button
+    $(document).on('click', '#btnClearHistory', function() {
+        clearCalculationHistory();
+    });
+
+    // Initialize history on page load
+    initCalculationHistory();
 
     $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
         sessionStorage.setItem('activeTab', $(e.target).attr('href'));
@@ -53,22 +214,32 @@
             alert('Could not save form data. Your browser may have cookies/storage disabled.');
         }
 
+        // Determine tank type and save to calculation history
+        var tankType = '';
         //set the post action on the tab form
         if ($('#horizDishEnds').hasClass('active')) {
             $('#submitForm').attr('action', '/HorizDishEnds/Calculate');
+            tankType = 'Horizontal Cylindrical Dished Ends';
         }
         if ($('#horizFlatEnds').hasClass('active')) {
             $('#submitForm').attr('action', '/HorizFlatEnds/Calculate');
+            tankType = 'Horizontal Cylindrical Flat Ends';
         }
         if ($('#rectangular').hasClass('active')) {
             $('#submitForm').attr('action', '/Rectangular/Calculate');
+            tankType = 'Rectangular';
         }
         if ($('#vertCyl').hasClass('active')) {
             $('#submitForm').attr('action', '/VertCyl/Calculate');
+            tankType = 'Vertical Cylindrical';
         }
         if ($('#ellipt').hasClass('active')) {
             $('#submitForm').attr('action', '/Elliptical/Calculate');
+            tankType = 'Elliptical';
         }
+
+        // Save calculation to history
+        CalculationHistory.save(tankType, Data, Client);
 
     }); //btnSubmit.click  
 

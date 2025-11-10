@@ -1,5 +1,34 @@
-﻿    
+
 <br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <span class="glyphicon glyphicon-time"></span> Calculation History
+                </h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <label for="historyDropdown">Load Previous Calculation:</label>
+                            <select id="historyDropdown" class="form-control">
+                                <option value="">-- Select Previous Calculation --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label>&nbsp;</label>
+                        <button type="button" id="btnClearHistory" class="btn btn-danger btn-block" title="Clear all calculation history">
+                            <span class="glyphicon glyphicon-trash"></span> Clear History
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <form id="submitForm" method="post">
     <div class="row">
         <div class="col-md-6">
