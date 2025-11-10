@@ -2,8 +2,14 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Professional dipstick calibration calculator for rectangular, cylindrical, elliptical, and dished end tanks. Generate accurate volume-to-height conversion tables for tank calibration." />
+    <meta name="keywords" content="dipstick calculator, tank calibration, volume calculation, height conversion, cylindrical tank, rectangular tank, elliptical tank, dished ends, tank measurement" />
+    <meta name="author" content="Dipsticks Engineering Services Ltd" />
+    <meta name="robots" content="index, follow" />
     <title>@ViewBag.Title</title>
+    <link rel="icon" type="image/png" href="~/favicon.png" />
+    <link rel="apple-touch-icon" href="~/DipsticksBlue50.png" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")

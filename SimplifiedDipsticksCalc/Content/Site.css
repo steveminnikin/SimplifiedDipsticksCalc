@@ -132,3 +132,43 @@ textarea.is-valid {
     font-size: 16px;
     font-weight: 500;
 }
+
+/* ===========================
+   BUTTON STYLING IMPROVEMENTS
+   =========================== */
+
+/* Primary Calculate buttons - make them stand out */
+.btn-primary.btn-lg {
+    background-color: #28a745;
+    border-color: #28a745;
+    font-weight: 600;
+    padding: 12px 30px;
+    font-size: 18px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.btn-primary.btn-lg:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transform: translateY(-2px);
+}
+
+.btn-primary.btn-lg:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Back/Secondary buttons */
+.btn-default.btn-lg {
+    font-weight: 500;
+    padding: 12px 30px;
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
+
+.btn-default.btn-lg:hover {
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}

@@ -7,6 +7,26 @@ End Code
     <p class="lead">Professional dipstick calibration calculator for various tank geometries. Generate accurate volume-to-height conversion tables for your tanks.</p>
 </div>
 
+<div class="row" style="margin-bottom: 30px;">
+    <div class="col-md-12">
+        <div class="alert alert-info">
+            <h4 class="alert-heading">
+                <span class="glyphicon glyphicon-star"></span> What's New
+            </h4>
+            <hr />
+            <p><strong>Recent Improvements:</strong></p>
+            <ul style="margin-bottom: 10px;">
+                <li><strong>Enhanced UI:</strong> New loading spinner shows calculation progress, success messages confirm completion</li>
+                <li><strong>Improved Buttons:</strong> Calculate buttons now feature prominent green styling with smooth animations</li>
+                <li><strong>Better Error Handling:</strong> Comprehensive server-side validation and helpful error messages</li>
+                <li><strong>Security Updates:</strong> Enhanced XSS protection and updated security packages</li>
+                <li><strong>User Experience:</strong> New favicon, SEO optimization, and improved error page</li>
+            </ul>
+            <small class="text-muted"><em>Last updated: @DateTime.Now.ToString("MMMM yyyy")</em></small>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-md-12">
         <h2>Select Tank Type</h2>
