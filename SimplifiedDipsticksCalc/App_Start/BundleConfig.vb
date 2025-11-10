@@ -18,7 +18,6 @@ Public Module BundleConfig
                     "~/Scripts/respond.js"))
 
         bundles.Add(New StyleBundle("~/Content/css").Include(
-                    "~/Content/bootstrap.css",
                     "~/Content/site.css"))
     End Sub
 End Module
