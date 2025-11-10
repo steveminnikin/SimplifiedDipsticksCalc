@@ -61,14 +61,6 @@ This document outlines suggested improvements for the Dipsticks Calculator appli
 - [ ] 📌 **Improve navbar mobile menu** - Better organization of tabs
 - [ ] 📌 **Optimize table display on mobile** - Make scrollable or stacked
 
-### 1.6 Accessibility
-- [ ] ⭐ **Add ARIA labels** to all form inputs
-- [ ] ⭐ **Ensure keyboard navigation** works throughout the application
-- [ ] 📌 **Add focus indicators** for better keyboard navigation visibility
-- [ ] 📌 **Test with screen readers** and fix any issues
-- [ ] 📌 **Improve color contrast** to meet WCAG 2.1 AA standards
-- [ ] 💡 **Add high contrast mode** toggle
-
 ---
 
 ## 2. FUNCTIONALITY IMPROVEMENTS
@@ -174,11 +166,10 @@ This document outlines suggested improvements for the Dipsticks Calculator appli
 - [ ] 💡 **Approval workflow** - Review and approve calculations
 - [ ] 💡 **Team workspaces** - Multiple users sharing data
 
-### 5.3 Reporting & Analytics
+### 5.3 Reporting
 - [ ] 💡 **Usage dashboard** - Track calculation statistics
 - [ ] 💡 **Custom reports** - Generate business reports
 - [ ] 💡 **Data export** - Bulk export of calculations
-- [ ] 💡 **Analytics integration** - Google Analytics or similar
 
 ---
 
@@ -204,16 +195,15 @@ This document outlines suggested improvements for the Dipsticks Calculator appli
 
 These are small changes that can be implemented quickly but provide significant value:
 
-1. [ ] ⭐ **Add loading spinner** on form submission
-2. [ ] ⭐ **Add success message** after calculation
-3. [ ] ⭐ **Improve button styling** - Make "Calculate" button more prominent
+1. [x] ⭐ **Add loading spinner** on form submission ✅ 2025-11-10
+2. [x] ⭐ **Add success message** after calculation ✅ 2025-11-10
+3. [x] ⭐ **Improve button styling** - Make "Calculate" button more prominent ✅ 2025-11-10
 4. [ ] ⭐ **Add form field labels** with icons for clarity
-5. [ ] ⭐ **Add "What's New" section** on homepage
-6. [ ] ⭐ **Improve error page** - Make it more helpful and branded
-7. [ ] ⭐ **Add Google Analytics** - Track usage patterns
-8. [ ] ⭐ **Add meta tags** for SEO
-9. [ ] ⭐ **Create favicon** - Brand the browser tab
-10. [ ] ⭐ **Add keyboard shortcuts help** - Modal showing available shortcuts
+5. [x] ⭐ **Add "What's New" section** on homepage ✅ 2025-11-10
+6. [x] ⭐ **Improve error page** - Make it more helpful and branded ✅ 2025-11-10
+7. [x] ⭐ **Add meta tags** for SEO ✅ 2025-11-10
+8. [x] ⭐ **Create favicon** - Brand the browser tab ✅ 2025-11-10
+9. [ ] ⭐ **Add keyboard shortcuts help** - Modal showing available shortcuts
 
 ---
 
