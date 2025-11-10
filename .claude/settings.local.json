@@ -8,7 +8,12 @@
       "Bash(git push:*)",
       "Bash(nuget restore:*)",
       "Bash(.gitignore)",
-      "Bash(msbuild:*)"
+      "Bash(msbuild:*)",
+      "Bash(nuget list:*)",
+      "Bash(where nuget:*)",
+      "Bash(\"C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe\" SimplifiedDipsticksCalc.sln /t:restore /p:Configuration=Release)",
+      "Bash(\"C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe\" SimplifiedDipsticksCalc.sln -t:restore -p:Configuration=Release)",
+      "Bash(\"C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe\" SimplifiedDipsticksCalc.sln -p:Configuration=Release -restore)"
     ],
     "deny": [],
     "ask": []
