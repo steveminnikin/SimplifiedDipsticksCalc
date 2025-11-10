@@ -5,12 +5,12 @@
         <div class="panel panel-info">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <span class="glyphicon glyphicon-time"></span> Calculation History
+                    <span class="glyphicon glyphicon-time"></span> Calculation History & Configuration Management
                 </h4>
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-10">
+                    <div class="col-md-7">
                         <div class="form-group">
                             <label for="historyDropdown">Load Previous Calculation:</label>
                             <select id="historyDropdown" class="form-control">
@@ -20,8 +20,21 @@
                     </div>
                     <div class="col-md-2">
                         <label>&nbsp;</label>
+                        <button type="button" id="btnExportConfig" class="btn btn-success btn-block" title="Export current tank configuration to file">
+                            <span class="glyphicon glyphicon-export"></span> Export Config
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        <label>&nbsp;</label>
+                        <button type="button" id="btnImportConfig" class="btn btn-info btn-block" title="Import tank configuration from file">
+                            <span class="glyphicon glyphicon-import"></span> Import Config
+                        </button>
+                        <input type="file" id="fileImportConfig" accept=".json" style="display: none;" />
+                    </div>
+                    <div class="col-md-1">
+                        <label>&nbsp;</label>
                         <button type="button" id="btnClearHistory" class="btn btn-danger btn-block" title="Clear all calculation history">
-                            <span class="glyphicon glyphicon-trash"></span> Clear History
+                            <span class="glyphicon glyphicon-trash"></span>
                         </button>
                     </div>
                 </div>

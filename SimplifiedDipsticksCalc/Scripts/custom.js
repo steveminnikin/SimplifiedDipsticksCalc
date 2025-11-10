@@ -129,6 +129,165 @@ var FormValidator = (function() {
     };
 })();
 
+// Configuration Export/Import Module
+var ConfigManager = (function() {
+    function getCurrentConfiguration() {
+        var activeTab = $('.tab-pane.active').attr('id');
+        var tankTypeMap = {
+            'horizDishEnds': 'Horizontal Cylindrical Dished Ends',
+            'horizFlatEnds': 'Horizontal Cylindrical Flat Ends',
+            'rectangular': 'Rectangular',
+            'vertCyl': 'Vertical Cylindrical',
+            'ellipt': 'Elliptical'
+        };
+
+        var config = {
+            version: '1.0',
+            exportDate: new Date().toISOString(),
+            tankType: tankTypeMap[activeTab],
+            client: {
+                Name: $('#Name').val(),
+                Ref: $('#Ref').val(),
+                Notes: $('#Notes').val(),
+                Date: $('#Date').val(),
+                TankRef: $('#tankRef').val(),
+                OurRef: $('#ourRef').val()
+            },
+            settings: {
+                Dimensions: $('#Dimensions').val(),
+                RegDip: $('input[name="regDip"]:checked').val(),
+                EngraveCode: $('#EngraveCode').is(':checked'),
+                Adjustments: $('#Adjustments').val(),
+                Increments: $('#incrementsInput').val()
+            },
+            tankData: {}
+        };
+
+        // Collect all input values from active tab
+        $('.tab-pane.active input[type="text"], .tab-pane.active input[type="number"]').each(function() {
+            var $input = $(this);
+            var id = $input.attr('id');
+            var value = $input.val();
+            if (id && value) {
+                config.tankData[id] = value;
+            }
+        });
+
+        return config;
+    }
+
+    function exportConfiguration() {
+        try {
+            var config = getCurrentConfiguration();
+            var json = JSON.stringify(config, null, 2);
+            var blob = new Blob([json], { type: 'application/json' });
+            var url = URL.createObjectURL(blob);
+
+            var filename = 'tank-config-' + config.tankType.replace(/\s+/g, '-').toLowerCase() + '-' +
+                          new Date().toISOString().slice(0, 10) + '.json';
+
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            return true;
+        } catch (e) {
+            console.error('Failed to export configuration:', e);
+            alert('Failed to export configuration. ' + e.message);
+            return false;
+        }
+    }
+
+    function importConfiguration(fileInput) {
+        var file = fileInput.files[0];
+        if (!file) {
+            return;
+        }
+
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                var config = JSON.parse(e.target.result);
+                applyConfiguration(config);
+                alert('Configuration imported successfully!');
+                fileInput.value = ''; // Clear file input
+            } catch (error) {
+                console.error('Failed to import configuration:', error);
+                alert('Failed to import configuration. Please ensure the file is a valid tank configuration file.');
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    function applyConfiguration(config) {
+        if (!config || !config.tankType) {
+            throw new Error('Invalid configuration file');
+        }
+
+        // Switch to correct tab
+        var tabMap = {
+            'Horizontal Cylindrical Dished Ends': '#horizDishEnds',
+            'Horizontal Cylindrical Flat Ends': '#horizFlatEnds',
+            'Rectangular': '#rectangular',
+            'Vertical Cylindrical': '#vertCyl',
+            'Elliptical': '#ellipt'
+        };
+
+        var tabId = tabMap[config.tankType];
+        if (tabId) {
+            $('a[href="' + tabId + '"]').tab('show');
+        }
+
+        // Apply client information
+        if (config.client) {
+            $('#Name').val(config.client.Name || '');
+            $('#Ref').val(config.client.Ref || '');
+            $('#Notes').val(config.client.Notes || '');
+            $('#Date').val(config.client.Date || '');
+            $('#tankRef').val(config.client.TankRef || '');
+            $('#ourRef').val(config.client.OurRef || '');
+        }
+
+        // Apply settings
+        if (config.settings) {
+            if (config.settings.Dimensions) {
+                $('#Dimensions').val(config.settings.Dimensions);
+            }
+            if (config.settings.RegDip !== undefined) {
+                $('input[name="regDip"][value="' + config.settings.RegDip + '"]').prop('checked', true);
+            }
+            if (config.settings.EngraveCode !== undefined) {
+                $('#EngraveCode').prop('checked', config.settings.EngraveCode);
+            }
+            if (config.settings.Adjustments) {
+                $('#Adjustments').val(config.settings.Adjustments);
+            }
+            if (config.settings.Increments) {
+                $('#incrementsInput').val(config.settings.Increments);
+            }
+        }
+
+        // Apply tank-specific data
+        if (config.tankData) {
+            for (var key in config.tankData) {
+                if (config.tankData.hasOwnProperty(key)) {
+                    $('#' + key).val(config.tankData[key]);
+                }
+            }
+        }
+    }
+
+    return {
+        export: exportConfiguration,
+        import: importConfiguration,
+        getCurrent: getCurrentConfiguration
+    };
+})();
+
 // Calculation History Management
 var CalculationHistory = (function() {
     var MAX_HISTORY_ITEMS = 10;
@@ -290,6 +449,20 @@ $(document).ready(function () {
     // Handle clear history button
     $(document).on('click', '#btnClearHistory', function() {
         clearCalculationHistory();
+    });
+
+    // Handle export configuration button
+    $(document).on('click', '#btnExportConfig', function() {
+        ConfigManager.export();
+    });
+
+    // Handle import configuration button
+    $(document).on('change', '#fileImportConfig', function() {
+        ConfigManager.import(this);
+    });
+
+    $(document).on('click', '#btnImportConfig', function() {
+        $('#fileImportConfig').click();
     });
 
     // Initialize history on page load
