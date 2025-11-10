@@ -14,7 +14,7 @@ Public Class Elliptical
     <Display(Name:="Length")>
     Property ElliptLength As Double
 
-    Public convertedEllipticalDimensions As IConvertedEllipticalDimensions
+    Property ConvertedEllipticalDimensions As IConvertedEllipticalDimensions
 
     Public Sub New()
         Shape = "Elliptical"

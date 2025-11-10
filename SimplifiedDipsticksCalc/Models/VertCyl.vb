@@ -9,7 +9,7 @@ Public Class VertCyl
     <Display(Name:="Dished End Depth")>
     Property DishEndDepth As Nullable(Of Double)
 
-    Public convertedVertDimensions As IConvertedVertDimensions
+    Property ConvertedVertDimensions As IConvertedVertDimensions
 
     Public Sub New()
         Shape = "Vertical Cylindrical"
