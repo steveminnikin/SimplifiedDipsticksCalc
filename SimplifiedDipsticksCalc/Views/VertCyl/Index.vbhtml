@@ -39,7 +39,8 @@ End Code
                     </div>
                 </div>
                 <div class="col-lg-offset-3 col-lg-9">
-                    <button type="submit" class="btn btn-primary btn-lg">Calculate</button>
+                    <button type="submit" class="btn btn-primary btn-lg btnSubmit">Calculate</button>
+                    <button type="button" class="btn btn-warning btn-lg btnClear">Clear Form</button>
                     <a href="@Url.Action("Index", "Home")" class="btn btn-default btn-lg">Back to Tank Selection</a>
                 </div>
             </div>

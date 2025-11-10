@@ -471,14 +471,7 @@ $(document).ready(function () {
     // Initialize history on page load
     initCalculationHistory();
 
-    $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
-        sessionStorage.setItem('activeTab', $(e.target).attr('href'));
-    });
-    var activeTab = sessionStorage.getItem('activeTab');
-    if (activeTab) {
-        $('a[href="' + activeTab + '"]').tab('show');
-    }
-
+    // Restore form data from sessionStorage (if exists)
     if (!sessionStorage.getItem("hasCodeRunBefore")) {
         try {
             sessionStorage.setItem("hasCodeRunBefore", true);
@@ -537,34 +530,54 @@ $(document).ready(function () {
             alert('Could not save form data. Your browser may have cookies/storage disabled.');
         }
 
-        // Determine tank type and save to calculation history
+        // Determine tank type from URL path for calculation history
         var tankType = '';
-        //set the post action on the tab form
-        if ($('#horizDishEnds').hasClass('active')) {
-            $('#submitForm').attr('action', '/HorizDishEnds/Calculate');
+        var path = window.location.pathname.toLowerCase();
+        if (path.indexOf('horizdishends') > -1) {
             tankType = 'Horizontal Cylindrical Dished Ends';
-        }
-        if ($('#horizFlatEnds').hasClass('active')) {
-            $('#submitForm').attr('action', '/HorizFlatEnds/Calculate');
+        } else if (path.indexOf('horizflatends') > -1) {
             tankType = 'Horizontal Cylindrical Flat Ends';
-        }
-        if ($('#rectangular').hasClass('active')) {
-            $('#submitForm').attr('action', '/Rectangular/Calculate');
+        } else if (path.indexOf('rectangular') > -1) {
             tankType = 'Rectangular';
-        }
-        if ($('#vertCyl').hasClass('active')) {
-            $('#submitForm').attr('action', '/VertCyl/Calculate');
+        } else if (path.indexOf('vertcyl') > -1) {
             tankType = 'Vertical Cylindrical';
-        }
-        if ($('#ellipt').hasClass('active')) {
-            $('#submitForm').attr('action', '/Elliptical/Calculate');
+        } else if (path.indexOf('elliptical') > -1) {
             tankType = 'Elliptical';
         }
 
         // Save calculation to history
-        CalculationHistory.save(tankType, Data, Client);
+        if (tankType) {
+            CalculationHistory.save(tankType, Data, Client);
+        }
 
-    }); //btnSubmit.click  
+    }); //btnSubmit.click
+
+    // Clear Form button handler
+    $('.btnClear').click(function (e) {
+        e.preventDefault();
+
+        if (confirm('Are you sure you want to clear all form data?')) {
+            // Clear all form inputs
+            $('form input[type="text"], form input[type="number"]').val('');
+            $('form select').prop('selectedIndex', 0);
+            $('form input[type="checkbox"]').prop('checked', false);
+            $('form input[type="radio"]').prop('checked', false);
+
+            // Clear sessionStorage
+            try {
+                sessionStorage.removeItem('Data');
+                sessionStorage.removeItem('Client');
+            } catch (ex) {
+                console.error('Failed to clear sessionStorage:', ex);
+            }
+
+            // Clear any validation errors
+            FormValidator.clearAllErrors();
+
+            // Focus on first input field
+            $('form input:visible:first').focus();
+        }
+    }); //btnClear.click  
 
     $('#btnEdit').click(function () {
 
