@@ -49,44 +49,45 @@ var FormValidator = (function() {
     function validateDimensionalFields() {
         clearAllErrors();
         var isValid = true;
-        var activeTab = $('.tab-pane.active').attr('id');
+        var $activeTabPane = $('.tab-pane.active');
+        var activeTab = $activeTabPane.attr('id');
 
         // Get active tank type
         var requiredFields = [];
 
         if (activeTab === 'rectangular') {
             requiredFields = [
-                { selector: '#Length', name: 'Length' },
-                { selector: '#Width', name: 'Width' },
-                { selector: '#Height', name: 'Height' }
+                { selector: 'input[id="Length"]', name: 'Length' },
+                { selector: 'input[id="Width"]', name: 'Width' },
+                { selector: 'input[id="Height"]', name: 'Height' }
             ];
         } else if (activeTab === 'vertCyl') {
             requiredFields = [
-                { selector: '#Diameter', name: 'Diameter' },
-                { selector: '#Height', name: 'Height' }
+                { selector: 'input[id="Diameter"]', name: 'Diameter' },
+                { selector: 'input[id="Height"]', name: 'Height' }
             ];
         } else if (activeTab === 'horizFlatEnds') {
             requiredFields = [
-                { selector: '#Diameter', name: 'Diameter' },
-                { selector: '#Length', name: 'Length' }
+                { selector: 'input[id="Diameter"]', name: 'Diameter' },
+                { selector: 'input[id="Length"]', name: 'Length' }
             ];
         } else if (activeTab === 'horizDishEnds') {
             requiredFields = [
-                { selector: '#Diameter', name: 'Diameter' },
-                { selector: '#Length', name: 'Length' },
-                { selector: '#DishEndRadius', name: 'Dished End Radius' }
+                { selector: 'input[id="Diameter"]', name: 'Diameter' },
+                { selector: 'input[id="Length"]', name: 'Length' },
+                { selector: 'input[id="DishEndRadius"]', name: 'Dished End Radius' }
             ];
         } else if (activeTab === 'ellipt') {
             requiredFields = [
-                { selector: '#MajorAxis', name: 'Major Axis' },
-                { selector: '#MinorAxis', name: 'Minor Axis' },
-                { selector: '#Length', name: 'Length' }
+                { selector: 'input[id="MajorAxis"]', name: 'Major Axis' },
+                { selector: 'input[id="MinorAxis"]', name: 'Minor Axis' },
+                { selector: 'input[id="Length"]', name: 'Length' }
             ];
         }
 
-        // Validate required fields
+        // Validate required fields - ONLY within active tab
         requiredFields.forEach(function(field) {
-            var $field = $(field.selector);
+            var $field = $activeTabPane.find(field.selector);
             if ($field.length) {
                 if (!validateNumericField($field, field.name, true)) {
                     isValid = false;
@@ -94,13 +95,13 @@ var FormValidator = (function() {
             }
         });
 
-        // Validate Increments field (always required)
+        // Validate Increments field (always required) - exists outside tabs
         var $increments = $('#incrementsInput');
         if ($increments.length && !validateNumericField($increments, 'Increments', true)) {
             isValid = false;
         }
 
-        // Validate Adjustments if filled (optional but must be numeric if provided)
+        // Validate Adjustments if filled (optional but must be numeric if provided) - exists outside tabs
         var $adjustments = $('#Adjustments');
         if ($adjustments.length && $adjustments.val().trim() !== '') {
             if (!validateNumericField($adjustments, 'Adjustments', false)) {
@@ -108,12 +109,14 @@ var FormValidator = (function() {
             }
         }
 
-        // Dimensional relationship validations
+        // Dimensional relationship validations - scope to active tab
         if (activeTab === 'ellipt') {
-            var majorAxis = parseFloat($('#MajorAxis').val());
-            var minorAxis = parseFloat($('#MinorAxis').val());
+            var $majorAxis = $activeTabPane.find('input[id="MajorAxis"]');
+            var $minorAxis = $activeTabPane.find('input[id="MinorAxis"]');
+            var majorAxis = parseFloat($majorAxis.val());
+            var minorAxis = parseFloat($minorAxis.val());
             if (!isNaN(majorAxis) && !isNaN(minorAxis) && minorAxis > majorAxis) {
-                showError($('#MinorAxis'), 'Minor Axis must be less than or equal to Major Axis.');
+                showError($minorAxis, 'Minor Axis must be less than or equal to Major Axis.');
                 isValid = false;
             }
         }
