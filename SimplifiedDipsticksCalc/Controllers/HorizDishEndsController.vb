@@ -53,6 +53,7 @@ Namespace Controllers
                 If horizDishEnds.EngraveCode Then
                     _tankService.DownloadEngraveCode(horizDishEnds)
                 End If
+                TempData("SuccessMessage") = "Calculation completed successfully!"
             End If
             Return View(horizDishEnds)
 

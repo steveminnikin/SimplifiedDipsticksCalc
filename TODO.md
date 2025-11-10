@@ -48,8 +48,8 @@ This document outlines suggested improvements for the Dipsticks Calculator appli
 - [ ] 💡 **Add comparison mode** - Compare results from different tank configurations
 
 ### 1.4 Navigation & Workflow
-- [ ] ⭐ **Add breadcrumb navigation** showing current step
-- [ ] 📌 **Add "Back to Input" button** on results page
+- [x] ⭐ **Add breadcrumb navigation** showing current step ✅ 2025-11-10
+- [x] 📌 **Add "Back to Input" button** on results page ✅ 2025-11-10
 - [x] ~~**Improve tab navigation** - Add keyboard shortcuts (Ctrl+1, Ctrl+2, etc.)~~ - **N/A** (tabs removed, now using separate pages) ✅ 2025-11-10
 - [x] 💡 **Add quick access menu** to recently calculated tanks ✅ 2025-11-10 (via calculation history dropdown)
 - [x] ~~**Remember last used tab** across sessions (already partially implemented)~~ - **N/A** (tabs removed) ✅ 2025-11-10
@@ -121,8 +121,8 @@ This document outlines suggested improvements for the Dipsticks Calculator appli
 - [ ] 💡 **Add XML documentation** to all public methods
 
 ### 3.3 Security
-- [ ] 🔥 **Fix XSS risk** in custom.js (Bug #14)
-- [ ] 🔥 **Add controller input validation** (Bug #15)
+- [x] 🔥 **Fix XSS risk** in custom.js (Bug #14) ✅ 2025-11-10
+- [x] 🔥 **Add controller input validation** (Bug #15) ✅ 2025-11-10
 - [ ] ⭐ **Implement CSRF tokens** on all forms
 - [ ] ⭐ **Add rate limiting** to prevent abuse
 - [ ] 📌 **Implement Content Security Policy** headers
@@ -222,8 +222,8 @@ These are small changes that can be implemented quickly but provide significant 
 From bugs.md that still need fixing:
 
 ### Low-Moderate Severity
-- [ ] 📌 Fix XSS risk in custom.js string concatenation (Bug #14)
-- [ ] 📌 Add input validation to all controllers (Bug #15)
+- [x] 📌 Fix XSS risk in custom.js string concatenation (Bug #14) ✅ 2025-11-10
+- [x] 📌 Add input validation to all controllers (Bug #15) ✅ 2025-11-10
 - [ ] 📌 Add null check in HorizDishEndsService.vb (Bug #16)
 - [ ] 📌 Remove commented-out code in RectangularService.vb (Bug #17)
 
@@ -296,3 +296,8 @@ Move completed items here with completion date:
   - Fixed validation bugs caused by duplicate IDs across tabs
   - Improved SEO with separate pages for each tank type
   - Better browser history and bookmarking support
+- ✅ **2025-11-10** - Security fixes and navigation improvements:
+  - Fixed Bug #14: XSS risk in custom.js by replacing HTML string concatenation with DOM element creation
+  - Fixed Bug #15: Added comprehensive server-side input validation to all 5 controllers
+  - Added "Back to Input" and "Tank Selection" navigation buttons to all Calculate results pages
+  - Implemented complete breadcrumb navigation system across all pages (Home > Tank Type > Results)

@@ -91,9 +91,6 @@ Public Class RectangularService
                 mark = mark + (i * 100)
                 SafeAddToIncrementList(incrementList, mark, Round(volt))
             Next
-            'h = (h - dbdb) * 100
-            'vol = (l * w * h) - vtilt
-            'dipTable.Rows.Add(Round(vol), mark)
         Else
             l = rectangular.Length / 100
             w = rectangular.Width / 100
@@ -132,12 +129,6 @@ Public Class RectangularService
                 SafeAddToIncrementList(incrementList, Round(i), Round(d4, 1))
             Loop
         End If
-        'adjustment to convert output volume to US Gallons
-        'If ObjUnits.OutputVolume = Units.Volume.USGallons Then
-        '    For j As Integer = 0 To DipTable.Rows.Count - 1
-        '        DipTable.Rows(j).Item(0) = Round(DipTable.Rows(j).Item(0) * 0.264172)
-        '    Next
-        'End If
         Return incrementList
     End Function
 

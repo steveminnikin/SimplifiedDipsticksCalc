@@ -41,7 +41,7 @@ Public Class TankService
                     .cor = CUBIC_INCHES_PER_IMPERIAL_GALLON * US_TO_IMPERIAL_GALLON_RATIO
                     .incAdj = 1.0
                 Case Else
-
+                    Throw New ArgumentException("Unknown dimension type: " & tank.Dimensions.ToString())
             End Select
         End With
 

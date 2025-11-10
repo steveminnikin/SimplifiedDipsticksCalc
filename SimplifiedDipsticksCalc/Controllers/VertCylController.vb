@@ -59,6 +59,7 @@ Namespace Controllers
                 _tankService.DownloadEngraveCode(vertCyl)
             End If
 
+            TempData("SuccessMessage") = "Calculation completed successfully!"
             Return View(_vertCyl)
         End Function
     End Class

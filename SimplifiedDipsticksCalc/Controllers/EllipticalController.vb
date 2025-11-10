@@ -58,6 +58,7 @@ Namespace Controllers
             If elliptical.EngraveCode Then
                 _tankService.DownloadEngraveCode(elliptical)
             End If
+            TempData("SuccessMessage") = "Calculation completed successfully!"
             Return View(elliptical)
         End Function
 

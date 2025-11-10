@@ -627,6 +627,14 @@ $(document).ready(function () {
         var myNote = prompt("Add a note to the chart", "Add 6mm to dip reading before using chart to allow for striker plate");
         $('#chartNote').text(myNote);
     });
+
+    // Loading Spinner - Show on all form submissions
+    $('form').on('submit', function(e) {
+        // Only show spinner if validation passes
+        if (!$(this).data('skip-spinner')) {
+            $('#loading-overlay').addClass('active');
+        }
+    });
 });
 
   

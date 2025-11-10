@@ -5,10 +5,10 @@ Public Class Elliptical
     Inherits Tank
 
     <Required>
-    <Display(Name:=" MajorDiameter")>
+    <Display(Name:="Major Diameter")>
     Property MajorDiameter As Double
     <Required>
-    <Display(Name:=" MinorDiameter")>
+    <Display(Name:="Minor Diameter")>
     Property MinorDiameter As Double
     <Required>
     <Display(Name:="Length")>

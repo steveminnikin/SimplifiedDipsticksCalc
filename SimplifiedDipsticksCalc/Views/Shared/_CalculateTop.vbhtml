@@ -3,6 +3,15 @@
     <h3> Dipsticks Engineering</h3>
 </div>
 
+@If TempData("SuccessMessage") IsNot Nothing Then
+    @<div class="alert alert-success alert-dismissible hidden-print" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong><span class="glyphicon glyphicon-ok"></span> Success!</strong> @TempData("SuccessMessage")
+    </div>
+End If
+
 <div id="clientInfo" class="row visible-print">
     <div class="col-xs-2  text-right">
         <dl id="clientTitle"></dl>

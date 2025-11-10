@@ -29,6 +29,15 @@
         End If
     </div>
     @RenderBody()
+
+    <!-- Loading Spinner Overlay -->
+    <div id="loading-overlay">
+        <div class="spinner-container">
+            <div class="spinner"></div>
+            <div class="spinner-text">Calculating...</div>
+        </div>
+    </div>
+
     <hr />
     <footer class="hidden-print">
         <div>
