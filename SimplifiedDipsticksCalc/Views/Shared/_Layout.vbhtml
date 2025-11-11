@@ -48,7 +48,7 @@
     <hr />
     <footer class="hidden-print">
         <div>
-            <p>&copy; @DateTime.Now.Year - Dipsticks Engineering Services Ltd - For Best Results Use Microsoft Edge Browser</p>
+            <p>&copy; @DateTime.Now.Year - Dipsticks Engineering Services Ltd</p>
         </div>
     </footer>
 

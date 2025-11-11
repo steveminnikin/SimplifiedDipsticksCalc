@@ -5,7 +5,8 @@
         Dim item = Model.IncrementList
         If Model.Increments.Equals(0.0625) Then
             Dim tableLength As Integer = Convert.ToInt32(Math.Ceiling((item.Values.Count / 16.0)))
-            @<table class="table table-condensed ">
+            @<div class="table-responsive">
+            <table class="table table-striped table-hover table-condensed">
                 <!--table row for increments across top of table-->
                 <tr>
                     <td class="text-center table-edged-bottom table-edged-right">@Model.GetShortLength</td>                    
@@ -38,9 +39,11 @@
                     </tr>
                 Next
             </table>
+            </div>
         Else
             Dim tableLength As Integer = Convert.ToInt32(Math.Ceiling((item.Values.Count / 10.0)))
-        @<table class="table table-condensed ">
+        @<div class="table-responsive">
+        <table class="table table-striped table-hover table-condensed">
             <!--table row for increments across top of table-->
             <tr>
                 <td class="text-center table-edged-bottom table-edged-right">@Model.GetShortLength</td>
@@ -60,10 +63,11 @@
                 </tr>
             Next
         </table>
+        </div>
         End If
     Else
         @<div class="col-sm-12 col-md-8 col-md-offset-2">
-            <div>
+            <div class="table-responsive">
                 <table class="table table-condensed">
                     <tr>
                         @For l As Integer = 0 To 2 Step 1
@@ -75,8 +79,8 @@
                 </table>
             </div>
             <div class="text-left wrappedCol">
-                <div>
-                    <table class="table table-condensed table-striped table-edged-bottom">
+                <div class="table-responsive">
+                    <table class="table table-condensed table-striped table-hover table-edged-bottom">
 
                         @For Each listItem In Model.IncrementList
 

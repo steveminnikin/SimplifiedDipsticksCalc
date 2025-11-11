@@ -172,3 +172,167 @@ textarea.is-valid {
     background-color: #e6e6e6;
     border-color: #adadad;
 }
+
+/* ===========================
+   TABLE IMPROVEMENTS
+   =========================== */
+
+/* Better table spacing and readability */
+.table {
+    margin-bottom: 20px;
+}
+
+.table > tbody > tr > td,
+.table > tbody > tr > th,
+.table > thead > tr > td,
+.table > thead > tr > th {
+    padding: 10px;
+    vertical-align: middle;
+}
+
+/* Hover effect for better UX */
+.table-hover > tbody > tr:hover {
+    background-color: #f0f8ff;
+    transition: background-color 0.2s ease;
+}
+
+/* Improve striped table contrast */
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
+}
+
+/* Better borders for increment tables */
+.table-edged-bottom {
+    border-bottom: 2px solid #337ab7 !important;
+}
+
+.table-edged-right {
+    border-right: 1px solid #ddd !important;
+}
+
+/* Mobile responsive tables */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+@media screen and (max-width: 767px) {
+    .table-responsive {
+        width: 100%;
+        margin-bottom: 15px;
+        overflow-y: hidden;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+        border: 1px solid #ddd;
+    }
+
+    .table-responsive > .table {
+        margin-bottom: 0;
+    }
+
+    .table-responsive > .table > thead > tr > th,
+    .table-responsive > .table > tbody > tr > th,
+    .table-responsive > .table > tfoot > tr > th,
+    .table-responsive > .table > thead > tr > td,
+    .table-responsive > .table > tbody > tr > td,
+    .table-responsive > .table > tfoot > tr > td {
+        white-space: nowrap;
+    }
+}
+
+/* ===========================
+   PRINT STYLESHEET
+   =========================== */
+
+@media print {
+    /* Hide non-printable elements */
+    .hidden-print,
+    .navbar,
+    .breadcrumb,
+    footer,
+    .btn,
+    button,
+    #loading-overlay {
+        display: none !important;
+    }
+
+    /* Reset page styles for printing */
+    body {
+        padding-top: 0;
+        padding-bottom: 0;
+        font-size: 12pt;
+        color: #000;
+        background: #fff;
+    }
+
+    .container {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Table improvements for print */
+    .table {
+        border-collapse: collapse !important;
+        width: 100% !important;
+    }
+
+    .table td,
+    .table th {
+        border: 1px solid #000 !important;
+        padding: 5px !important;
+        font-size: 10pt !important;
+    }
+
+    .table thead th {
+        background-color: #f0f0f0 !important;
+        font-weight: bold !important;
+        color: #000 !important;
+    }
+
+    /* Remove hover effects for print */
+    .table-hover > tbody > tr:hover {
+        background-color: transparent !important;
+    }
+
+    /* Ensure alternating rows are visible in print */
+    .table-striped > tbody > tr:nth-of-type(odd) {
+        background-color: #f5f5f5 !important;
+    }
+
+    /* Page break control */
+    .row {
+        page-break-inside: avoid;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        page-break-after: avoid;
+        font-weight: bold;
+        color: #000;
+    }
+
+    /* Ensure important content is visible */
+    .alert {
+        border: 1px solid #000 !important;
+        padding: 10px !important;
+        background-color: #f0f0f0 !important;
+    }
+
+    /* Remove box shadows and transitions */
+    * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+        transition: none !important;
+    }
+
+    /* Links */
+    a {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: "";
+    }
+}
