@@ -79,8 +79,8 @@
                 </table>
             </div>
             <div class="text-left wrappedCol">
-                <div class="table-responsive">
-                    <table class="table table-condensed table-striped table-hover table-edged-bottom">
+                <div>
+                    <table class="table table-condensed table-striped table-edged-bottom">
 
                         @For Each listItem In Model.IncrementList
 
