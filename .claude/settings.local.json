@@ -14,7 +14,18 @@
       "Bash(\"C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe\" SimplifiedDipsticksCalc.sln /t:restore /p:Configuration=Release)",
       "Bash(\"C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe\" SimplifiedDipsticksCalc.sln -t:restore -p:Configuration=Release)",
       "Bash(\"C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe\" SimplifiedDipsticksCalc.sln -p:Configuration=Release -restore)",
-      "WebFetch(domain:cdn.jsdelivr.net)"
+      "WebFetch(domain:cdn.jsdelivr.net)",
+      "Bash(node --version:*)",
+      "Bash(npm --version:*)",
+      "Bash(git init:*)",
+      "Bash(git remote add:*)",
+      "Bash(git branch:*)",
+      "Bash(where devenv:*)",
+      "Bash(xcopy:*)",
+      "Bash(robocopy:*)",
+      "Bash(\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\MSBuild.exe\" /t:restore)",
+      "Bash(\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\MSBuild.exe\" \"C:\\Users\\steve\\OneDrive\\Code\\SimplifiedDipsticksCalc-Vue\\backend\\DipsticksCalculator.API\\DipsticksCalculator.API.vbproj\" -t:restore)",
+      "Bash(dir:*)"
     ],
     "deny": [],
     "ask": []

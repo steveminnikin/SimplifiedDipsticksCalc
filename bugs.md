@@ -1,17 +1,17 @@
 # Bugs and Issues - SimplifiedDipsticksCalc
 
-**Last Updated:** 2025-11-09
-**Total Issues Found:** 22
-**Fixed:** 13
+**Last Updated:** 2025-11-11
+**Total Issues Found:** 23
+**Fixed:** 16
 
 ## Summary
 
 | Severity | Count | Fixed |
 |----------|-------|-------|
-| Critical | 3 | 3 ✅ |
+| Critical | 4 | 4 ✅ |
 | High | 6 | 6 ✅ |
 | Moderate | 4 | 4 ✅ |
-| Low-Moderate | 4 | 0 |
+| Low-Moderate | 4 | 2 ✅ |
 | Low | 5 | 0 |
 
 ---
@@ -100,9 +100,58 @@ Dim initialConversionValues As New IInitialConversionValues()
 
 ---
 
+### 4. ✅ Missing View Files in Azure Deployment
+
+**File:** `SimplifiedDipsticksCalc/SimplifiedDipsticksCalc.vbproj`
+**Status:** ✅ Fixed (2025-11-11)
+**Severity:** Critical
+
+**Issue:**
+
+Tank calculator Index views were missing from the project file and not being deployed to Azure:
+- Views\Rectangular\Index.vbhtml
+- Views\HorizDishEnds\Index.vbhtml
+- Views\HorizFlatEnds\Index.vbhtml
+- Views\VertCyl\Index.vbhtml
+- Views\Elliptical\Index.vbhtml
+
+When users accessed the tank calculators on Azure, they received:
+```
+Server Error in '/' Application.
+The view 'Index' or its master was not found or no view engine supports the searched locations.
+```
+
+The application worked perfectly in local development (Visual Studio with IIS Express) because the files physically existed, but failed on Azure because they weren't included in the deployment package.
+
+**Impact:** Complete failure of all tank calculator pages on Azure production site, making the application unusable for end users
+
+**Root Cause:** The view files existed in the filesystem but were not registered as `<Content>` items in the .vbproj file, so MSBuild/Web Deploy did not include them in the publish package.
+
+**Fix Applied:**
+Added missing view files to SimplifiedDipsticksCalc.vbproj:
+```xml
+<Content Include="Views\Rectangular\Index.vbhtml" />
+<Content Include="Views\HorizDishEnds\Index.vbhtml" />
+<Content Include="Views\HorizFlatEnds\Index.vbhtml" />
+<Content Include="Views\VertCyl\Index.vbhtml" />
+<Content Include="Views\Elliptical\Index.vbhtml" />
+```
+
+Also added the following as preventative measures:
+1. Added `<customErrors mode="RemoteOnly" />` to Web.config for better error visibility during debugging
+2. Added custom MSBuild target to ensure Roslyn compiler files are deployed (common Azure deployment issue)
+
+**Lessons Learned:**
+- Always verify deployment package contents match local development
+- Test on actual deployment target (Azure) early in development
+- "Works on my machine" issues are often deployment configuration problems
+- View files and other content must be explicitly marked in .vbproj to be deployed
+
+---
+
 ## HIGH SEVERITY ISSUES
 
-### 4. ✅ Potential Division by Zero in HorizFlatEndsService.vb
+### 5. ✅ Potential Division by Zero in HorizFlatEndsService.vb
 
 **File:** `SimplifiedDipsticksCalc/Services/HorizFlatEndsService.vb:57-59`
 **Status:** ✅ Fixed
@@ -132,7 +181,7 @@ End If
 
 ---
 
-### 5. ✅ Potential Division by Zero in EllipticalService.vb
+### 6. ✅ Potential Division by Zero in EllipticalService.vb
 
 **File:** `SimplifiedDipsticksCalc/Services/EllipticalService.vb:60-63`
 **Status:** ✅ Fixed
@@ -151,11 +200,11 @@ Same issue as HorizFlatEndsService - line 62 divides by `(1 - Cos(T9))` without 
 
 **Impact:** Runtime crash (DivideByZeroException)
 
-**Suggested Fix:** Add division by zero guard (see issue #4)
+**Suggested Fix:** Add division by zero guard (see issue #5)
 
 ---
 
-### 6. ✅ Potential Division by Zero in HorizDishEndsService.vb (VolCalcs)
+### 7. ✅ Potential Division by Zero in HorizDishEndsService.vb (VolCalcs)
 
 **File:** `SimplifiedDipsticksCalc/Services/HorizDishEndsService.vb:167-174`
 **Status:** ✅ Fixed
@@ -183,7 +232,7 @@ End If
 
 ---
 
-### 7. ✅ Potential Division by Zero in HorizDishEndsService.vb (BasicConstants)
+### 8. ✅ Potential Division by Zero in HorizDishEndsService.vb (BasicConstants)
 
 **File:** `SimplifiedDipsticksCalc/Services/HorizDishEndsService.vb:176-196`
 **Status:** ✅ Fixed
@@ -208,7 +257,7 @@ End If
 
 ---
 
-### 8. ✅ Potential Division by Zero in RectangularService.vb
+### 9. ✅ Potential Division by Zero in RectangularService.vb
 
 **File:** `SimplifiedDipsticksCalc/Services/RectangularService.vb:108-129`
 **Status:** ✅ Fixed
@@ -233,7 +282,7 @@ End If
 
 ---
 
-### 9. ✅ Potential NullReferenceException in TankService.vb
+### 10. ✅ Potential NullReferenceException in TankService.vb
 
 **File:** `SimplifiedDipsticksCalc/Services/TankService.vb:52-70`
 **Status:** ✅ Fixed
@@ -266,7 +315,7 @@ If tank.Details Is Nothing Then tank.Details = ""
 
 ## MODERATE SEVERITY ISSUES
 
-### 10. ✅ Potential Dictionary Key Duplicate Issues
+### 11. ✅ Potential Dictionary Key Duplicate Issues
 
 **File:** Multiple service classes (e.g., `SimplifiedDipsticksCalc/Services/RectangularService.vb:14-41`)
 **Status:** ✅ Fixed
@@ -293,7 +342,7 @@ End If
 
 ---
 
-### 11. ✅ Type Conversion Issue - Case Sensitivity in Property Names
+### 12. ✅ Type Conversion Issue - Case Sensitivity in Property Names
 
 **File:** `SimplifiedDipsticksCalc/Services/HorizFlatEndsService.vb:62`
 **Status:** ✅ Fixed
@@ -312,7 +361,7 @@ The return type is `IConvertedFLatEndsDimensions` (with capital "F" and "Lat") b
 
 ---
 
-### 12. ✅ Inconsistent Property Naming - Case Mismatch
+### 13. ✅ Inconsistent Property Naming - Case Mismatch
 
 **File:** Multiple service files
 **Status:** ✅ Fixed
@@ -331,7 +380,7 @@ Property naming inconsistencies throughout the codebase:
 
 ---
 
-### 13. ✅ Potential Negative Volume in VertCylService.vb
+### 14. ✅ Potential Negative Volume in VertCylService.vb
 
 **File:** `SimplifiedDipsticksCalc/Services/VertCylService.vb:13,17`
 **Status:** ✅ Fixed
@@ -358,39 +407,39 @@ End If
 
 ## LOW-MODERATE SEVERITY ISSUES
 
-### 14. ❌ String Concatenation XSS Risk in JavaScript
+### 15. ✅ String Concatenation XSS Risk in JavaScript
 
 **File:** `SimplifiedDipsticksCalc/Scripts/custom.js:97,101,105,109,113,117,134`
-**Status:** 🔴 Open
+**Status:** ✅ Fixed (2025-11-11)
 **Severity:** Low-Moderate
 
 **Issue:**
 
-While the code does use `.text()` which provides some XSS protection, the approach is inconsistent:
+While the code does use `.text()` which provides some XSS protection, the approach was inconsistent:
 ```javascript
 $clientData.append($('<span>').text(retrievedClient.Name)).append('<br />');
 ```
 
-The code mixes `.text()` with raw HTML strings.
+The code mixed `.text()` with raw HTML strings.
 
 **Impact:** Potential XSS vulnerability if user input is not properly escaped
 
-**Suggested Fix:**
+**Fix Applied:**
 ```javascript
 $clientData.append($('<br>'));  // Instead of .append('<br />')
 ```
 
 ---
 
-### 15. ❌ Missing Input Validation in Controllers
+### 16. ✅ Missing Input Validation in Controllers
 
 **File:** All controllers (e.g., `SimplifiedDipsticksCalc/Controllers/RectangularController.vb:25-41`)
-**Status:** 🔴 Open
+**Status:** ✅ Fixed (2025-11-11)
 **Severity:** Low-Moderate
 
 **Issue:**
 
-Controllers receive form data but don't validate that dimensions are positive:
+Controllers received form data but didn't validate that dimensions were positive:
 ```vb
 Function Calculate(<Bind(Include:="Length,Width,Height,...")> rectangular As Rectangular) As ActionResult
     ' No validation that Length, Width, Height > 0
@@ -400,17 +449,18 @@ Zero or negative dimensions lead to meaningless calculations and division by zer
 
 **Impact:** Invalid calculations, potential runtime errors
 
-**Suggested Fix:**
+**Fix Applied:**
+Added comprehensive server-side validation to all 5 tank type controllers (Rectangular, VertCyl, HorizFlatEnds, HorizDishEnds, Elliptical) including:
 ```vb
 If rectangular.Length <= 0 OrElse rectangular.Width <= 0 OrElse rectangular.Height <= 0 Then
     ModelState.AddModelError("", "All dimensions must be positive numbers")
-    Return View(rectangular)
+    Return View("Index", rectangular)
 End If
 ```
 
 ---
 
-### 16. ❌ Missing Null Check in HorizDishEndsService.vb
+### 17. ❌ Missing Null Check in HorizDishEndsService.vb
 
 **File:** `SimplifiedDipsticksCalc/Services/HorizDishEndsService.vb:165-174`
 **Status:** 🔴 Open
@@ -430,7 +480,7 @@ No null check for `InitialConversionValues` or validation that `cor` is not zero
 
 ---
 
-### 17. ❌ Large Commented-Out Code Block in RectangularService.vb
+### 18. ❌ Large Commented-Out Code Block in RectangularService.vb
 
 **File:** `SimplifiedDipsticksCalc/Services/RectangularService.vb:89-91,130-135`
 **Status:** 🔴 Open
@@ -456,7 +506,7 @@ Dead code should be removed, not left commented.
 
 ## LOW SEVERITY ISSUES
 
-### 18. ❌ Misleading Display Name in Elliptical.vb
+### 19. ❌ Misleading Display Name in Elliptical.vb
 
 **File:** `SimplifiedDipsticksCalc/Models/Elliptical.vb:8,11`
 **Status:** 🔴 Open
@@ -482,7 +532,7 @@ Display names have leading spaces, which will show in the UI with visual padding
 
 ---
 
-### 19. ❌ Empty Case Statement in TankService.vb
+### 20. ❌ Empty Case Statement in TankService.vb
 
 **File:** `SimplifiedDipsticksCalc/Services/TankService.vb:43-44`
 **Status:** 🔴 Open
@@ -507,7 +557,7 @@ Case Else
 
 ---
 
-### 20. ❌ Goto Statements in HorizDishEndsService.vb
+### 21. ❌ Goto Statements in HorizDishEndsService.vb
 
 **File:** `SimplifiedDipsticksCalc/Services/HorizDishEndsService.vb:52-97`
 **Status:** 🔴 Open
@@ -532,7 +582,7 @@ Use of `GoTo` with numeric labels is a code smell. Makes code harder to follow a
 
 ---
 
-### 21. ❌ Public Field Instead of Property in Model Classes
+### 22. ❌ Public Field Instead of Property in Model Classes
 
 **File:** Multiple model classes
 **Status:** 🔴 Open
@@ -558,7 +608,7 @@ Public Property ConvertedVertDimensions As IConvertedVertDimensions
 
 ---
 
-### 22. ❌ Missing Null Check in Custom.js SessionStorage
+### 23. ❌ Missing Null Check in Custom.js SessionStorage
 
 **File:** `SimplifiedDipsticksCalc/Scripts/custom.js:88-91`
 **Status:** 🔴 Open

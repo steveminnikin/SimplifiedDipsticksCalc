@@ -160,10 +160,12 @@ Rectangular tanks with tilted bottoms use complex geometry to calculate volumes 
 
 The codebase has undergone a comprehensive bug review and fix. See [bugs.md](bugs.md) for details.
 
-**Fixed Issues:**
-- ✅ 3 Critical bugs (loop conditions, initialization)
+**Fixed Issues (as of 2025-11-11):**
+- ✅ 4 Critical bugs (loop conditions, initialization, Azure deployment)
 - ✅ 6 High severity bugs (division by zero, null references)
-- 📋 13 Moderate/Low severity issues documented
+- ✅ 4 Moderate severity bugs (dictionary duplicates, naming consistency)
+- ✅ 2 Low-Moderate bugs (XSS risk, input validation)
+- 📋 7 Low severity issues remain open for future improvement
 
 ## Configuration
 
@@ -179,6 +181,31 @@ Key settings in `Web.config`:
 Port and binding settings in `.vs/config/applicationhost.config`:
 - Default port: 51564
 - Protocol: HTTP
+
+## Deployment
+
+### Azure App Service Deployment
+
+The application is deployed to Azure App Service at `dipstickscalc.azurewebsites.net`.
+
+**Important Notes:**
+1. **View Files Must Be in Project**: All `.vbhtml` view files MUST be explicitly listed as `<Content>` items in the `.vbproj` file to be deployed. Files that exist in the filesystem but aren't in the project won't be deployed.
+
+2. **Roslyn Compiler Files**: The project includes a custom MSBuild target to ensure Roslyn compiler files are deployed (required for runtime view compilation on Azure).
+
+3. **Error Display**: Set `<customErrors mode="RemoteOnly" />` in Web.config for production (shows errors locally but not on Azure).
+
+**Deployment Steps:**
+1. Build in Release configuration
+2. Publish using Visual Studio (right-click project → Publish)
+3. Or use Azure DevOps/GitHub Actions for CI/CD
+
+**Common Deployment Issues:**
+- ❌ **Views not found on Azure**: Check that all `.vbhtml` files are in the `.vbproj` file
+- ❌ **500 errors after deployment**: Enable detailed errors temporarily to diagnose
+- ❌ **Compilation errors on Azure**: Ensure Roslyn files are being deployed
+
+See Bug #4 in [bugs.md](bugs.md) for details on the Azure deployment issue that was resolved.
 
 ## Development
 

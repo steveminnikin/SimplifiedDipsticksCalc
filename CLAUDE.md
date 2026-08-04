@@ -66,14 +66,17 @@ Controllers (in `Controllers` folder) follow this pattern:
 
 ### View Structure
 
-The main interface (`Views/Home/Index.vbhtml`) uses Bootstrap tabs to switch between tank types. Each tank type has:
-- A partial view for input form (e.g., `_RectangularPartial.vbhtml`)
-- A Calculate view to display results (e.g., `Rectangular/Calculate.vbhtml`)
+The application uses a multi-page architecture with separate views for each tank type:
+- `Views/Home/Index.vbhtml` - Landing page with tank type selection cards
+- `Views/{TankType}/Index.vbhtml` - Input form for each tank type (Rectangular, VertCyl, HorizFlatEnds, HorizDishEnds, Elliptical)
+- `Views/{TankType}/Calculate.vbhtml` - Results display for each tank type
 
 Shared partials include:
 - `_ClientPartial.vbhtml` - Client information form
 - `_DimensionsPartial.vbhtml` - Unit selection and common parameters
 - `_IncrementsView.vbhtml` - Display of calculated increment table
+
+**Important**: Each tank type MUST have its own Index.vbhtml file in the corresponding Views folder, and these files MUST be included in the .vbproj file as `<Content>` items for deployment to work properly.
 
 ### JavaScript Functionality
 
@@ -104,9 +107,29 @@ Shared partials include:
 - `Nullable(Of T)` syntax for nullable types
 - Imports statements equivalent to C# using directives
 
+## Deployment
+
+### Azure App Service
+
+The application is deployed to Azure App Service at `dipstickscalc.azurewebsites.net`.
+
+**Critical Deployment Requirements:**
+
+1. **All view files must be in .vbproj**: Any `.vbhtml` files that exist in the filesystem but are NOT listed as `<Content>` items in `SimplifiedDipsticksCalc.vbproj` will NOT be deployed to Azure. This was the root cause of Bug #4 where all tank calculator Index views were missing from production.
+
+2. **Roslyn compiler files**: The project includes a custom MSBuild target (`CopyRoslynFiles`) to ensure Roslyn compiler files are deployed to `bin/roslyn`. This is required for runtime view compilation on Azure.
+
+3. **Error visibility**: Set `<customErrors mode="RemoteOnly" />` in Web.config for production (shows detailed errors locally but generic errors on Azure).
+
+**If the app works locally but fails on Azure with "view not found" errors:**
+- Check that all `.vbhtml` files are listed in the `.vbproj` file
+- Verify the files have `<Content Include="Views/...">` entries
+- Rebuild and republish the application
+
 ## Important Notes
 
 - The application generates XML documentation (SimplifiedDipsticksCalc.xml) during build
 - ApplicationInsights is configured for telemetry
-- Target framework is .NET Framework 4.5.2
+- Target framework is .NET Framework 4.5.2 (Web.config shows 4.8 for compilation)
 - Uses classic ASP.NET MVC 5 (not .NET Core)
+- See bugs.md for comprehensive list of known issues and fixes

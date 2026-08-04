@@ -291,3 +291,11 @@ Move completed items here with completion date:
   - Fixed Bug #15: Added comprehensive server-side input validation to all 5 controllers
   - Added "Back to Input" and "Tank Selection" navigation buttons to all Calculate results pages
   - Implemented complete breadcrumb navigation system across all pages (Home > Tank Type > Results)
+- ✅ **2025-11-11** - Fixed critical Azure deployment issue (Bug #4):
+  - Diagnosed "view not found" errors on Azure production site
+  - Discovered all tank calculator Index views were missing from .vbproj file
+  - Added 5 missing Index.vbhtml files to project (Rectangular, VertCyl, HorizFlatEnds, HorizDishEnds, Elliptical)
+  - Added Web.config customErrors configuration for better error visibility
+  - Added custom MSBuild target to ensure Roslyn compiler files are deployed to Azure
+  - Verified fix works on Azure production environment
+  - Documented Azure deployment best practices in README.md
